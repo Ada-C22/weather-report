@@ -8,7 +8,8 @@
 // Wave 2
 const state = {
   tempValue: 70,
-  tempValueColor: 'orange'
+  tempValueColor: 'orange',
+  landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷'
 }
 
 const increaseTemp = () =>{
@@ -16,6 +17,7 @@ const increaseTemp = () =>{
   const temp = document.getElementById('tempValue');
   temp.textContent = state.tempValue;
   manageTempValueColor();
+  changeLandscape();
 };
 
 const decreaseTemp = () =>{
@@ -23,6 +25,7 @@ const decreaseTemp = () =>{
   const temp = document.getElementById('tempValue');
   temp.textContent = state.tempValue;
   manageTempValueColor();
+  changeLandscape();
 };
 
 const manageTempValueColor = () =>{
@@ -43,6 +46,22 @@ const manageTempValueColor = () =>{
 }
 
 
+const changeLandscape =()=>{
+  if (state.tempValue >= 80){
+    state.landscape = '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂';
+  }else if (state.tempValue <=79 && state.tempValue >=70){
+    state.landscape = '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷';
+  }else if (state.tempValue <=69 && state.tempValue>=60){
+    state.landscape = '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃';
+  }else {
+    state.landscape = '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
+  }
+  
+  const currentLandscape = document.getElementById('landscape');
+  currentLandscape.textContent= state.landscape;
+  
+}
+
 const registerEventHandlers = () => {
   const increaseTempButton = document.getElementById("increaseTempControl");
   increaseTempButton.addEventListener("click", increaseTemp);
@@ -54,5 +73,6 @@ const registerEventHandlers = () => {
 document.addEventListener("DOMContentLoaded", ()=>{
   registerEventHandlers();
   manageTempValueColor();
+  changeLandscape();
 
 });
