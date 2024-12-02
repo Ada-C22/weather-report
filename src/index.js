@@ -2,8 +2,6 @@ const increaseTempButton = document.getElementById('increaseTempControl');
 
 const decreaseTempButton = document.getElementById('decreaseTempControl');
 
-const currentTemp = document.getElementById('tempValue');
-
 let temperature = 70;
 
 function updateDisplay() {
@@ -12,11 +10,11 @@ function updateDisplay() {
 };
 
 increaseTempButton.addEventListener( 'click',() => { 
-    currentTemp++;
+    temperature++;
     updateDisplay();
 });
 decreaseTempButton.addEventListener( 'click',() => { 
-    currentTemp--;
+    temperature--;
     updateDisplay();
 });
 
