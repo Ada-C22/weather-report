@@ -19,21 +19,23 @@ const decreaseTemp = () => {
 };
 
 const changeColorAndLandscape = (temp) => {
+    const tempValue = document.getElementById("tempValue");
+    const landscape = document.getElementById("landscape");
     if (temp >= 80) {
-        document.getElementById("tempValue").style.color = "Red";
-        document.getElementById("landscape").textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
+        tempValue.style.color = "Red";
+        landscape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
     } else if (temp >= 70) {
-        document.getElementById("tempValue").style.color = "Orange";
-        document.getElementById("landscape").textContent = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
+        tempValue.style.color = "Orange";
+        landscape.textContent = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
     } else if (temp >= 60) {
-        document.getElementById("tempValue").style.color = "Yellow";
-        document.getElementById("landscape").textContent = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
+        tempValue.style.color = "Yellow";
+        landscape.textContent = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
     } else if (temp >= 50) {
-        document.getElementById("tempValue").style.color = "Green";
-        document.getElementById("landscape").textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
+        tempValue.style.color = "Green";
+        landscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
     } else {
-        document.getElementById("tempValue").style.color = "Teal";
-        document.getElementById("landscape").textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
+        tempValue.style.color = "Teal";
+        landscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
     }
 };
 
