@@ -18,3 +18,5 @@ document.addEventListener("DOMContentLoaded", () => {
         cityNameInput.value = "";
     });
 });
+
+// Wave 5 
