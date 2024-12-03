@@ -131,7 +131,7 @@ const updateDisplayCityTemp =  () => {
       return getDisplayCityTemp(coordList);
     })
     .then((currentTemp) =>{
-      state.tempValue = currentTemp
+      state.tempValue = parseInt(currentTemp)
       const temp = document.getElementById('tempValue');
       temp.textContent = state.tempValue;
       manageTempValueColor();
