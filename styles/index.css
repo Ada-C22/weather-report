@@ -1,4 +1,160 @@
-h2 {
+.container-fluid {
+    background-color: #0B131E;
+    padding: 20px 25px;
+    height: 100vh;
+    font-family: "Philosopher", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 1px;
+}
+.header__header {
+    margin: 0 10px; 
+    #weatherTitle {
+        font-size: 20px;
+        background-color: #202B3B;
+        color: #FAF9F6;
+        padding: 5px 10px;
+        border-radius: 5px;
+
+    }
+
+    #header_city {
+        color: #FAF9F6;
+        font-size: 50px;
+        .header__city-name::before,
+        .header__city-name::after {
+            content: "✨";
+        }
+    }
+}  
+
+.temperature__section {
+    color: #FAF9F6;
+
+    #tempValue {
+        font-size: 150px;
+    }
+    #increaseTempControl, 
+    #decreaseTempControl {
+        font-size: 50px;
+    }
+    #increaseTempControl:hover, 
+    #decreaseTempControl:hover {
+        cursor: pointer;
+        color: gray;
+    }
+
+    #currentTempButton,
+    #cityNameReset { 
+        box-shadow: 4px 4px 6px #3a34344d;
+        color: #FAF9F6;
+        padding: 5px;
+        border-radius: 5px;
+        border: none;
+        font-size: 16px;
+        cursor: pointer;
+        border: 3px #334766 solid;
+        margin: 0 5px;
+    }
+    #currentTempButton {
+        background-color: #334766; 
+    }
+
+    #cityNameReset {
+        background-color: #0B131E; 
+    }
+
+    #currentTempButton:hover,
+    #cityNameReset:hover { 
+        opacity: 60%;
+    }
+}
+
+hr {
+    margin: 40px 80px;
+    color:white;
+}
+
+#bottomSection {
+    margin: 0 10px;
+    height: 45%; 
+
+    .sky__section,
+    .garden__section,
+    .city-name__section,
+    #landscapeImg {
+        box-shadow: 1px -1px 3px rgba(20, 25, 35, 0.7);
+        background-color: #232c3a;
+        color: #FAF9F6;
+        padding: 20px 0;
+        border-radius: 5px;
+    }
+
+    #skyAndGarden .row {
+        height: 50%;
+    }
+
+    .sky__section {
+        margin-bottom: 12px;
+    }
+
+    .garden__section {
+        margin-top: 12px;
+        #gardenContent {
+            font-size: 20px;
+        }
+    }
+
+    .sky__section,
+    .garden__section {
+        margin-right: 10px;
+    }
+
+    .city-name__section {
+        margin: 0 10px;
+
+        .weather__icons {
+            font-size: 25px;
+        }
+
+        #globeIcon {
+            font-size: 40px;
+        }
+
+        #cityNameInput {
+            border: 3px white solid; 
+            border-radius: 5px;
+        }
+    
+        #citySearchButton { 
+            background-color: #0B131E; 
+            box-shadow: 4px 4px 6px #2824244d;
+            color: #FAF9F6;
+            padding: 2px 5px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border: 3px #334766 solid;
+        }
+
+        #citySearchSection .col {
+            padding: 4px;
+        } 
+        
+    }
+
+    #landscapeImg {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        margin-left: 10px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+}
+
+
+/* h2 {
     margin: 0 auto 2rem auto;
 }
   
@@ -80,14 +236,11 @@ align-self: center;
 display: flex;
 flex-direction: row;
 justify-content: space-around;
-/* justify-content: center; */
 }
 
 #tempValue {
 font-size: 3rem;
 margin-left: 1.5rem;
-/* padding-right: 1rem; */
-/* margin-right: 1.5rem; */
 }
 
 .temperature__controls {
@@ -161,4 +314,4 @@ background-color: lightblue;
 
 .snowy {
 background-color: lightsteelblue;
-}
+} */
