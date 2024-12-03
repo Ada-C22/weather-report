@@ -110,11 +110,11 @@ Wave 6:
 
 [Wave 2: Increase and Decrease Temperature](./ada-project-docs/wave-02.md)
 
-[Wave 3: Naming the City](./ada-project-docs/wave-03.md)
+[Wave 3: Naming the City](./ada-project-docs/wave-03.md) - Tatyana
 
 [Wave 4: Calling APIs](./ada-project-docs/wave-04.md)
 
-[Wave 5: Selecting the Sky](./ada-project-docs/wave-05.md)
+[Wave 5: Selecting the Sky](./ada-project-docs/wave-05.md) - Tatyana
 
 [Wave 6: Resetting the City Name](./ada-project-docs/wave-06.md)
 
