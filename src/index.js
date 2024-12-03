@@ -1,58 +1,68 @@
-// src/index.js
+"use strict";
 
-// Variables
-let currentTemp = 70; // Default temperature
+let currentTempValue = 32 ;
 
-// Elements
-const tempValue = document.getElementById('tempValue');
-const increaseTempControl = document.getElementById('increaseTempControl');
-const decreaseTempControl = document.getElementById('decreaseTempControl');
-const landscapeDiv = document.getElementById('landscape');
-
-// Function to update temperature display and its style
-const updateTemperatureDisplay = () => {
-    tempValue.textContent = `${currentTemp}°F`;
-    let color = '';
-    let landscape = '';
-
-    // Determine color and landscape based on temperature
-    if (currentTemp >= 80) {
-        color = 'red';
-        landscape = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
-    } else if (currentTemp >= 70) {
-        color = 'orange';
-        landscape = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
-    } else if (currentTemp >= 60) {
-        color = 'yellow';
-        landscape = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
-    } else if (currentTemp >= 50) {
-        color = 'green';
-        landscape = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
-    } else {
-        color = 'teal';
-        landscape = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
-    }
-
-    // Apply styles
-    tempValue.style.color = color;
-    landscapeDiv.textContent = landscape;
+const state = {
+    increaseTempControl: null,
+    decreaseTempControl: null,
+    tempElement: null,
+    gardenLandscape: null
 };
 
-// Event Listeners for temperature controls
-increaseTempControl.addEventListener('click', () => {
-    currentTemp += 1;
+const loadControls = () =>{
+    state.tempElement = document.getElementById('tempValue');
+    state.decreaseTempControl = document.getElementById('decreaseTempControl');
+    state.increaseTempControl = document.getElementById('increaseTempControl');
+    state.gardenLandscape = document.getElementById('landscape');
+};
+
+const updateTemperatureDisplay = () => {
+    state.tempElement.textContent = `${currentTempValue}°F`;
+
+    if (currentTempValue <= 49) {
+        state.tempElement.style.color = 'blue';
+        state.gardenLandscape.textContent = "A cold, snowy winter day with frost-covered trees and a blue-tinted sky, symbolizing freezing temperatures."
+    } 
+    
+    else if (currentTempValue <= 59) {
+        state.tempElement.style.color = 'green';
+        state.gardenLandscape.textContent = "A mild spring day with vibrant green grass, blooming flowers, and a soft, refreshing breeze"
+    } 
+    
+    else if (currentTempValue <= 69) {
+        state.tempElement.style.color = 'yellow';
+        state.gardenLandscape.textContent = "A warm summer afternoon, with golden sunlight casting a cheerful glow on the surroundings."
+    } 
+    
+    else if (currentTempValue <= 79) {
+        state.tempElement.style.color = 'orange';
+        state.gardenLandscape.textContent = "An autumn landscape with leaves turning shades of orange and brown, and the air feeling crisp but comfortable."
+    } 
+    
+    else {
+        state.tempElement.style.color = 'red';
+        state.gardenLandscape.textContent = "A scorching hot desert scene with blazing sunlight, sand dunes shimmering in heat, and a fiery red horizon."
+    }
+};
+
+
+const increaseTemp = () =>{
+    currentTempValue += 1;
     updateTemperatureDisplay();
-});
+};
 
-decreaseTempControl.addEventListener('click', () => {
-    currentTemp -= 1;
+const decreaseTemp = () =>{
+    currentTempValue -= 1;
     updateTemperatureDisplay();
-});
+};
 
-// Initialize display
-updateTemperatureDisplay();
+const registerEventHandlers = () => {
+    loadControls();
+    updateTemperatureDisplay();
+    state.increaseTempControl.addEventListener('click',increaseTemp)
+    state.decreaseTempControl.addEventListener('click',decreaseTemp)
+};
 
-
-/////////////////
+document.addEventListener('DOMContentLoaded', registerEventHandlers);
 
 
