@@ -79,20 +79,34 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
 // Wave 3
 document.addEventListener("DOMContentLoaded", () => {
+
+    const state = {
+      city: "Seattle",
+  };
     const headerCityName = document.getElementById("headerCityName");
     const cityNameInput = document.getElementById("cityNameInput");
     const cityNameReset = document.getElementById("cityNameReset");
 
+    const updateCityName = () => {
+      headerCityName.textContent = state.city;
+    };
+
+    updateCityName();
+
     // Update city name when user types city in the input field
     cityNameInput.addEventListener("input", () => {
-        headerCityName.textContent = cityNameInput.value;
+        state.city = cityNameInput.value;
+        updateCityName();
     });
 
     // When user clicks on reset the city name will default to Seattle
     cityNameReset.addEventListener("click", () => {
-        headerCityName.textContent = "Seattle";
+        state.city = "Seattle";
         cityNameInput.value = "";
+        updateCityName();
     });
 });
 
-// Wave 5 
+// Wave 5
+
+
