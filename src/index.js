@@ -9,7 +9,8 @@
 const state = {
   tempValue: 70,
   tempValueColor: 'orange',
-  landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷'
+  landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
+  name: 'Seattle',
 }
 
 const increaseTemp = () =>{
@@ -94,5 +95,12 @@ document.addEventListener("DOMContentLoaded", () => {
         cityNameInput.value = "";
     });
 });
+
+// Wave 4
+const getDisplayCityTemp = async () =>{
+  const city = state.name;
+  return axios
+          .get(`http://127.0.0.1:5000/location?q=${state.name}`) 
+}
 
 // Wave 5 
