@@ -1,4 +1,4 @@
-let currentTemperature = 60;
+let currentTemperature = 70;
 
 const tempValue = document.getElementById('tempValue');
 const increaseTempControl = document.getElementById('increaseTempControl');
@@ -9,23 +9,23 @@ const updateTemperature = () => {
 
     if (currentTemperature >= 80) {
         tempValue.style.color = 'red';
-        // tempValue.style.backgroundColor = 'light red';
+        tempValue.style.backgroundColor = '#FFCCCC';
         landScrape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
     } else if (currentTemperature >= 70) {
         tempValue.style.color = 'orange';
-        // tempValue.style.backgroundColor = 'light orange';
+        tempValue.style.backgroundColor = '#FFE4B5';
         landScrape.textContent = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
     } else if (currentTemperature >= 60) {
         tempValue.style.color = 'yellow';
-        // tempValue.style.backgroundColor = 'light pink';
+        tempValue.style.backgroundColor = '#FFE4B5';
         landScrape.textContent = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
     } else if (currentTemperature >= 50) {
         tempValue.style.color = 'green';
-        // tempValue.style.backgroundColor = 'light green';
+        tempValue.style.backgroundColor = '#CCFFCC';
         landScrape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
     } else if (currentTemperature >= 40) {
         tempValue.style.color = 'teal';
-        // tempValue.style.backgroundColor = 'light teal';
+        tempValue.style.backgroundColor = '#CCFFFF';
         landScrape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
     }
 }
@@ -39,3 +39,7 @@ decreaseTempControl.addEventListener('click', () => {
     currentTemperature -= 1;
     updateTemperature();
 });
+
+updateTemperature();
+
+let currentCity = cityNameInput.value;
