@@ -1,11 +1,13 @@
 .container-fluid {
     background-color: #0B131E;
     padding: 20px 25px;
-    height: 100vh;
     font-family: "Philosopher", sans-serif;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 1px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .header__header {
@@ -72,13 +74,18 @@
 }
 
 hr {
-    margin: 20px 80px;
+    margin: 25px 75px;
     color:white;
+}
+
+#topSection,
+#bottomSection {
+    height: calc((100vh - 60px) / 2);
+    overflow: hidden;
 }
 
 #bottomSection {
     margin: 0 10px;
-    height: 40%; 
 
     .sky__section,
     .garden__section,
