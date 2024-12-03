@@ -1,10 +1,12 @@
+const currentTemp = document.getElementById("tempValue");
+const currentLandscape = document.getElementById("landscape")
+
 const state = {
     temperature: 69,
 };
 
 // Function when clicking on up button
 const increaseTemp = () => {
-    const currentTemp = document.getElementById("tempValue");
     state.temperature += 1;
     currentTemp.textContent = state.temperature;
     changeTextColor(currentTemp)
@@ -13,7 +15,6 @@ const increaseTemp = () => {
 
 // Function when clicking on down button
 const decreaseTemp = () => {
-    const currentTemp = document.getElementById("tempValue");
     state.temperature -= 1;
     currentTemp.textContent = state.temperature;
     changeTextColor(currentTemp)
@@ -35,7 +36,6 @@ const changeTextColor = (currentTemp) => {
 };
 
 const changeLandscape = () => {
-    currentLandscape = document.getElementById("landscape")
     if (state.temperature >= 80) {
         currentLandscape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
     } else if (state.temperature >= 70) {
@@ -51,7 +51,6 @@ const changeLandscape = () => {
 // register the buttons and their respective listener + function
 const registerEventHandlers = () => {
     // when DOM loads, the default temp text should also change colors
-    const currentTemp = document.getElementById("tempValue");
     changeTextColor(currentTemp)
     changeLandscape()
     
