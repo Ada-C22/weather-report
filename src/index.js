@@ -65,31 +65,15 @@ const findWeather = (latitude, longitude) => {
             params: { lat: latitude, lon: longitude },
         })
         .then((response) => {
-            const Fahrenheit = response.data.main.temp * 9/5 - 459.67;
-            state.curTemp = Fahrenheit;
+            const kelvinTemp = response.data.main.temp;
+            const fahrenheitTemp = Math.round(kelvinTemp * 9 / 5 - 459.67);
+            state.curTemp = fahrenheitTemp;
         })
-        // °F = K * 9/5 - 459.67
-        // Math.round(
+
         .catch((error) => {
             console.log('error in Weather!');
         });
 }
-
-// findLatitudeAndLongitude('Seattle');
-
-// const serverURL = 'http://127.0.0.1:5000/'
-// const getCurrentTemp = () => {
-//     const cityName = document.getElementById("cityNameInput").value;
-//     const axios = require('axios');
-//     axios
-//         .get('{serverURL}/location'), {
-//             q: cityName,
-//         }
-
-// };
-// const getCurrentWeather = () => {
-
-// }
 
 
 const changeCityName = () => {
