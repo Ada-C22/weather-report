@@ -67,20 +67,3 @@ document.addEventListener("DOMContentLoaded", registerEventHandlers);
 
 
 
-
-// function temperatureDecrease(){
-
-// }
-// const increaseButton = () => {
-//     const newIncreaseButton = document.createElement("span")
-// }
-
-//increase and decrease button by 1 and should change color 
-
-//background of .garden__section needs to change color 
-
-// add number between buttons 
-
-// id landscape add emojis 
-
-//css span a class document.getelement.id temp value temperature.classname 
