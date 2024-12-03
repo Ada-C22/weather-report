@@ -68,6 +68,8 @@ const findWeather = (latitude, longitude) => {
             const kelvinTemp = response.data.main.temp;
             const fahrenheitTemp = Math.round(kelvinTemp * 9 / 5 - 459.67);
             state.curTemp = fahrenheitTemp;
+            const temp = document.getElementById("tempValue");
+            temp.textContent = state.curTemp;
         })
 
         .catch((error) => {
