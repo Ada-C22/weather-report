@@ -1,34 +1,15 @@
 "use strict";
 
 // Constants
-
-
-
-
-// Wave 2
 const state = {
   tempValue: 70,
   tempValueColor: 'orange',
   landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
   name: 'Seattle'
-}
-
-const increaseTemp = () =>{
-  state.tempValue += 1;
-  const temp = document.getElementById('tempValue');
-  temp.textContent = state.tempValue;
-  manageTempValueColor();
-  changeLandscape();
 };
 
-const decreaseTemp = () =>{
-  state.tempValue -= 1;
-  const temp = document.getElementById('tempValue');
-  temp.textContent = state.tempValue;
-  manageTempValueColor();
-  changeLandscape();
-};
 
+// Helper Functions
 const manageTempValueColor = () =>{
   const temp = document.getElementById('tempValue').textContent;
   if (temp >= 80){
@@ -42,9 +23,9 @@ const manageTempValueColor = () =>{
   }else if (temp <=49){
     state.tempValueColor = 'teal';
   }
-
+  
   document.getElementById('tempValue').style.color = state.tempValueColor;
-}
+};
 
 
 const changeLandscape =()=>{
@@ -60,44 +41,33 @@ const changeLandscape =()=>{
   
   const currentLandscape = document.getElementById('landscape');
   currentLandscape.textContent= state.landscape;
-  
-}
-
-const registerEventHandlers = () => {
-  const increaseTempButton = document.getElementById("increaseTempControl");
-  increaseTempButton.addEventListener("click", increaseTemp);
-  
-  const decreaseTempButton = document.getElementById("decreaseTempControl");
-  decreaseTempButton.addEventListener("click", decreaseTemp);
-
-  const getCurrentTempButton = document.getElementById('currentTempButton');
-  getCurrentTempButton.addEventListener('click', updateDisplayCityTemp);
-
-  const resetCityNameButton = document.getElementById('cityNameReset')
-  resetCityNameButton.addEventListener('click', resetCityName)
 };
 
-document.addEventListener("DOMContentLoaded", ()=>{
-  registerEventHandlers();
+const increaseTemp = () =>{
+  state.tempValue += 1;
+  const temp = document.getElementById('tempValue').textContent;
+  temp = state.tempValue;
   manageTempValueColor();
   changeLandscape();
+};
 
-});
+const decreaseTemp = () =>{
+  state.tempValue -= 1;
+  const temp = document.getElementById('tempValue').textContent;
+  temp  = state.tempValue;
+  manageTempValueColor();
+  changeLandscape();
+};
 
-// Wave 3
-document.addEventListener("DOMContentLoaded", () => {
-    const headerCityName = document.getElementById("headerCityName");
-    const cityNameInput = document.getElementById("cityNameInput");
+const updateCityName = () => {
+  const cityNameInput = document.getElementById("cityNameInput");
+  state.name = cityNameInput.value
+  
+  const headerCityName = document.getElementById("headerCityName");
+  headerCityName.textContent = state.name;
+};
 
-    // Update city name when user types city in the input field
-    cityNameInput.addEventListener("input", () => {
-      state.name = cityNameInput.value
-      headerCityName.textContent = cityNameInput.value;
-    });
 
-});
-
-// Wave 4
 const getDisplayCityCoords = () =>{
   const city = state.name;
   return axios
@@ -140,13 +110,44 @@ const updateDisplayCityTemp =  () => {
 };
 
 
-
-// Wave 5 
-
-// Wave 6
 const resetCityName = () =>{
   state.name = 'Seattle';
-  const headerCityName = document.getElementById('header-city-name')
+  const headerCityName = document.getElementById('headerCityName')
   headerCityName.textContent = state.name;
   cityNameInput.value = "";
 };
+
+
+
+
+// Main code 
+const registerEventHandlers = () => {
+  const increaseTempButton = document.getElementById("increaseTempControl");
+  increaseTempButton.addEventListener("click", increaseTemp);
+  
+  const decreaseTempButton = document.getElementById("decreaseTempControl");
+  decreaseTempButton.addEventListener("click", decreaseTemp);
+  
+  const getCurrentTempButton = document.getElementById('currentTempButton');
+  getCurrentTempButton.addEventListener('click', updateDisplayCityTemp);
+  
+  const cityNameInput = document.getElementById("cityNameInput");
+  cityNameInput.addEventListener("input", updateCityName);
+  
+  const resetCityNameButton = document.getElementById('cityNameReset')
+  resetCityNameButton.addEventListener('click', resetCityName)
+  
+};
+
+
+const initializeSite = () =>{
+  resetCityName();
+  updateDisplayCityTemp();
+};
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  registerEventHandlers();
+  initializeSite();
+});
+
+
