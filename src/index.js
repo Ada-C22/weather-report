@@ -67,12 +67,26 @@ const updateLandscape = () => {
     landscapeContainer.appendChild(newLandscape);
 }
 
+
+
 const registerEventHandlers = () => {
   // loadControls();
   const decreaseTemp = document.getElementById('decreaseTempControl');
   const increaseTemp = document.getElementById('increaseTempControl');
   decreaseTemp.addEventListener('click', updateDecreaseTempCount);
   increaseTemp.addEventListener('click', updateIncreaseTempCount);
+
+  cityNameInput.addEventListener("input", () => {
+    const cityNameInput = document.getElementById("cityNameInput");
+    const headerCityName = document.getElementById("headerCityName");
+    headerCityName.textContent = cityNameInput.value;
+  });
+
+  cityNameReset.addEventListener("click", () => {
+    const cityNameReset = document.getElementById("cityNameReset");
+    cityNameInput.value = "";
+    headerCityName.textContent = "";
+  });
 
   updateTempBackgroundColor();
   updateLandscape();
