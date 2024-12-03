@@ -39,7 +39,21 @@ const changeColorAndLandscape = (temp) => {
     }
 };
 
-// const axios = require('axios');
+const updateSky = () => {
+    const skySelect = document.getElementById("skySelect").value;
+    const sky = document.getElementById("sky")
+    if (skySelect === "sunny") {
+        sky.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
+    } else if (skySelect === "cloudy") {
+        sky.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
+    } else if (skySelect === "rainy") {
+        sky.textContent = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
+    } else if (skySelect === "snowy") {
+        sky.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
+    } else {
+        sky.textContent = "----------------------------- ";
+    }
+};
 
 const findLatitudeAndLongitude = () => {
     let latitude, longitude;
@@ -85,16 +99,19 @@ const changeCityName = () => {
 
 const registerEventHandlers = () => {
     const increaseButton = document.getElementById("increaseTempControl");
-    increaseButton.addEventListener("click", increaseTemp)
+    increaseButton.addEventListener("click", increaseTemp);
 
     const decreaseButton = document.getElementById("decreaseTempControl");
-    decreaseButton.addEventListener("click", decreaseTemp)
+    decreaseButton.addEventListener("click", decreaseTemp);
 
     const cityResetButton = document.getElementById("cityNameReset");
-    cityResetButton.addEventListener("click", changeCityName)
+    cityResetButton.addEventListener("click", changeCityName);
 
-    const updateTempButton = document.getElementById('currentTempButton')
-    updateTempButton.addEventListener('click', findLatitudeAndLongitude)
+    const updateTempButton = document.getElementById('currentTempButton');
+    updateTempButton.addEventListener('click', findLatitudeAndLongitude);
+
+    const skySelect = document.getElementById("skySelect");
+    skySelect.addEventListener("change", updateSky);
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
