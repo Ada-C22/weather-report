@@ -12,6 +12,7 @@ const syncCityName =  () => {
 
 
 syncCityName();
+
 // temperature control section
 document.addEventListener("DOMContentLoaded", () => {
     const tempValue = document.getElementById("tempValue");
@@ -90,3 +91,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInterval(rotateImage, 10000);
 });
+
