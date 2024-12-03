@@ -72,6 +72,9 @@ const registerEventHandlers = () => {
 
   const getCurrentTempButton = document.getElementById('currentTempButton');
   getCurrentTempButton.addEventListener('click', updateDisplayCityTemp);
+
+  const resetCityNameButton = document.getElementById('cityNameReset')
+  resetCityNameButton.addEventListener('click', resetCityName)
 };
 
 document.addEventListener("DOMContentLoaded", ()=>{
@@ -85,7 +88,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 document.addEventListener("DOMContentLoaded", () => {
     const headerCityName = document.getElementById("headerCityName");
     const cityNameInput = document.getElementById("cityNameInput");
-    const cityNameReset = document.getElementById("cityNameReset");
 
     // Update city name when user types city in the input field
     cityNameInput.addEventListener("input", () => {
@@ -93,12 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
       headerCityName.textContent = cityNameInput.value;
     });
 
-    // When user clicks on reset the city name will default to Seattle
-    cityNameReset.addEventListener("click", () => {
-        headerCityName.textContent = "Seattle";
-        cityNameInput.value = "";
-        state.name = 'Seattle'
-    });
 });
 
 // Wave 4
@@ -146,3 +142,11 @@ const updateDisplayCityTemp =  () => {
 
 
 // Wave 5 
+
+// Wave 6
+const resetCityName = () =>{
+  state.name = 'Seattle';
+  const headerCityName = document.getElementById('header-city-name')
+  headerCityName.textContent = state.name;
+  cityNameInput.value = "";
+};
