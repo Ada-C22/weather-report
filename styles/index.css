@@ -88,6 +88,7 @@ font-size: 3rem;
 margin-left: 1.5rem;
 /* padding-right: 1rem; */
 /* margin-right: 1.5rem; */
+text-shadow: black 1px 1px 5px;
 }
 
 .temperature__controls {
