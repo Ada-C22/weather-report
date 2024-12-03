@@ -1,6 +1,13 @@
 const increaseTempButton = document.getElementById('increaseTempControl');
-
 const decreaseTempButton = document.getElementById('decreaseTempControl');
+const landscape = document.getElementById('landscape');
+const cityDisplay = document.getElementById('headerCityName');
+const cityInput = document.getElementById('cityNameInput');
+
+cityDisplay.textContent ="Miami";
+cityInput.addEventListener('input', () => {
+  cityDisplay.textContent = cityInput.value;
+});
 
 landscape.style.fontFamily = "monospace";
 landscape.style.whiteSpace = "pre";
@@ -57,8 +64,6 @@ decreaseTempButton.addEventListener( 'click',() => {
     temperature--;
     updateDisplay();
 });
-
-
 
 
 updateDisplay();
