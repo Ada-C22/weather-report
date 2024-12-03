@@ -15,15 +15,19 @@
     <header class="header__header">
         <h1>Weather Report</h1>
         <span>For the lovely city of 
-            <span id="headerCityName" class="header__city-name"></span></span>
+            <span id="headerCityName" class="header__city-name">Seattle</span></span>
     </header>
     <section class="temperature__section">
         <h2>Temperature</h2>
         <div class="temperature__content">
             <div class="temperature__controls">
-                <span id="increaseTempControl">⬆️</span>
-                <span id="tempValue"></span>
-                <span id="decreaseTempControl">⬇️</span>
+                <span id="increaseTempControl" class="temperature">
+                    <button id="increaseButton">⬆️</button>
+                </span>
+                <span id="tempValue">80</span>
+                <span id="decreaseTempControl">
+                    <button id="decreaseButton">⬇️</button> 
+                </span>
             </div>
             <button id="currentTempButton">Get Realtime Temperature</button>
         </div>

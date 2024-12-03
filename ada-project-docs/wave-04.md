@@ -1,4 +1,9 @@
 # Wave 4: Calling APIs
+##Connect your API keys in a .env file. Connecting weather key and your api key which should then allow you to make the endpoint calls shown in routes 
+
+Each person ould need to clone and add the .env
+
+
 
 For this wave, we will add a feature that gets the weather of the currently displayed city name. 
 

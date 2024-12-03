@@ -25,7 +25,7 @@ Our solution uses the following ranges, which you may use if desired:
 | 80+             | Red    |
 | 70-79           | Orange |
 | 60-69           | Yellow |
-| 50-59           | Green  |
+| 50-59           | Green  |`
 | 49 or below     | Teal   |
 
 ### Temperature Ranges Change Landscape
