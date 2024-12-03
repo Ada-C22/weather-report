@@ -1,4 +1,4 @@
-// Temperature control section
+// temperature control section
 document.addEventListener("DOMContentLoaded", () => {
     const tempValue = document.getElementById("tempValue");
     const increaseTempControl = document.getElementById("increaseTempControl");
@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let temp = 80;
     tempValue.textContent = `${temp}°F`;
 
-    // Controls temperature text color
+    // controls temperature text color
     const updateTemperatureColor = () => {
         if (temp >= 80) {
             tempValue.style.color = "red";
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    // Controls weather garden landscape
+    // controls weather garden landscape
     const updateLandscape = () => {
         if (temp >= 80) {
             landscape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// Weather album section
+// weather album section
 document.addEventListener("DOMContentLoaded", () => {
     const landscapeImg = document.getElementById("landscapeImg");
     const images = [
