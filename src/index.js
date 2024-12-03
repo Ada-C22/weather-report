@@ -96,15 +96,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const resetCityName = document.getElementById("cityNameReset");
     const headerCityName = document.getElementById("headerCityName");
     const tempValue = document.getElementById("tempValue");
+    const cityNameInput = document.getElementById("cityNameInput");
 
-    let defaultInput = "Los Angeles";
+    let defaultCityNameInput = "Los Angeles";
 
     resetCityName.addEventListener("click", () => {
-        headerCityName.textContent = defaultInput;
+        headerCityName.textContent = defaultCityNameInput;
         tempValue.textContent = "80°F";
         tempValue.style.color = "red";
+        cityNameInput.value = "";
     });
-    
-    resetCityName();
 });
 
