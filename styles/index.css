@@ -162,3 +162,16 @@ background-color: lightblue;
 .snowy {
 background-color: lightsteelblue;
 }
+
+/* /////////// */
+
+#increaseTempControl,
+#decreaseTempControl {
+    background: none; /* Removes default button background */
+    border: none; /* Removes default button border */
+    font-size: 3rem; /* Matches the size of the emojis */
+    cursor: pointer; /* Adds a pointer cursor for better UX */
+    text-align: center; /* Centers the content */
+    padding: 0; /* Removes default padding */
+    margin: 0; /* Removes default margin */
+}
