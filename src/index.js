@@ -27,9 +27,6 @@ const updateTempBackgroundColor = () => {
   const temperature__section = document.querySelector('.temperature__section');
 
   switch (true) {
-    default:
-      temperature__section.style.backgroundColor = 'white';
-      break;
     case state.tempCount >= 80:
       temperature__section.style.backgroundColor = 'red';
       break;
@@ -54,9 +51,6 @@ const updateLandscape = () => {
   landscapeContainer.textContent =  ''
   
     switch (true) {
-      default:
-        newLandscape.textContent = 'test';
-        break;
       case state.tempCount >= 80:
         newLandscape.textContent = '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂';
         break;
