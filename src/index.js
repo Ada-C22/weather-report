@@ -1,5 +1,6 @@
 const currentTemp = document.getElementById("tempValue");
 const currentLandscape = document.getElementById("landscape")
+const searchBar = document.getElementById("cityNameInput")
 
 const state = {
     temperature: 69,
@@ -21,6 +22,7 @@ const decreaseTemp = () => {
     changeLandscape()
 };
 
+// helper function to change text color
 const changeTextColor = (currentTemp) => {
     if (state.temperature > 80) {
         currentTemp.style.color = "red";
@@ -35,6 +37,7 @@ const changeTextColor = (currentTemp) => {
     }
 };
 
+// helper function to change landscape
 const changeLandscape = () => {
     if (state.temperature >= 80) {
         currentLandscape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
@@ -47,6 +50,11 @@ const changeLandscape = () => {
     }
 }
 
+// function that runs when user inputs in search bar
+const updateCityName = () => {
+    const cityNameDisplay = document.getElementById("headerCityName");
+    cityNameDisplay.textContent = searchBar.value;
+};
 
 // register the buttons and their respective listener + function
 const registerEventHandlers = () => {
@@ -59,6 +67,8 @@ const registerEventHandlers = () => {
 
     const downButton = document.querySelector("#decreaseTempControl")
     downButton.addEventListener("click", decreaseTemp)
+
+    searchBar.addEventListener("input", updateCityName)
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers)
