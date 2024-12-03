@@ -52,6 +52,23 @@ const updateCityName = () => {
     cityNameDisplay.textContent = state.cityName;
 };
 
+// fnc that runs when user clicks get realtime temp button
+const getCurrentTemp = () => {
+
+    // axios
+    // .get("/location", {
+    //     params : {
+    //         q: state.cityName,
+    //         format: "json",
+    //     }, 
+    // })
+    // .then((response) => {
+    //     console.log("success!", response.data)
+    // })
+    // .catch((error) => {
+    //     console.log('failed!', error.response.data)
+    // })
+};
 
 // register the buttons and their respective listener + function
 const registerEventHandlers = () => {
@@ -68,7 +85,7 @@ const registerEventHandlers = () => {
     searchBar.addEventListener("input", updateCityName);
 
     const currentTempButton = document.querySelector("#currentTempButton");
-    // currentTempButton.addEventListener("click", getCurrentTemp)
+    currentTempButton.addEventListener("click", getCurrentTemp)
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers)
