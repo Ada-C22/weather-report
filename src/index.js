@@ -1,7 +1,7 @@
 "use strict";
 
 const state = {
-    curTemp : 60,
+    curTemp: 60,
 }
 
 const increaseTemp = () => {
@@ -39,12 +39,61 @@ const changeColorAndLandscape = (temp) => {
     }
 };
 
+const axios = require('axios');
+
+const findLatitudeAndLongitude = () => {
+    let latitude, longitude;
+    axios.get('http://127.0.0.1:5000/location',
+        {
+            params: {
+                q: 'Seattle',
+            }
+        })
+        .then((response) => {
+            latitude = response.data[0].lat;
+            longitude = response.data[0].lon;
+            findWeather(latitude, longitude);
+        })
+        .catch((error) => {
+            console.log('error in findLatitudeAndLongitude!');
+        });
+}
+
+const findWeather = (latitude, longitude) => {
+    axios.get('http://127.0.0.1:5000/weather')
+        .then((response) => {
+            const Fahrenheit = response.data.main.temp * 9/5 - 459.67;
+            state.curTemp = Fahrenheit
+        })
+        // °F = K * 9/5 - 459.67
+        .catch((error) => {
+            console.log('error in findLocation!');
+        });
+}
+
+findLatitudeAndLongitude('Seattle, Washington, USA');
+
+// const serverURL = 'http://127.0.0.1:5000/'
+// const getCurrentTemp = () => {
+//     const cityName = document.getElementById("cityNameInput").value;
+//     const axios = require('axios');
+//     axios
+//         .get('{serverURL}/location'), {
+//             q: cityName,
+//         }
+
+// };
+// const getCurrentWeather = () => {
+
+// }
+
+
 const changeCityName = () => {
     const cityName = document.getElementById("cityNameInput").value;
     document.getElementById("headerCityName").textContent = cityName;
 };
 
-const registerEventHandlers= () => {
+const registerEventHandlers = () => {
     const increaseButton = document.getElementById("increaseTempControl");
     increaseButton.addEventListener("click", increaseTemp)
 
@@ -53,6 +102,9 @@ const registerEventHandlers= () => {
 
     const cityResetButton = document.getElementById("cityNameReset");
     cityResetButton.addEventListener("click", changeCityName)
+
+    const updateTempButton = document.getElementById('currentTempButton')
+    updateTempButton.addEventListener('click', findLatitudeAndLongitude)
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
