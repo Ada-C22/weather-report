@@ -39,6 +39,10 @@ const changeColorAndLandscape = (temp) => {
     }
 };
 
+const changeCityName = () => {
+    const cityName = document.getElementById("cityNameInput").value;
+    document.getElementById("headerCityName").textContent = cityName;
+};
 
 const registerEventHandlers= () => {
     const increaseButton = document.getElementById("increaseTempControl");
@@ -46,6 +50,9 @@ const registerEventHandlers= () => {
 
     const decreaseButton = document.getElementById("decreaseTempControl");
     decreaseButton.addEventListener("click", decreaseTemp)
+
+    const cityResetButton = document.getElementById("cityNameReset");
+    cityResetButton.addEventListener("click", changeCityName)
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
