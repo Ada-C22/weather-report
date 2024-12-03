@@ -81,11 +81,11 @@ document.addEventListener("DOMContentLoaded", ()=>{
 document.addEventListener("DOMContentLoaded", () => {
 
     const state = {
-      city: "Seattle",
+      city: 'Seattle',
   };
-    const headerCityName = document.getElementById("headerCityName");
-    const cityNameInput = document.getElementById("cityNameInput");
-    const cityNameReset = document.getElementById("cityNameReset");
+    const headerCityName = document.getElementById('headerCityName');
+    const cityNameInput = document.getElementById('cityNameInput');
+    const cityNameReset = document.getElementById('cityNameReset');
 
     const updateCityName = () => {
       headerCityName.textContent = state.city;
@@ -94,19 +94,39 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCityName();
 
     // Update city name when user types city in the input field
-    cityNameInput.addEventListener("input", () => {
+    cityNameInput.addEventListener('input', () => {
         state.city = cityNameInput.value;
         updateCityName();
     });
 
     // When user clicks on reset the city name will default to Seattle
-    cityNameReset.addEventListener("click", () => {
-        state.city = "Seattle";
-        cityNameInput.value = "";
+    cityNameReset.addEventListener('click', () => {
+        state.city = 'Seattle';
+        cityNameInput.value = '';
         updateCityName();
     });
 });
 
 // Wave 5
+document.addEventListener("DOMContentLoaded", () => {
+  const skySelect = document.getElementById('skySelect');
+  const skyDisplay = document.getElementById('skyDisplay');
 
+  // Sky emoji options
+  const skyOptions = {
+  'sunny': '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
+  'cloudy': '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️',
+  'rainy': '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧',
+  'snowy': '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨',
+  }
+
+  skySelect.addEventListener('change', () => {
+    const selectedSky = skySelect.value;
+    if (skyOptions[selectedSky]) {
+      skyDisplay.textContent = skyOptions[selectedSky];
+    } else {
+      skyDisplay.textContent = '';
+    }
+  });
+});
 
