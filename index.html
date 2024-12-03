@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,128 @@
     <title>Weather Report</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="../../styles/search_bar.css">
+    <!-- Imports jQuery for search bar -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.11/jquery.autocomplete.min.js"></script>
 </head>
+
 <body>
+    <header class="header__header">
+        <h1>Weather Report</h1>
+        <span>For the lovely city of 
+            <span id="headerCityName" class="header__city-name"></span></span>
+    </header>
+    <section class="temperature__section">
+        <h2>Temperature</h2>
+        <div class="temperature__content">
+            <div class="temperature__controls">
+                <span id="increaseTempControl">⬆️</span>
+                <span id="tempValue"></span>
+                <span id="decreaseTempControl">⬇️</span>
+            </div>
+            <button id="currentTempButton">Get Realtime Temperature</button>
+        </div>
+    </section>
+    <section class="sky__section">
+        <h2>Sky</h2>
+        <select id="skySelect">
+            <!-- sky options here -->
+        </select>
+    </section>
+
+    <section class="city-name__section">
+        <!-- LocationIQ Autocomplete API form -->
+        <h2 class="result">Address:</h3>
+        <div id="address_box" class="result"></div>
+        <div class="container">
+          <div id="search-box">
+            <div class="locationiq-autocomplete-control locationiq-bounds locationiq-control locationiq-autocomplete-expanded" id="search-box-area">
+              <input class="locationiq-autocomplete-input ui-autocomplete-input" id="search-box-input" title="Search" placeholder="Search for an address...">
+              <a class="locationiq-autocomplete-search-icon"></a>
+              <a class="locationiq-reset-control" id="reset-autocomplete" title="Reset">x</a>
+            </div>
+          </div>
+        </div>
+        <!-- Code for the search bar is written in jQuery -->
+        <script type="text/javascript">
+          //Change this to your access token
+          var locationiqKey = "pk.9328ed23e3c9f577b9e37137891f40cc"
+    
+          $('#search-box-input').autocomplete({
+            minChars: 3,
+            deferRequestBy: 250,
+            serviceUrl: 'https://api.locationiq.com/v1/autocomplete',
+            paramName: 'q',
+            params: {
+              // The input parameters to the API goes here
+              key: locationiqKey,
+              format: "json",
+              limit: 5
+            },
+            ajaxSettings: {
+              dataType: 'json'
+            },
+            formatResult: function(suggestion, currentValue) {
+              // Current value is the input query. We can use this to highlight the search phrase in the result
+              var format = "<div class='autocomplete-suggestion-name'>" + highlight(suggestion.data.display_place, currentValue) + "</div>" +
+                "<div class='autocomplete-suggestion-address'>" + highlight(suggestion.data.display_address, currentValue) + "</div>"
+              return format;
+            },
+            transformResult: function(response) {
+              var suggestions = $.map(response, function(dataItem) {
+                return {
+                  value: dataItem.display_name,
+                  data: dataItem
+                };
+              })
+    
+              return {
+                suggestions: suggestions
+              };
+            },
+            onSelect: function(suggestion) {
+              displayUnit(suggestion.value, "address_box");
+              
+            }
+          });
+    
+          // For triggering reset
+          $("#reset-autocomplete").click(function() {
+            $('#search-box-input').val("");
+          });
+    
+          //Displays the geocoding response in the "result" div
+          function displayUnit(unit_name, domName) {
+            var resultString = unit_name || "";
+            document.getElementById(domName).innerHTML = resultString;
+          }
+    
+          // function displayCountry(country_name) {
+          //   var resultString = country_name;
+          //   document.getElementById("country_box").innerHTML = resultString;
+          // }
+    
+          function highlight(text, focus) {
+            var r = RegExp('(' + escapeRegExp(focus) + ')', 'gi');
+            return text.replace(r, '<strong>$1</strong>');
+          }
+    
+          function escapeRegExp(str) {
+            return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+          }
+        </script>
+    </section>
+
+    <section class="garden__section">
+        <h2>Weather Garden</h2>
+        <div id="gardenContent" class="garden__content">
+            <div id="sky"></div>
+            <div id="landscape"></div>
+        </div>
+    </section>
+    <script src="./node_modules/axios/dist/axios.min.js"></script>
     <script src="./src/index.js"></script>
 </body>
 </html>
