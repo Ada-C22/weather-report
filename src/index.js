@@ -4,6 +4,7 @@ const tempValue = document.getElementById('tempValue');
 const increaseTempControl = document.getElementById('increaseTempControl');
 const decreaseTempControl = document.getElementById('decreaseTempControl');
 const landScrape = document.getElementById('landscape');
+
 const updateTemperature = () => {
     tempValue.textContent = `${currentTemperature}°F`;
 
@@ -43,3 +44,20 @@ decreaseTempControl.addEventListener('click', () => {
 updateTemperature();
 
 let currentCity = cityNameInput.value;
+
+// Wave 3
+
+document.addEventListener("DOMContentLoaded", () => {
+    const cityName = document.getElementById('cityNameInput');
+    const headerCityName = document.getElementById('headerCityName');
+
+    cityNameInput.addEventListener("input", (updateValue) => {
+        const newCityName = event.target.value;
+        headerCityName.textContent = newCityName;
+    });
+    // const cityNameReset = document.getElementById('cityNameReset');
+    // cityNameReset.addEventListener("click", () => {
+
+    // })
+
+};
