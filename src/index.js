@@ -92,3 +92,19 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(rotateImage, 10000);
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const resetCityName = document.getElementById("cityNameReset");
+    const headerCityName = document.getElementById("headerCityName");
+    const tempValue = document.getElementById("tempValue");
+
+    let defaultInput = "Los Angeles";
+
+    resetCityName.addEventListener("click", () => {
+        headerCityName.textContent = defaultInput;
+        tempValue.textContent = "80°F";
+        tempValue.style.color = "red";
+    });
+    
+    resetCityName();
+});
+
