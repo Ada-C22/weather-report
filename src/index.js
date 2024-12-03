@@ -17,30 +17,29 @@ const updateIncreaseTempCount = () => {
   const tempValue = document.getElementById('tempValue');
   ++state.tempCount;
   tempValue.textContent = state.tempCount;
-  const landscape = document.getElementById('landscape');
 
   updateTempBackgroundColor();
   updateLandscape();
 };
 
 const updateTempBackgroundColor = () => {
-  const temperature__section = document.querySelector('.temperature__section');
+  const tempValue = document.getElementById("tempValue");
 
   switch (true) {
     case state.tempCount >= 80:
-      temperature__section.style.backgroundColor = 'red';
+      tempValue.style.color = 'red';
       break;
     case state.tempCount >= 70:
-      temperature__section.style.backgroundColor = 'orange';
+      tempValue.style.color = 'orange';
       break;
     case state.tempCount >= 60:
-      temperature__section.style.backgroundColor = 'yellow';
+      tempValue.style.color = 'yellow';
       break;
     case state.tempCount >= 50:
-      temperature__section.style.backgroundColor = 'green';
+      tempValue.style.color = 'green';
       break;
     case state.tempCount < 50:
-      temperature__section.style.backgroundColor = 'teal';
+      tempValue.style.color = 'teal';
       break;
   }
 };
@@ -66,7 +65,6 @@ const updateLandscape = () => {
     }
 
     landscapeContainer.appendChild(newLandscape);
-
 }
 
 const registerEventHandlers = () => {
