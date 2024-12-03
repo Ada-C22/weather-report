@@ -146,6 +146,11 @@ hr {
             border: 3px #334766 solid;
         }
 
+        #citySearchButton:hover {
+            cursor: pointer;
+            color: gray;
+        }
+
         #citySearchSection .col {
             padding: 4px;
         } 
