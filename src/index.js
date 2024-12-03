@@ -38,19 +38,21 @@ const temperatureColor = () => {
 }
 
 const weatherGardenDisplay = () => {
-    landscape.classList.remove()
+    // landscape.classList.remove()
     gardenSection.classList.remove("sunny", "cloudy", "rainy", "snowy");
     if (state.temperature >= 80) {
         gardenSection.classList.add("sunny")
-        // landscape.classList.add("sunny")
+        landscape.innerHTML = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂"
     } else if (state.temperature >= 70) {
         gardenSection.classList.add("cloudy")
+        landscape.innerHTML = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷"
     } else if (state.temperature >= 60) {
         gardenSection.classList.add("rainy")
-    } else 
-        gardenSection.classList.add("rainy")
-
-    // } else if (state.temperature )
+        landscape.innerHTML = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃"
+    } else {
+        gardenSection.classList.add("snowy")
+        landscape.innerHTML = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲"
+    }
 }
 
 const registerEventHandlers = () => {
