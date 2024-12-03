@@ -10,6 +10,8 @@ const state = {
 
 
 // Helper Functions
+
+//Wave 2
 const manageTempValueColor = () =>{
   const temp = document.getElementById('tempValue').textContent;
   if (temp >= 80){
@@ -59,6 +61,8 @@ const decreaseTemp = () =>{
   changeLandscape();
 };
 
+
+// Wave 3
 const updateCityName = () => {
   const cityNameInput = document.getElementById("cityNameInput");
   state.name = cityNameInput.value
@@ -67,7 +71,7 @@ const updateCityName = () => {
   headerCityName.textContent = state.name;
 };
 
-
+// Wave 4
 const getDisplayCityCoords = () =>{
   const city = state.name;
   return axios
@@ -109,7 +113,9 @@ const updateDisplayCityTemp =  () => {
     });
 };
 
+// Wave 5
 
+// Wave 6
 const resetCityName = () =>{
   state.name = 'Seattle';
   const headerCityName = document.getElementById('headerCityName')
