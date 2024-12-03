@@ -39,14 +39,15 @@ const changeColorAndLandscape = (temp) => {
     }
 };
 
-const axios = require('axios');
+// const axios = require('axios');
 
 const findLatitudeAndLongitude = () => {
     let latitude, longitude;
+    const cityName = document.getElementById("cityNameInput").value;
     axios.get('http://127.0.0.1:5000/location',
         {
             params: {
-                q: 'Seattle',
+                q: cityName,
             }
         })
         .then((response) => {
@@ -60,18 +61,21 @@ const findLatitudeAndLongitude = () => {
 }
 
 const findWeather = (latitude, longitude) => {
-    axios.get('http://127.0.0.1:5000/weather')
+    axios.get('http://127.0.0.1:5000/weather', {
+            params: { lat: latitude, lon: longitude },
+        })
         .then((response) => {
             const Fahrenheit = response.data.main.temp * 9/5 - 459.67;
-            state.curTemp = Fahrenheit
+            state.curTemp = Fahrenheit;
         })
         // °F = K * 9/5 - 459.67
+        // Math.round(
         .catch((error) => {
-            console.log('error in findLocation!');
+            console.log('error in Weather!');
         });
 }
 
-findLatitudeAndLongitude('Seattle, Washington, USA');
+// findLatitudeAndLongitude('Seattle');
 
 // const serverURL = 'http://127.0.0.1:5000/'
 // const getCurrentTemp = () => {
