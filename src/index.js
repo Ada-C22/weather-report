@@ -1,7 +1,7 @@
 // const axios = require('axios');
 const state = {
     city: 'Seattle',  
-    temperature: 0     
+    temperature: 20     
 };
 
 const getCurrentTemperature = () => {
@@ -49,6 +49,7 @@ const currentTemperature = document.getElementById('currentTempButton')
 const skySection = document.querySelector('.sky__section ');
 const skySelect = document.getElementById('skySelect')
 const sky = document.getElementById('sky')
+const cityNameReset = document.getElementById('cityNameReset')
 
 const temperatureIncrease = () => {
     state.temperature += 1;  
@@ -103,6 +104,11 @@ const updateCityName = () => {
     headerCityName.textContent = cityInputValue
 }
 
+const resetCityName = () => {
+    cityNameInput.value = '';
+    headerCityName.textContent = '';
+}
+
 const skyGardenDisplay = () => {
     skySection.classList.remove("sunny", "cloudy", "rainy", "snowy");
     const selectedText = skySelect.value
@@ -131,6 +137,8 @@ const registerEventHandlers = () => {
     currentTemperatureButton.addEventListener("click", getCurrentTemperature)
 
     skySelect.addEventListener('change', skyGardenDisplay);
+
+    cityNameReset.addEventListener('click', resetCityName);
 
 };
 
