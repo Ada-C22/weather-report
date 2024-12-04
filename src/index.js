@@ -11,7 +11,7 @@ const state = {
 const updateTemperatureDisplay = () => {
   const tempValueElement = document.getElementById("tempValue");
   const landscapeElement = document.getElementById("landscape");
-  tempValueElement.textContent = `${state.currentTemp} °F`;
+  tempValueElement.textContent = `${state.currentTemp}°F`;
 
   if (state.currentTemp >= 80) {
     tempValueElement.style.color = "red";
@@ -48,11 +48,13 @@ const decreaseTemp = () => {
 /******* Wave 3 *********/
 /************************/
 
+// Event handler function to retrieve user input:
 const retrieveInput = () => {
   const cityNameInput = document.getElementById("cityNameInput");
   return cityNameInput.value;
 };
 
+// Event handler function to UPDATE the headerCityName to user's input:
 const updateCityName = () => {
   const currentCity = document.getElementById("headerCityName");
   state.cityName = retrieveInput();
