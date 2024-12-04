@@ -1,5 +1,3 @@
-const axios = require('axios');
-
 let currentTemperature = 70;
 
 const tempValue = document.getElementById('tempValue');
@@ -42,16 +40,10 @@ decreaseTempControl.addEventListener('click', () => {
     currentTemperature -= 1;
     updateTemperature();
 });
-
-updateTemperature();
-
-// let currentCity = cityNameInput.value;
-
 // Wave 3 
 document.addEventListener("DOMContentLoaded", () => {
     const cityNameInput = document.getElementById('cityNameInput');
     const headerCityName = document.getElementById('headerCityName');
-    const tempValue = document.getElementById("tempValue");
     const currentTempButton = document.getElementById("currentTempButton");
 
     cityNameInput.addEventListener("input", (event) => {
@@ -60,13 +52,44 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 // Wave 4
+    const getRealTimeTemperature = async () => {
+      
+        const cityName = headerCityName.textContent;
+        
+        try {
+            const locationResponse = await axios.get(
+                `http://127.0.0.1:5000/location?q=${cityName}`
+            );
+           
+            const { lat, lon } = locationResponse.data[0];
+           
+            const weatherResponse = await axios.get(
+                `http://127.0.0.1:5000/weather?lat=${lat}&lon=${lon}`
+            );
+            const tempKelvin = weatherResponse.data.main.temp;
 
+            const tempFahrenheit = ((tempKelvin - 273.15) * 1.8) + 32;
+
+            currentTemperature = Math.round(tempFahrenheit);
+            updateTemperature();
+
+        } catch (error) {
+            console.error("Error fetching weather data:", error);
+        }
+    };
+
+    currentTempButton.addEventListener("click", getRealTimeTemperature);
 
 // Wave 6
     const resetButton = document.getElementById('cityNameReset');
     resetButton.addEventListener("click", () => {
         cityNameInput.value = "";
         headerCityName.textContent = "Seattle";
+        currentTemperature = 70;
+        updateTemperature();
     });
+
+    updateTemperature();
 });
+
 
