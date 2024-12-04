@@ -9,12 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/index.css">
-    <link rel="stylesheet" href="../../styles/search_bar.css">
-    <!-- Imports jQuery for search bar -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.11/jquery.autocomplete.min.js"></script>
-    <script src="./src/index.js"></script>
-
 </head>
 
 <body>
@@ -42,155 +36,9 @@
     </section>
 
     <section class="city-name__section">
-        <!-- LocationIQ Autocomplete API form -->
-        <h2 class="result">Address:</h3>
-        <div id="address_box" class="result"></div>
-        <div class="container">
-          <div id="search-box">
-            <div class="locationiq-autocomplete-control locationiq-bounds locationiq-control locationiq-autocomplete-expanded" id="search-box-area">
-              <input class="locationiq-autocomplete-input ui-autocomplete-input" id="search-box-input" title="Search" placeholder="Search for an address...">
-              <a class="locationiq-autocomplete-search-icon"></a>
-              <a class="locationiq-reset-control" id="reset-autocomplete" title="Reset">x</a>
-            </div>
-          </div>
-        </div>
-        <!-- Code for the search bar is written in jQuery -->
-      <script>
-
-//Change this to your access token
-var locationiqKey = process.env.LOCATIONIQ_API_KEY
-
-$('#search-box-input').autocomplete({
-  minChars: 3,
-  deferRequestBy: 250,
-  serviceUrl: 'https://api.locationiq.com/v1/autocomplete',
-  paramName: 'q',
-  params: {
-    // The input parameters to the API goes here
-    key: locationiqKey,
-    format: "json",
-    limit: 5
-  },
-  ajaxSettings: {
-    dataType: 'json'
-  },
-  formatResult: function(suggestion, currentValue) {
-    // Current value is the input query. We can use this to highlight the search phrase in the result
-    var format = "<div class='autocomplete-suggestion-name'>" + highlight(suggestion.data.display_place, currentValue) + "</div>" +
-      "<div class='autocomplete-suggestion-address'>" + highlight(suggestion.data.display_address, currentValue) + "</div>"
-    return format;
-  },
-  transformResult: function(response) {
-    var suggestions = $.map(response, function(dataItem) {
-      return {
-        value: dataItem.display_name,
-        data: dataItem
-      };
-    })
-
-    return {
-      suggestions: suggestions
-    };
-  },
-  onSelect: function(suggestion) {
-    displayUnit(suggestion.value, "address_box");
-    
-  }
-});
-
-// For triggering reset
-$("#reset-autocomplete").click(function() {
-  $('#search-box-input').val("");
-});
-
-//Displays the geocoding response in the "result" div
-function displayUnit(unit_name, domName) {
-  var resultString = unit_name || "";
-  document.getElementById(domName).innerHTML = resultString;
-}
-
-// function displayCountry(country_name) {
-//   var resultString = country_name;
-//   document.getElementById("country_box").innerHTML = resultString;
-// }
-
-function highlight(text, focus) {
-  var r = RegExp('(' + escapeRegExp(focus) + ')', 'gi');
-  return text.replace(r, '<strong>$1</strong>');
-}
-
-function escapeRegExp(str) {
-  return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
-}
-
-      </script>
-        <script type="text/javascript">
-          //Change this to your access token
-          var locationiqKey = "pk.9328ed23e3c9f577b9e37137891f40cc"
-    
-          $('#search-box-input').autocomplete({
-            minChars: 3,
-            deferRequestBy: 250,
-            serviceUrl: 'https://api.locationiq.com/v1/autocomplete',
-            paramName: 'q',
-            params: {
-              // The input parameters to the API goes here
-              key: locationiqKey,
-              format: "json",
-              limit: 5
-            },
-            ajaxSettings: {
-              dataType: 'json'
-            },
-            formatResult: function(suggestion, currentValue) {
-              // Current value is the input query. We can use this to highlight the search phrase in the result
-              var format = "<div class='autocomplete-suggestion-name'>" + highlight(suggestion.data.display_place, currentValue) + "</div>" +
-                "<div class='autocomplete-suggestion-address'>" + highlight(suggestion.data.display_address, currentValue) + "</div>"
-              return format;
-            },
-            transformResult: function(response) {
-              var suggestions = $.map(response, function(dataItem) {
-                return {
-                  value: dataItem.display_name,
-                  data: dataItem
-                };
-              })
-    
-              return {
-                suggestions: suggestions
-              };
-            },
-            onSelect: function(suggestion) {
-              displayUnit(suggestion.value, "address_box");
-              
-            }
-          });
-    
-          // For triggering reset
-          $("#reset-autocomplete").click(function() {
-            $('#search-box-input').val("");
-          });
-    
-          //Displays the geocoding response in the "result" div
-          function displayUnit(unit_name, domName) {
-            var resultString = unit_name || "";
-            document.getElementById(domName).innerHTML = resultString;
-          }
-    
-          // function displayCountry(country_name) {
-          //   var resultString = country_name;
-          //   document.getElementById("country_box").innerHTML = resultString;
-          // }
-    
-          function highlight(text, focus) {
-            var r = RegExp('(' + escapeRegExp(focus) + ')', 'gi');
-            return text.replace(r, '<strong>$1</strong>');
-          }
-    
-          function escapeRegExp(str) {
-            return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
-          }
-        </script>
+        <h2>City Name</h2>
+        <input type="text" id="cityNameInput">
+        <button id="cityNameReset" class="city-name__reset-btn">Reset</button>
     </section>
 
     <section class="garden__section">
@@ -201,5 +49,6 @@ function escapeRegExp(str) {
         </div>
     </section>
     <script src="./node_modules/axios/dist/axios.min.js"></script>
+    <script src="./src/index.js"></script>
 </body>
 </html>
