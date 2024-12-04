@@ -5,6 +5,7 @@ const state = {
   tempValue: 70,
   tempValueColor: 'orange',
   landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
+  sky: 'sunny',
   name: 'Seattle'
 };
 
@@ -30,6 +31,13 @@ const tempProperties = [
     landscape: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲'
   }
 ];
+
+const skyOptions = {
+  'sunny': '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
+  'cloudy': '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️',
+  'rainy': '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧',
+  'snowy': '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨',
+}
 
 // Helper Functions
 
@@ -117,7 +125,16 @@ const updateCityTempDisplay =  () => {
 };
 
 // Wave 5
-
+const changeSky = () =>{
+const selectedSky = document.getElementById('skySelect').value;
+if (skyOptions[selectedSky]) {
+  state.sky = selectedSky
+  const skyDisplay = document.getElementById('skyDisplay');
+  skyDisplay.textContent = skyOptions[state.sky];
+} else {
+  skyDisplay.textContent = '';
+}
+};
 // Wave 6
 const resetCityName = () =>{
   state.name = 'Seattle';
@@ -143,6 +160,9 @@ const registerEventHandlers = () => {
   
   const cityNameInput = document.getElementById("cityNameInput");
   cityNameInput.addEventListener("input", updateCityName);
+
+  const skySelect = document.getElementById('skySelect');
+  skySelect.addEventListener('change', changeSky);
   
   const resetCityNameButton = document.getElementById('cityNameReset')
   resetCityNameButton.addEventListener('click', resetCityName)
@@ -161,3 +181,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 
 
+
+  // Sky emoji options
+  
