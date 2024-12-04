@@ -1,57 +1,37 @@
 
-
-// Notes: 
-// Select all elements you'll need to change: 
-// <span id="increaseTempControl">⬆️</span>
-// <span id="tempValue"></span>
-// <span id="decreaseTempControl">⬇️</span>
-
-// 1. <span id="tempValue"></span> this element should be set equal to variable currentTemp
-//  
-// 2. Add Button & Behavior to <span id="tempValue"></span> & <span id="decreaseTempControl">⬇️</span>
-// 3. 
-// 
-// 
-
 const state = {
-    currentTemp: 0,
-    warmUp: null,
-    coolDown: null,
+  currentTemp: 0,
 };
 
-
-const currentTempValue = () => {
-    const currentTemp = document.getElementById('currentTempButton');
-    currentTemp.textContent = `${state.currentTemp} °F`;
-}
-
-// Calling the function above to display the temperature
-// currentTempValue();
-
-const loadControls = () => {
-    state.warmUp = document.querySelector('increaseTempControl');
-    state.coolDown = document.querySelector('decreaseTempControl');
-
-    // Currently this element <span id="tempValue"></span> is being treated as our container
-    const tempChangeContainer = document.getElementById('tempValue');
+// Function to update the temperature display and apply color changes
+const updateTemperatureDisplay = () => {
+  const tempValueElement = document.getElementById("tempValue");
+  tempValueElement.textContent = `${state.currentTemp} °F`;
 };
 
+// Event handler to increase temperature
+const increaseTemp = () => {
+  state.currentTemp += 1;
+  updateTemperatureDisplay();
+};
+
+// Event handler to decrease temperature
+const decreaseTemp = () => {
+  state.currentTemp -= 1;
+  updateTemperatureDisplay();
+};
+
+// Register event handlers for temperature controls
 const registerEventHandlers = () => {
-    loadControls();
-    state.warmUp.addEventListener('click', increaseTemp);
-    state.coolDown.addEventListener('click', decreaseTemp);
+  const warmUpButton = document.getElementById("increaseTempControl");
+  const coolDownButton = document.getElementById("decreaseTempControl");
+
+  warmUpButton.addEventListener("click", increaseTemp);
+  coolDownButton.addEventListener("click", decreaseTemp);
+
+  // Initialize the temperature display
+  updateTemperatureDisplay();
 };
 
-const increaseTemp = (event) => {
-    state.currentTemp += 1;
-    currentTempValue();
-    
-};
-
-const decreaseTemp = (event) => {
-    state.currentTemp -= 1;
-    currentTempValue();
-    
-};
-
-document.addEventListener('DOMContentLoaded', registerEventHandlers);
+// Initialize the application when DOM content is loaded
+document.addEventListener("DOMContentLoaded", registerEventHandlers);
