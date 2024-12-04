@@ -30,12 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       try {
-        // Step 1: Get latitude and longitude from the proxy server
         const locationResponse = await axios.get(`${PROXY_URL}/location`, {
           params: { q: city }
         });
-
-        console.log("Location Response:", locationResponse.data);
 
         if (!locationResponse.data || locationResponse.data.length === 0) {
           alert('Unable to find location.');
@@ -43,16 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const { lat, lon } = locationResponse.data[0];
-
-        // Step 2: Get weather data from the proxy server using latitude and longitude
         const weatherResponse = await axios.get(`${PROXY_URL}/weather`, {
           params: { lat: lat, lon: lon }
         });
 
-        console.log("Weather Response:", weatherResponse.data);
-
         if (weatherResponse.data && weatherResponse.data.main) {
-          // Convert temperature from Kelvin to Fahrenheit
+       
           const kelvinTemp = weatherResponse.data.main.temp;
           temperature = Math.round((kelvinTemp - 273.15) * 9/5 + 32);
           updateDisplay();
