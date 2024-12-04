@@ -107,7 +107,7 @@ const updateCityName = () => {
 };
 
 // Wave 4
-const getDisplayCityCoords = () =>{
+const getCityCoords = () =>{
   const city = state.name;
   return axios
     .get('http://127.0.0.1:5000/location', {params:{q: city}})
@@ -118,10 +118,10 @@ const getDisplayCityCoords = () =>{
       };
       return results;
     })
-    .catch((error) => console.log('getDisplayCityCoords error: ', error.status));
+    .catch((error) => console.log('getCityCoords error: ', error.status));
 }
 
-const getDisplayCityTemp = (coordObject) =>{
+const getCityTemp = (coordObject) =>{
   return axios
     .get ('http://127.0.0.1:5000/weather?', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
     .then((response)=>{
@@ -129,15 +129,15 @@ const getDisplayCityTemp = (coordObject) =>{
       const tempF = (tempK - 273.15) * 1.8 + 32;
       return tempF.toFixed(0);
     })
-    .catch((error) => console.log('getDisplayCityTemp error: ', error.status));
+    .catch((error) => console.log('getCityTemp error: ', error.status));
     ;
 };
 
 
-const updateDisplayCityTemp =  () => {
-  getDisplayCityCoords()
+const updateCityTempDisplay =  () => {
+  getCityCoords()
     .then( (coordList) => {
-      return getDisplayCityTemp(coordList);
+      return getCityTemp(coordList);
     })
     .then((currentTemp) =>{
       state.tempValue = parseInt(currentTemp)
@@ -170,7 +170,7 @@ const registerEventHandlers = () => {
   decreaseTempButton.addEventListener("click", decreaseTemp);
   
   const getCurrentTempButton = document.getElementById('currentTempButton');
-  getCurrentTempButton.addEventListener('click', updateDisplayCityTemp);
+  getCurrentTempButton.addEventListener('click', updateCityTempDisplay);
   
   const cityNameInput = document.getElementById("cityNameInput");
   cityNameInput.addEventListener("input", updateCityName);
@@ -183,7 +183,7 @@ const registerEventHandlers = () => {
 
 const initializeSite = () =>{
   resetCityName();
-  updateDisplayCityTemp();
+  updateCityTempDisplay();
 };
 
 document.addEventListener("DOMContentLoaded", ()=>{
