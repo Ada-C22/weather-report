@@ -53,22 +53,47 @@ const updateCityName = () => {
 };
 
 // fnc that runs when user clicks get realtime temp button
-const getCurrentTemp = () => {
+const getCityInfoToTemp = () => {
+    let lat, lon;
+    axios
+        .get("http://127.0.0.1:5000/location", {
+            params: {
+                q: state.cityName,    
+            },
+        })
+        .then((response) => {
+            lat = response.data[0].lat;
+            lon = response.data[0].lon;
+            console.log("success getting lat and lon!", lat, lon);
 
-    // axios
-    // .get("/location", {
-    //     params : {
-    //         q: state.cityName,
-    //         format: "json",
-    //     }, 
-    // })
-    // .then((response) => {
-    //     console.log("success!", response.data)
-    // })
-    // .catch((error) => {
-    //     console.log('failed!', error.response.data)
-    // })
+            return getCityTemp(lat, lon);
+
+        })
+        .catch((error) => {
+            console.log('failed getting lat and lon!', error.response.data);
+        })
 };
+
+const getCityTemp = (lat, lon) => {
+    axios
+      .get("http://127.0.0.1:5000/weather", {
+        params: {
+          lat: lat,
+          lon: lon,
+        }
+      })
+      .then((response) => {
+        let tempK = response.data.main.temp
+        let tempF = Math.round((tempK - 273.15) * 1.8 + 32)
+        console.log('success getting temp!', tempF)
+        
+        state.temperature = tempF
+        changeTemp()
+      })
+      .catch((error) => {
+        console.log("failed getting temp!", error.response.data)
+      });
+}
 
 // register the buttons and their respective listener + function
 const registerEventHandlers = () => {
@@ -85,7 +110,7 @@ const registerEventHandlers = () => {
     searchBar.addEventListener("input", updateCityName);
 
     const currentTempButton = document.querySelector("#currentTempButton");
-    currentTempButton.addEventListener("click", getCurrentTemp)
+    currentTempButton.addEventListener("click", getCityInfoToTemp)
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers)
