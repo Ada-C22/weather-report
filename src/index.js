@@ -104,10 +104,8 @@ const updateCityName = () => {
 }
 
 const skyGardenDisplay = () => {
-    // console.log("working?")
     skySection.classList.remove("sunny", "cloudy", "rainy", "snowy");
     const selectedText = skySelect.value
-    // console.log(`${selectedText}, "text"`)
 
     if (selectedText === 'sunny') {
         sky.innerHTML = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
@@ -132,7 +130,6 @@ const registerEventHandlers = () => {
     const currentTemperatureButton =  document.getElementById('currentTempButton');
     currentTemperatureButton.addEventListener("click", getCurrentTemperature)
 
-    // id = skySelect
     skySelect.addEventListener('change', skyGardenDisplay);
 
 };
