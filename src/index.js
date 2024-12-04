@@ -31,31 +31,6 @@ const tempProperties = [
   }
 ];
 
-
-
-// {
-//   80: {
-//     color: 'red',
-//     landscape: '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂'
-//   },
-//   70: {
-//     color: 'orange',
-//     landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷'
-//   },
-//   60: {
-//     color: 'yellow',
-//     landscape: '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃'
-//   },
-//   50: {
-//     color: 'green',
-//     landscape: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲' 
-//   },
-//   49: {
-//     color: 'teal',
-//     landscape: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲'
-//   }
-// }
-
 // Helper Functions
 
 //Wave 2
@@ -166,8 +141,7 @@ const updateDisplayCityTemp =  () => {
     })
     .then((currentTemp) =>{
       state.tempValue = parseInt(currentTemp)
-      const temp = document.getElementById('tempValue');
-      temp.textContent = state.tempValue;
+      document.getElementById('tempValue').textContent = state.tempValue;
       changeTempValueColor();
       changeLandscape();
     });
@@ -178,7 +152,8 @@ const updateDisplayCityTemp =  () => {
 // Wave 6
 const resetCityName = () =>{
   state.name = 'Seattle';
-  const headerCityName = document.getElementById('headerCityName')
+  const headerCityName = document.getElementById('headerCityName');
+
   headerCityName.textContent = state.name;
   cityNameInput.value = "";
 };
