@@ -71,11 +71,12 @@ const resetCityNameInput = () => {
 };
 
 const findTemperature = (coordinates) => {
+  console.log(coordinates)
   return axios
     .get("http://127.0.0.1:5000/weather", {
       params: {
-        lat: coordinates.latitude,
-        lon: coordinates.longitude,
+        lat: coordinates.lat,
+        lon: coordinates.lon,
       },
     })
     .then((response) => {
