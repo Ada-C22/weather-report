@@ -5,6 +5,8 @@ const state = {
 const tempValue = document.getElementById('tempValue')
 const gardenSection = document.querySelector('.garden__section ');
 const landscape = document.getElementById('landscape')
+const cityNameInput = document.getElementById('cityNameInput');
+const headerCityName = document.getElementById('headerCityName');
 
 const temperatureIncrease= () => {
     state.temperature += 1
@@ -55,6 +57,11 @@ const weatherGardenDisplay = () => {
     }
 }
 
+const updateCityName = () => {
+    const cityInputValue = cityNameInput.value;
+    headerCityName.textContent = cityInputValue
+}
+
 const registerEventHandlers = () => {
     //whatever function is updating UI
     const increaseButton = document.getElementById('increaseButton');
@@ -62,6 +69,8 @@ const registerEventHandlers = () => {
 
     const decreaseButton = document.getElementById('decreaseButton');
     decreaseButton.addEventListener("click",temperatureDecrease);
+
+    cityNameInput.addEventListener('input', updateCityName);
 };
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
 
