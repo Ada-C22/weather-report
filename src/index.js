@@ -8,9 +8,10 @@ let temperature = 70;
 
 const tempValueElement = document.getElementById("tempValue");
 const landscapeElement = document.getElementById("landscape");
-const cityNameInput = document.getElementById("cityNameInput");
-const headerCityName = document.getElementById("headerCityName");
-const cityNameReset = document.getElementById("cityNameReset");
+const cityNameInput = document.getElementById('cityNameInput');
+const headerCityName = document.getElementById('headerCityName');
+const cityNameReset = document.getElementById('cityNameReset');
+const cityForcastButton = document.getElementById('cityForcastButton');
 
 
 const updateTemperature = () => {
@@ -65,3 +66,41 @@ cityNameReset.addEventListener('click', () => {
   headerCityName.textContent = '';
   cityNameInput.value = '';
 });
+
+const kelvinToFarenheit = (kelvin) => {
+  return (kelvin - 273.15) * 9/5 + 32
+}
+
+cityForcastButton.addEventListener('click', () => {
+  const search = cityNameInput.value;
+  const locationIQURL = `http://127.0.0.1:5000/location`;
+  axios
+  .get(locationIQURL, {
+    params: {
+      q: search
+    }
+  })
+  .then((response) => {
+    // Code that executes with a successful response goes here
+    const lat = response.data[0].lat;
+    const lon = response.data[0].lon;
+    const openWeartherURL = `http://127.0.0.1:5000/weather`;
+    axios
+    .get(openWeartherURL, {
+      params: {
+        lat: lat,
+        lon: lon
+      }
+    })
+    .then((response) => {
+      const temperature = kelvinToFarenheit(response.data.main.temp).toFixed(2);
+      tempValueElement.innerText = temperature;
+    })
+  }
+)
+  .catch((error) => {
+    // Code that executes with an unsuccessful response goes here
+    console.log((error));
+  });
+})
+  
