@@ -15,6 +15,8 @@
 
 const state = {
     currentTemp: 0,
+    warmUp: null,
+    coolDown: null,
 };
 
 
@@ -23,32 +25,33 @@ const currentTempValue = () => {
     currentTemp.textContent = `${state.currentTemp} °F`;
 }
 
-currentTempValue();
+// Calling the function above to display the temperature
+// currentTempValue();
 
 const loadControls = () => {
-
-};
-
-const registerEventHandlers = () => {
-    const warmUp = document.querySelector('increaseTempControl');
-    warmUp.addEventListener("click", increaseTemp);
-};
-
-const increaseTemp = () => {
-    const warmUp = document.querySelector('increaseTempControl');
+    state.warmUp = document.querySelector('increaseTempControl');
+    state.coolDown = document.querySelector('decreaseTempControl');
 
     // Currently this element <span id="tempValue"></span> is being treated as our container
     const tempChangeContainer = document.getElementById('tempValue');
-    state.currentTemp += 1;
-
 };
 
-const decreaseTemp = () => {
-    const coolDown = document.querySelector('decreaseTempControl');
-    const tempChangeContainer = document.getElementById('tempValue');
+const registerEventHandlers = () => {
+    loadControls();
+    state.warmUp.addEventListener('click', increaseTemp);
+    state.coolDown.addEventListener('click', decreaseTemp);
+};
 
+const increaseTemp = (event) => {
+    state.currentTemp += 1;
+    currentTempValue();
+    
+};
 
+const decreaseTemp = (event) => {
     state.currentTemp -= 1;
+    currentTempValue();
+    
 };
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
