@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cityDisplay = document.getElementById('headerCityName');
     const cityInput = document.getElementById('cityNameInput');
     const getTempButton = document.getElementById('currentTempButton');
+    const skySelect = document.getElementById("skySelect");
+    const sky = document.getElementById("sky");
 
     cityDisplay.textContent = "Miami";
     cityInput.addEventListener('input', () => {
@@ -97,18 +99,40 @@ document.addEventListener('DOMContentLoaded', () => {
           "▓▓▓▓▓▓▓▓▓\n";
       }
     };
-  
+
+    function updateSky() {
+      sky.textContent = "";
+      const skyValue = skySelect.value;
+
+      if (skyValue === "sunny") {
+        sky.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️" 
+      } 
+      else if (skyValue === "cloudy") {
+        sky.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️"
+      } 
+      else if (skyValue === "rainy") {
+        sky.textContent = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧" 
+      } 
+      else if (skyValue === "snowy") {
+        sky.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨"
+      } 
+    };
+
+    skySelect.addEventListener("change", updateSky);
+
+    
     increaseTempButton.addEventListener('click', () => {
       temperature++;
       updateDisplay();
     });
-  
+
     decreaseTempButton.addEventListener('click', () => {
       temperature--;
       updateDisplay();
     });
-  
+
     getTempButton.addEventListener('click', getRealTimeTemperature);
-  
+
     updateDisplay();
+    updateSky();
   });  
