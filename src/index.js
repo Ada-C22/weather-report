@@ -2,6 +2,7 @@
 
 const state = {
   tempCount: 70,
+  cityNameInput: null,
 };
 
 const findLatitudeAndLongitude = (city) => {
@@ -26,6 +27,24 @@ const findLatitudeAndLongitude = (city) => {
     seattleLat: latitude,
     seattleLon: longitude,
   };
+};
+
+const findLocation = (latitude, longitude) => {
+  axios
+    .get("http://127.0.0.1:5000/weather", {
+      params: {
+        format: "json",
+        lat: latitude,
+        lon: longitude,
+      },
+    })
+    .then((response) => {
+      console.log("success in findLocation!", response.data);
+      return response.data;
+    })
+    .catch((error) => {
+      console.log("error in findLocation!");
+    });
 };
 
 const updateDecreaseTempCount = () => {
@@ -91,29 +110,31 @@ const updateLandscape = () => {
     landscapeContainer.appendChild(newLandscape);
 }
 
-const loadControls = () => {
-  const decreaseTemp = document.getElementById("decreaseTempControl");
-  const increaseTemp = document.getElementById("increaseTempControl");
-}
+const updateCityNameInput = () => {
+  const cityNameInput = document.getElementById("cityNameInput");
+  const headerCityName = document.getElementById("headerCityName");
+  headerCityName.textContent = cityNameInput.value;
+};
+
+const resetCityNameInput = () => {
+  const cityNameReset = document.getElementById("cityNameReset");
+  cityNameInput.value = "";
+  headerCityName.textContent = "";
+};
+
+// const loadControls = () => {
+//   const decreaseTemp = document.getElementById("decreaseTempControl");
+//   const increaseTemp = document.getElementById("increaseTempControl");
+// }
 
 const registerEventHandlers = () => {
-  loadControls();
-  // const decreaseTemp = document.getElementById('decreaseTempControl');
-  // const increaseTemp = document.getElementById('increaseTempControl');
+  // loadControls();
+  const decreaseTemp = document.getElementById('decreaseTempControl');
+  const increaseTemp = document.getElementById('increaseTempControl');
   decreaseTemp.addEventListener('click', updateDecreaseTempCount);
   increaseTemp.addEventListener('click', updateIncreaseTempCount);
-
-  cityNameInput.addEventListener("input", () => {
-    const cityNameInput = document.getElementById("cityNameInput");
-    const headerCityName = document.getElementById("headerCityName");
-    headerCityName.textContent = cityNameInput.value;
-  });
-
-  cityNameReset.addEventListener("click", () => {
-    const cityNameReset = document.getElementById("cityNameReset");
-    cityNameInput.value = "";
-    headerCityName.textContent = "";
-  });
+  cityNameInput.addEventListener("input", updateCityNameInput);
+  cityNameReset.addEventListener("click", resetCityNameInput);
 
   updateTempBackgroundColor();
   updateLandscape();
