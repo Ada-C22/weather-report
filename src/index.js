@@ -1,6 +1,9 @@
 const state = {
-  currentTemp: 72,
+  currentTemp: 39,
+  cityName: "Seattle",
 };
+
+/*********** Wave 2 ***********/
 
 // Function to update the temperature display and apply color changes
 const updateTemperatureDisplay = () => {
@@ -26,23 +29,6 @@ const updateTemperatureDisplay = () => {
   }
 };
 
-// Function to update the temperature Color and Landscape
-
-// const designTemp = () => {
-//   const tempValueElement = document.getElementById("tempValue");
-//   const landscape = document.getElementById("landscape");
-//   tempValueElement.textContent = `${state.currentTemp} °F`;
-
-//   if (state.currentTemp >= 80) {
-//     tempValueElement.style.color = "red";
-//   } else if (state.currentTemp >= 70) {
-//     tempValueElement.style.color = "orange";
-//   } else if (state.currentTemp >= 70) {
-//     tempValueElement.style.color = "orange";
-//   }
-
-// };
-
 // Event handler to increase temperature
 const increaseTemp = () => {
   state.currentTemp += 1;
@@ -55,13 +41,34 @@ const decreaseTemp = () => {
   updateTemperatureDisplay();
 };
 
-// Register event handlers for temperature controls
+/************ Wave 3 ************/
+
+const retrieveInput = () => {
+    
+
+};
+
+const updateCityName = () => {
+  const currentCity = document.getElementById("headerCityName");
+  state.cityName = 
+
+};
+
+// // Register eent handlers for temperature controls
 const registerEventHandlers = () => {
+  /** Wave 2 events **/
   const warmUpButton = document.getElementById("increaseTempControl");
   const coolDownButton = document.getElementById("decreaseTempControl");
 
   warmUpButton.addEventListener("click", increaseTemp);
   coolDownButton.addEventListener("click", decreaseTemp);
+
+  /** Wave 3 events **/
+  const cityNameInput = document.getElementById("cityNameInput");
+  const resetButton = document.getElementById("cityNameReset");
+
+  cityNameInput.addEventListener("input", retrieveInput);
+  resetButton.addEventListener("click", updateCityName);
 
   // Initialize the temperature display
   updateTemperatureDisplay();
