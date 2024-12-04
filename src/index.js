@@ -23,51 +23,40 @@ document.addEventListener("DOMContentLoaded", () => {
     let temp = 80;
     tempValue.textContent = `${temp}°F`;
 
-    // controls temperature text color
-    const updateTemperatureColor = () => {
+    // updates temperature text color and weather garden landscape
+    const updateWeatherDisplay = () => {
         if (temp >= 80) {
             tempValue.style.color = "red";
-        } else if (temp >= 70) {
-            tempValue.style.color = "orange";
-        } else if (temp >= 60) {
-            tempValue.style.color = "yellow";
-        } else if (temp >= 50) {
-            tempValue.style.color = "green";
-        } else {
-            tempValue.style.color = "teal";
-        }
-    };
-
-    // controls weather garden landscape
-    const updateLandscape = () => {
-        if (temp >= 80) {
             landscape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
         } else if (temp >= 70) {
+            tempValue.style.color = "orange";
             landscape.textContent = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
         } else if (temp >= 60) {
+            tempValue.style.color = "yellow";
             landscape.textContent = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
+        } else if (temp >= 50) {
+            tempValue.style.color = "green";
+            landscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
         } else {
+            tempValue.style.color = "teal";
             landscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
         }
     };
 
-    updateTemperatureColor();
-    updateLandscape();
+    updateWeatherDisplay();
 
     // controls temperature increase
     increaseTempControl.addEventListener("click", () => {
         temp += 1;
         tempValue.textContent = `${temp}°F`;
-        updateTemperatureColor();
-        updateLandscape();
+        updateWeatherDisplay();
     });
 
     // controls temperature decrease
     decreaseTempControl.addEventListener("click", () => {
         temp -= 1;
         tempValue.textContent = `${temp}°F`;
-        updateTemperatureColor();
-        updateLandscape();
+        updateWeatherDisplay();
     });
 });
 
