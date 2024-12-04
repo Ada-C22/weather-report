@@ -97,15 +97,16 @@ const resetCityName = () => {
     const defaultCity = 'Seattle';
     const cityName = document.getElementById("cityNameInput");
     const headerCityName = document.getElementById("headerCityName")
-    cityNameInput.value = defaultCity;
+    cityName.value = defaultCity;
     headerCityName.textContent = defaultCity;
     findLatitudeAndLongitude(defaultCity);
 };
 
 const changeCityName = () => {
     const cityName = document.getElementById("cityNameInput").value;
-    document.getElementById("headerCityName").textContent = cityName;
-    findLatitudeAndLongitude(defaultCity);
+    const headerCityName = document.getElementById("headerCityName");
+    headerCityName.textContent = cityName;
+    findLatitudeAndLongitude(cityName);
 };
 
 const registerEventHandlers = () => {
@@ -117,6 +118,9 @@ const registerEventHandlers = () => {
 
     const cityResetButton = document.getElementById("cityNameReset");
     cityResetButton.addEventListener("click", resetCityName);
+
+    const cityNameInput = document.getElementById("cityNameInput");
+    cityNameInput.addEventListener("click", changeCityName);
 
     const updateTempButton = document.getElementById('currentTempButton');
     updateTempButton.addEventListener('click', findLatitudeAndLongitude);
