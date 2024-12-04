@@ -67,7 +67,8 @@ const findLatitudeAndLongitude = () => {
         .then((response) => {
             latitude = response.data[0].lat;
             longitude = response.data[0].lon;
-            findWeather(latitude, longitude);
+            const temp = findWeather(latitude, longitude);
+            changeColorAndLandscape(temp)
         })
         .catch((error) => {
             console.log('error in findLatitudeAndLongitude!');
@@ -94,7 +95,13 @@ const findWeather = (latitude, longitude) => {
 
 const changeCityName = () => {
     const cityName = document.getElementById("cityNameInput").value;
+    const defaultCity = 'Seattle';
+    if (cityName === '') {
+        document.getElementById("headerCityName").textContent = defaultCity;
+    } else {
     document.getElementById("headerCityName").textContent = cityName;
+    };
+
 };
 
 const registerEventHandlers = () => {
@@ -114,4 +121,7 @@ const registerEventHandlers = () => {
     skySelect.addEventListener("change", updateSky);
 };
 
+
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
+document.addEventListener("DOMContentLoaded", changeCityName);
+document.addEventListener("DOMContentLoaded", findLatitudeAndLongitude);
