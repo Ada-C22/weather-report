@@ -67,11 +67,11 @@ const findLatitudeAndLongitude = () => {
         .then((response) => {
             latitude = response.data[0].lat;
             longitude = response.data[0].lon;
-            const temp = findWeather(latitude, longitude);
-            changeColorAndLandscape(temp)
+            findWeather(latitude, longitude);
+            changeColorAndLandscape(state.curTemp)
         })
         .catch((error) => {
-            console.log('error in findLatitudeAndLongitude!');
+            console.log('error in testfindLatitudeAndLongitude!');
         });
 }
 
@@ -85,6 +85,7 @@ const findWeather = (latitude, longitude) => {
             state.curTemp = fahrenheitTemp;
             const temp = document.getElementById("tempValue");
             temp.textContent = state.curTemp;
+            
         })
 
         .catch((error) => {
@@ -92,16 +93,19 @@ const findWeather = (latitude, longitude) => {
         });
 }
 
+const resetCityName = () => {
+    const defaultCity = 'Seattle';
+    const cityName = document.getElementById("cityNameInput");
+    const headerCityName = document.getElementById("headerCityName")
+    cityNameInput.value = defaultCity;
+    headerCityName.textContent = defaultCity;
+    findLatitudeAndLongitude(defaultCity);
+};
 
 const changeCityName = () => {
     const cityName = document.getElementById("cityNameInput").value;
-    const defaultCity = 'Seattle';
-    if (cityName === '') {
-        document.getElementById("headerCityName").textContent = defaultCity;
-    } else {
     document.getElementById("headerCityName").textContent = cityName;
-    };
-
+    findLatitudeAndLongitude(defaultCity);
 };
 
 const registerEventHandlers = () => {
@@ -112,7 +116,7 @@ const registerEventHandlers = () => {
     decreaseButton.addEventListener("click", decreaseTemp);
 
     const cityResetButton = document.getElementById("cityNameReset");
-    cityResetButton.addEventListener("click", changeCityName);
+    cityResetButton.addEventListener("click", resetCityName);
 
     const updateTempButton = document.getElementById('currentTempButton');
     updateTempButton.addEventListener('click', findLatitudeAndLongitude);
@@ -123,5 +127,4 @@ const registerEventHandlers = () => {
 
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
-document.addEventListener("DOMContentLoaded", changeCityName);
-document.addEventListener("DOMContentLoaded", findLatitudeAndLongitude);
+document.addEventListener("DOMContentLoaded", resetCityName);
