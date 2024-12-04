@@ -124,26 +124,42 @@ const getCityWeatherData = (coordObject) =>{
   return axios
     .get ('http://127.0.0.1:5000/weather', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
     .then((response)=>{
-      state.weather = response.data.weather.main;
-      state.weatherIconCode = response.data.weather.icon;
-      state.weatherConditionCode = response.data.weather.id;
       const tempK = response.data.main.temp;
       const tempF = (tempK - 273.15) * 1.8 + 32;
-      state.realTempValue = parseInt(tempF.toFixed(0));
-      return state.realTempValue
+      const weatherData ={
+        tempF: parseInt(tempF.toFixed(0)),
+        weather: response.data.weather.main,
+        weatherIconCode:  response.data.weather.icon,
+        weatherConditionCode: response.data.weather.id,
+      }
+      return weatherData
     })
     .catch((error) => console.log('getCityWeatherData error: ', error.status));
     ;
+  };
+  
+  
+  const getCityData =  () => {
+    return getCityCoords()
+    .then( (coordList) => {
+      return getCityWeatherData(coordList);
+    })
+  };
+  
+
+const updateState = (data) =>{
+  state.weather = data.weather
+  state.weatherConditionCode = data.weatherConditionCode
+  state.weatherIconCode = data.weatherIconCode
+  state.realTempValue = data.tempF
 };
 
-
-const updateCityTempDisplay =  () => {
-  getCityCoords()
-  .then( (coordList) => {
-    return getCityWeatherData(coordList);
-  })
-  .then(() =>{
-    document.getElementById('realTempValue').textContent = state.realTempValue;
+const updateCityTempDisplay = () =>{
+  getCityData()
+  .then((data) =>{
+    updateState(data);
+    let temp = data.tempF
+    document.getElementById('realTempValue').textContent = temp;
     changeRealTempValueColor();
   });
 };
