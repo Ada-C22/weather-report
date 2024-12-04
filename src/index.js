@@ -127,10 +127,10 @@ const getCityWeatherData = (coordObject) =>{
       const tempK = response.data.main.temp;
       const tempF = (tempK - 273.15) * 1.8 + 32;
       const weatherData ={
-        tempF: parseInt(tempF.toFixed(0)),
-        weather: response.data.weather.main,
-        weatherIconCode:  response.data.weather.icon,
-        weatherConditionCode: response.data.weather.id,
+        realTempValue: parseInt(tempF.toFixed(0)),
+        weather: response.data.weather[0].main,
+        weatherIconCode:  response.data.weather[0].icon,
+        weatherConditionCode: response.data.weather[0].id,
       }
       return weatherData
     })
@@ -148,17 +148,22 @@ const getCityWeatherData = (coordObject) =>{
   
 
 const updateState = (data) =>{
-  state.weather = data.weather
-  state.weatherConditionCode = data.weatherConditionCode
-  state.weatherIconCode = data.weatherIconCode
-  state.realTempValue = data.tempF
+  // state.weather = data.weather
+  // state.weatherConditionCode = data.weatherConditionCode
+  // state.weatherIconCode = data.weatherIconCode
+  // state.realTempValue = data.realTempValue
+
+  for (let key of Object.keys(data)){
+    state[key] = data[key]
+  }
+
 };
 
 const updateCityTempDisplay = () =>{
   getCityData()
   .then((data) =>{
     updateState(data);
-    let temp = data.tempF
+    let temp = data.realTempValue
     document.getElementById('realTempValue').textContent = temp;
     changeRealTempValueColor();
   });
