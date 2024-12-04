@@ -47,22 +47,26 @@ updateTemperature();
 
 // let currentCity = cityNameInput.value;
 
-// Wave 3
-
+// Wave 3 
 document.addEventListener("DOMContentLoaded", () => {
     const cityNameInput = document.getElementById('cityNameInput');
     const headerCityName = document.getElementById('headerCityName');
+    const tempValue = document.getElementById("tempValue");
+    const currentTempButton = document.getElementById("currentTempButton");
 
-    cityNameInput.addEventListener("input", (updateValue) => {
+    cityNameInput.addEventListener("input", (event) => {
         const newCityName = event.target.value;
         headerCityName.textContent = newCityName;
     });
+
+// Wave 4
+
+
+// Wave 6
     const resetButton = document.getElementById('cityNameReset');
     resetButton.addEventListener("click", () => {
         cityNameInput.value = "";
         headerCityName.textContent = "Seattle";
     });
 });
-
-
 
