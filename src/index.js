@@ -43,7 +43,6 @@ const decreaseTemp = () => {
   updateTemperatureDisplay();
 };
 
-
 /************************/
 /******* Wave 3 *********/
 /************************/
@@ -59,7 +58,7 @@ const updateCityName = () => {
   currentCity.textContent = state.cityName;
 };
 
-// // Register eent handlers for temperature controls
+// // Register event handlers for temperature controls
 const registerEventHandlers = () => {
   /** Wave 2 events **/
   const warmUpButton = document.getElementById("increaseTempControl");
@@ -77,7 +76,36 @@ const registerEventHandlers = () => {
 
   // Initialize the temperature display
   updateTemperatureDisplay();
+  updateSky();
 };
 
 // Initialize the application when DOM content is loaded
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
+
+/************************/
+/******* Wave 4 *********/
+/************************/
+
+/************************/
+/******* Wave 5 *********/
+/************************/
+
+const skyOptions = {
+  sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
+  cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
+  rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
+  snowy: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨",
+};
+
+// Function to update the sky display
+const updateSky = () => {
+  const skySelect = document.getElementById("skySelect");
+  const skyDisplay = document.getElementById("sky");
+
+  // Get the selected option value
+  const selectedSky = skySelect.value;
+
+  // Update the sky display
+  skyDisplay.textContent = skyOptions[selectedSky];
+  skySelect.addEventListener("change", updateSky);
+};
