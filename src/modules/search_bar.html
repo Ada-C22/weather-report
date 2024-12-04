@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="../../styles/search_bar.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.11/jquery.autocomplete.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div id="search-box">
+        <div class="locationiq-autocomplete-control locationiq-bounds locationiq-control locationiq-autocomplete-expanded" id="search-box-area">
+          <input class="locationiq-autocomplete-input ui-autocomplete-input" id="search-box-input" title="Search" placeholder="Search for an address...">
+          <a class="locationiq-autocomplete-search-icon"></a>
+          <a class="locationiq-reset-control" id="reset-autocomplete" title="Reset">x</a>
+        </div>
+      </div>
+      <h3 class="result">City:</h3>
+      <div id="city_box" class="result"></div>
+      <br>
+      <h3 class="result">Country:</h3>
+      <div id="country_box" class="result"></div>
+    </div>
+    <script type="text/javascript">
+      //Change this to your access token
+      var locationiqKey = "pk.9328ed23e3c9f577b9e37137891f40cc"
+
+      $('#search-box-input').autocomplete({
+        minChars: 3,
+        deferRequestBy: 250,
+        serviceUrl: 'https://api.locationiq.com/v1/autocomplete',
+        paramName: 'q',
+        params: {
+          // The input parameters to the API goes here
+          key: locationiqKey,
+          format: "json",
+          limit: 5
+        },
+        ajaxSettings: {
+          dataType: 'json'
+        },
+        formatResult: function(suggestion, currentValue) {
+          // Current value is the input query. We can use this to highlight the search phrase in the result
+          var format = "<div class='autocomplete-suggestion-name'>" + highlight(suggestion.data.display_place, currentValue) + "</div>" +
+            "<div class='autocomplete-suggestion-address'>" + highlight(suggestion.data.display_address, currentValue) + "</div>"
+          return format;
+        },
+        transformResult: function(response) {
+          var suggestions = $.map(response, function(dataItem) {
+            return {
+              value: dataItem.display_name,
+              data: dataItem
+            };
+          })
+
+          return {
+            suggestions: suggestions
+          };
+        },
+        onSelect: function(suggestion) {
+          displayCity(suggestion.data.address.city);
+          displayCountry(suggestion.data.address.country);
+        }
+      });
+
+      // For triggering reset
+      $("#reset-autocomplete").click(function() {
+        $('#search-box-input').val("");
+      });
+
+      //Displays the geocoding response in the "result" div
+      function displayCity(city_name) {
+        var resultString = city_name;
+        document.getElementById("city_box").innerHTML = resultString;
+      }
+
+      function displayCountry(country_name) {
+        var resultString = country_name;
+        document.getElementById("country_box").innerHTML = resultString;
+      }
+
+      function highlight(text, focus) {
+        var r = RegExp('(' + escapeRegExp(focus) + ')', 'gi');
+        return text.replace(r, '<strong>$1</strong>');
+      }
+
+      function escapeRegExp(str) {
+        return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+      }
+    </script>
+  </body>
+</html>
