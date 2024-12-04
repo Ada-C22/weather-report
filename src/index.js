@@ -1,16 +1,5 @@
 
 
-const state = {
-    currentTemp: 0,
-};
-
-
-const currentTempDisplay = () {
-    let currentTemp = 0;
-    const tempDisplay = document.getElementById('currentTempButton');
-    tempDisplay.textContent = `${currentTemp} °F`;
-};
-
 // Notes: 
 // Select all elements you'll need to change: 
 // <span id="increaseTempControl">⬆️</span>
@@ -24,10 +13,21 @@ const currentTempDisplay = () {
 // 
 // 
 
-// const currentTempValue = () => {
-//     const currentTemp = document.getElementById('tempValue');
-//     currentTemp.textContent = `${currentTemp} °F`;
-// }
+const state = {
+    currentTemp: 0,
+};
+
+
+const currentTempValue = () => {
+    const currentTemp = document.getElementById('currentTempButton');
+    currentTemp.textContent = `${state.currentTemp} °F`;
+}
+
+currentTempValue();
+
+const loadControls = () => {
+
+};
 
 const registerEventHandlers = () => {
     const warmUp = document.querySelector('increaseTempControl');
@@ -45,6 +45,10 @@ const increaseTemp = () => {
 
 const decreaseTemp = () => {
     const coolDown = document.querySelector('decreaseTempControl');
+    const tempChangeContainer = document.getElementById('tempValue');
+
+
+    state.currentTemp -= 1;
 };
 
-
+document.addEventListener('DOMContentLoaded', registerEventHandlers);
