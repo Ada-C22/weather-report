@@ -1,0 +1,35 @@
+{
+  "name": "weather-report",
+  "version": "1.0.0",
+  "description": "## Skills Assessed",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npm run test",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aneesquateja/weather-report.git"
+  },
+  "author": "Tatiana Trofimova, Anees Quateja",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aneesquateja/weather-report/issues"
+  },
+  "homepage": "https://github.com/aneesquateja/weather-report#readme",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.1.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.16.0",
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-react": "^7.37.2",
+    "globals": "^15.13.0"
+  }
+}
