@@ -180,7 +180,4 @@ document.addEventListener("DOMContentLoaded", ()=>{
   initializeSite();
 });
 
-
-
-  // Sky emoji options
   
