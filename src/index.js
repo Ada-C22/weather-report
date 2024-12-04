@@ -1,11 +1,11 @@
 // const axios = require('axios');
 const state = {
-    city: 'Seattle',  // Default city
-    temperature: 0     // Start with a temperature value of 0
+    city: 'Seattle',  
+    temperature: 0     
 };
 
 const getCurrentTemperature = () => {
-    const cityName = cityNameInput.value || 'Seattle';  // Default to 'Seattle' if no city is provided
+    const cityName = cityNameInput.value || 'Seattle';  
 
     // Fetch latitude and longitude for the city
     axios
@@ -13,11 +13,10 @@ const getCurrentTemperature = () => {
             params: { q: cityName }
         })
         .then(response => {
-            const { lat, lon } = response.data[0];  // Assuming LocationIQ returns an array with lat/lon in the first item
+            const { lat, lon } = response.data[0];  
             console.log('Latitude:', lat);
             console.log('Longitude:', lon);
 
-            // Fetch weather data using the latitude and longitude
             return axios.get('http://localhost:5000/weather', {
                 params: { lat: lat, lon: lon }
             });
@@ -27,16 +26,12 @@ const getCurrentTemperature = () => {
             const temperatureInFahrenheit = parseInt((temperatureInKelvin - 273.15) * 9 / 5 + 32);
             console.log(`Temperature in Fahrenheit: ${temperatureInFahrenheit}°F`);
 
-            // Update the global state with the new temperature
-            state.temperature = parseFloat(temperatureInFahrenheit, 10);  // Set the temperature in the global state
+            state.temperature = parseFloat(temperatureInFahrenheit, 10);  
 
-            // Update the DOM element with the new temperature
             tempValue.textContent = `${state.temperature}°F`;
 
-            // Optionally, update the city name in the header
             headerCityName.textContent = cityName;
 
-            // Call the other functions to update the UI
             temperatureColor();
             weatherGardenDisplay();
         })
@@ -44,7 +39,6 @@ const getCurrentTemperature = () => {
             console.error('Error fetching weather data:', error);
         });
 };
-////
 
 const tempValue = document.getElementById('tempValue')
 const gardenSection = document.querySelector('.garden__section ');
@@ -54,18 +48,18 @@ const headerCityName = document.getElementById('headerCityName');
 const currentTemperature = document.getElementById('currentTempButton')
 
 const temperatureIncrease = () => {
-    state.temperature += 1;  // Increase the global state temperature
-    tempValue.textContent = `${state.temperature}°F`;  // Update the temperature on the page
-    temperatureColor();  // Update the color based on the temperature
-    weatherGardenDisplay();  // Update the garden display based on the temperature
+    state.temperature += 1;  
+    tempValue.textContent = `${state.temperature}°F`;  
+    temperatureColor();  
+    weatherGardenDisplay();  
 };
 
 // Function to decrease the temperature
 const temperatureDecrease = () => {
-    state.temperature -= 1;  // Decrease the global state temperature
-    tempValue.textContent = `${state.temperature}°F`;  // Update the temperature on the page
-    temperatureColor();  // Update the color based on the temperature
-    weatherGardenDisplay();  // Update the garden display based on the temperature
+    state.temperature -= 1; 
+    tempValue.textContent = `${state.temperature}°F`;  
+    temperatureColor();  
+    weatherGardenDisplay();  
 };
 
 const temperatureColor = () => {
@@ -85,7 +79,6 @@ const temperatureColor = () => {
 }
 
 const weatherGardenDisplay = () => {
-    // landscape.classList.remove()
     gardenSection.classList.remove("sunny", "cloudy", "rainy", "snowy");
     if (state.temperature >= 80) {
         gardenSection.classList.add("sunny")
@@ -101,7 +94,6 @@ const weatherGardenDisplay = () => {
         landscape.innerHTML = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲"
     }
 }
-
 
 const updateCityName = () => {
     const cityInputValue = cityNameInput.value 
