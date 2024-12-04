@@ -93,7 +93,7 @@ const getCityCoords = () =>{
 
 const getCityTemp = (coordObject) =>{
   return axios
-    .get ('http://127.0.0.1:5000/weather?', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
+    .get ('http://127.0.0.1:5000/weather', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
     .then((response)=>{
       const tempK = response.data.main.temp;
       const tempF = (tempK - 273.15) * 1.8 + 32;
@@ -106,14 +106,14 @@ const getCityTemp = (coordObject) =>{
 
 const updateCityTempDisplay =  () => {
   getCityCoords()
-    .then( (coordList) => {
-      return getCityTemp(coordList);
-    })
-    .then((currentTemp) =>{
-      state.tempValue = parseInt(currentTemp)
-      document.getElementById('tempValue').textContent = state.tempValue;
-      changeTempValueColorAndLandscape();
-    });
+  .then( (coordList) => {
+    return getCityTemp(coordList);
+  })
+  .then((currentTemp) =>{
+    state.tempValue = parseInt(currentTemp)
+    document.getElementById('tempValue').textContent = state.tempValue;
+    changeTempValueColorAndLandscape();
+  });
 };
 
 // Wave 5
