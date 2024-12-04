@@ -108,3 +108,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
+const kelvinToF = (k) => {
+    return Math.floor(1.8*(k-273) + 32)
+}
+document.getElementById("currentTempButton").addEventListener("click", async (e) => {
+    const cityName = document.getElementById('headerCityName').textContent;
+
+    const locationResponse = await axios.get('http://localhost:5000/location', {
+        params: { q: cityName }
+    });
+    const { lat, lon } = locationResponse.data[0];
+
+    const weatherResponse = await axios.get('http://localhost:5000/weather', {
+        params: { lat, lon }
+    });
+
+    const temp = kelvinToF(weatherResponse.data.main.temp);
+    document.getElementById("tempValue").textContent = "" + temp +" " + "F";
+
+});
