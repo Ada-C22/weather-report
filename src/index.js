@@ -8,56 +8,116 @@ const state = {
   name: 'Seattle'
 };
 
+const tempProperties = [ 
+{   temp: 80, 
+    color: 'red',
+    landscape: '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂'
+  },
+{   temp: 70,
+    color: 'orange',
+    landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷'
+  },
+{   temp: 60,
+    color: 'yellow',
+    landscape: '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃'
+  },
+{   temp: 50,
+    color: 'green',
+    landscape: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲' 
+  },
+{   temp: 49,
+    color: 'teal',
+    landscape: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲'
+  }
+];
+
+
+
+// {
+//   80: {
+//     color: 'red',
+//     landscape: '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂'
+//   },
+//   70: {
+//     color: 'orange',
+//     landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷'
+//   },
+//   60: {
+//     color: 'yellow',
+//     landscape: '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃'
+//   },
+//   50: {
+//     color: 'green',
+//     landscape: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲' 
+//   },
+//   49: {
+//     color: 'teal',
+//     landscape: '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲'
+//   }
+// }
 
 // Helper Functions
 
 //Wave 2
-const manageTempValueColor = () =>{
-  const temp = document.getElementById('tempValue').textContent;
-  if (temp >= 80){
-    state.tempValueColor = 'red';
-  }else if (temp <=79 && temp >=70){
-    state.tempValueColor = 'orange';
-  }else if (temp <=69 && temp>=60){
-    state.tempValueColor = 'yellow';
-  }else if (temp <=59 && temp>=50){
-    state.tempValueColor = 'green';
-  }else if (temp <=49){
-    state.tempValueColor = 'teal';
+const changeTempValueColorAndLandscape = () =>{
+  for (const idx in tempProperties){
+    let temp = tempProperties[idx].temp;
+    if (temp === 49 && state.tempValue<= temp){
+      state.tempValueColor = tempProperties[idx].color;
+      state.landscape = tempProperties[idx].landscape;
+      break;
+    }else if (state.tempValue >= temp){
+      state.tempValueColor = tempProperties[idx].color;
+      state.landscape = tempProperties[idx].landscape;
+      break;
+    }
   }
-  
+  document.getElementById('tempValue').style.color = state.tempValueColor;
+  document.getElementById('landscape'). textContent = state.landscape;
+};
+
+const changeTempValueColor = () =>{  
+  for (const idx in tempProperties){
+    let temp = tempProperties[idx].temp;
+    if (temp === 49 && state.tempValue<= temp){
+      state.tempValueColor = tempProperties[idx].color;
+      break;
+    }else if (state.tempValue >= temp){
+      state.tempValueColor = tempProperties[idx].color;
+      break;
+    };
+  };
   document.getElementById('tempValue').style.color = state.tempValueColor;
 };
 
 
 const changeLandscape =()=>{
-  if (state.tempValue >= 80){
-    state.landscape = '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂';
-  }else if (state.tempValue <=79 && state.tempValue >=70){
-    state.landscape = '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷';
-  }else if (state.tempValue <=69 && state.tempValue>=60){
-    state.landscape = '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃';
-  }else {
-    state.landscape = '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
-  }
-  
-  const currentLandscape = document.getElementById('landscape');
-  currentLandscape.textContent= state.landscape;
+  for (const idx in tempProperties){
+    let temp = tempProperties[idx].temp;
+    if (temp === 49 && state.tempValue<= temp){
+      state.landscape = tempProperties[idx].landscape;
+      break;
+    }else if (state.tempValue >= temp){
+      state.landscape = tempProperties[idx].landscape;
+      break;
+    };
+  };
+  document.getElementById('landscape').textContent= state.landscape;
 };
 
 const increaseTemp = () =>{
   state.tempValue += 1;
-  const temp = document.getElementById('tempValue').textContent;
-  temp = state.tempValue;
-  manageTempValueColor();
+  const temp = document.getElementById('tempValue');
+  temp.textContent = state.tempValue;
+  changeTempValueColor();
   changeLandscape();
 };
 
 const decreaseTemp = () =>{
   state.tempValue -= 1;
-  const temp = document.getElementById('tempValue').textContent;
-  temp  = state.tempValue;
-  manageTempValueColor();
+  const temp = document.getElementById('tempValue');
+  temp.textContent  = state.tempValue;
+  changeTempValueColor();
   changeLandscape();
 };
 
@@ -108,7 +168,7 @@ const updateDisplayCityTemp =  () => {
       state.tempValue = parseInt(currentTemp)
       const temp = document.getElementById('tempValue');
       temp.textContent = state.tempValue;
-      manageTempValueColor();
+      changeTempValueColor();
       changeLandscape();
     });
 };
