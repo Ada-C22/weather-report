@@ -2,31 +2,32 @@
 
 const state = {
   tempCount: 70,
-  cityNameInput: null,
+  cityName: null,
 };
 
-const findLatitudeAndLongitude = (city) => {
+const findLatitudeAndLongitude = () => {
   let latitude, longitude;
   axios
     .get("http://127.0.0.1:5000/location", {
       params: {
-        q: city,
+        q: state.cityName,
         format: "json",
       },
     })
     .then((response) => {
       latitude = response.data[0].lat;
       longitude = response.data[0].lon;
+      findLocation(latitude, longitude);
       console.log("success in findLatitudeAndLongitude!", latitude, longitude);
     })
     .catch((error) => {
       console.log("error in findLatitudeAndLongitude!");
     });
 
-  return {
-    seattleLat: latitude,
-    seattleLon: longitude,
-  };
+  // return {
+  //   seattleLat: latitude,
+  //   seattleLon: longitude,
+  // };
 };
 
 const findLocation = (latitude, longitude) => {
@@ -52,7 +53,7 @@ const updateDecreaseTempCount = () => {
   --state.tempCount;
   tempValue.textContent = state.tempCount;
 
-  updateTempBackgroundColor();
+  updateTempColor();
   updateLandscape();
 };
 
@@ -61,11 +62,11 @@ const updateIncreaseTempCount = () => {
   ++state.tempCount;
   tempValue.textContent = state.tempCount;
 
-  updateTempBackgroundColor();
+  updateTempColor();
   updateLandscape();
 };
 
-const updateTempBackgroundColor = () => {
+const updateTempColor = () => {
   const tempValue = document.getElementById("tempValue");
 
   switch (true) {
@@ -114,6 +115,7 @@ const updateCityNameInput = () => {
   const cityNameInput = document.getElementById("cityNameInput");
   const headerCityName = document.getElementById("headerCityName");
   headerCityName.textContent = cityNameInput.value;
+  state.cityName = cityNameInput.value;
 };
 
 const resetCityNameInput = () => {
@@ -122,13 +124,7 @@ const resetCityNameInput = () => {
   headerCityName.textContent = "";
 };
 
-// const loadControls = () => {
-//   const decreaseTemp = document.getElementById("decreaseTempControl");
-//   const increaseTemp = document.getElementById("increaseTempControl");
-// }
-
 const registerEventHandlers = () => {
-  // loadControls();
   const decreaseTemp = document.getElementById('decreaseTempControl');
   const increaseTemp = document.getElementById('increaseTempControl');
   decreaseTemp.addEventListener('click', updateDecreaseTempCount);
@@ -136,7 +132,7 @@ const registerEventHandlers = () => {
   cityNameInput.addEventListener("input", updateCityNameInput);
   cityNameReset.addEventListener("click", resetCityNameInput);
 
-  updateTempBackgroundColor();
+  updateTempColor();
   updateLandscape();
 };
 
