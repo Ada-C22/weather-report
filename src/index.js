@@ -51,49 +51,19 @@ const changeTempValueColorAndLandscape = () =>{
   document.getElementById('landscape'). textContent = state.landscape;
 };
 
-const changeTempValueColor = () =>{  
-  for (const idx in tempProperties){
-    let temp = tempProperties[idx].temp;
-    if (temp === 49 && state.tempValue<= temp){
-      state.tempValueColor = tempProperties[idx].color;
-      break;
-    }else if (state.tempValue >= temp){
-      state.tempValueColor = tempProperties[idx].color;
-      break;
-    };
-  };
-  document.getElementById('tempValue').style.color = state.tempValueColor;
-};
-
-
-const changeLandscape =()=>{
-  for (const idx in tempProperties){
-    let temp = tempProperties[idx].temp;
-    if (temp === 49 && state.tempValue<= temp){
-      state.landscape = tempProperties[idx].landscape;
-      break;
-    }else if (state.tempValue >= temp){
-      state.landscape = tempProperties[idx].landscape;
-      break;
-    };
-  };
-  document.getElementById('landscape').textContent= state.landscape;
-};
 
 const increaseTemp = () =>{
   state.tempValue += 1;
   const temp = document.getElementById('tempValue');
   temp.textContent = state.tempValue;
-  changeTempValueColor();
-  changeLandscape();
+  changeTempValueColorAndLandscape();
 };
 
 const decreaseTemp = () =>{
   state.tempValue -= 1;
   const temp = document.getElementById('tempValue');
   temp.textContent  = state.tempValue;
-  changeTempValueColor();
-  changeLandscape();
+  changeTempValueColorAndLandscape();
 };
 
 
@@ -142,8 +112,7 @@ const updateCityTempDisplay =  () => {
     .then((currentTemp) =>{
       state.tempValue = parseInt(currentTemp)
       document.getElementById('tempValue').textContent = state.tempValue;
-      changeTempValueColor();
-      changeLandscape();
+      changeTempValueColorAndLandscape();
     });
 };
 
