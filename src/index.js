@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const getTempButton = document.getElementById('currentTempButton');
     const skySelect = document.getElementById("skySelect");
     const sky = document.getElementById("sky");
+    const resetButton = document.getElementById("cityNameReset");
+    const DEFAULT_TEMP = 70;
 
     cityDisplay.textContent = "Miami";
     cityInput.addEventListener('input', () => {
@@ -16,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     landscape.style.fontFamily = "monospace";
     landscape.style.whiteSpace = "pre";
 
-    let temperature = 70;
+    let temperature = DEFAULT_TEMP;
     const PROXY_URL = "http://localhost:5000";
 
     const getRealTimeTemperature = async () => {
@@ -118,8 +120,15 @@ document.addEventListener('DOMContentLoaded', () => {
       } 
     };
 
-    skySelect.addEventListener("change", updateSky);
+    skySelect.addEventListener('change', updateSky);
 
+    resetButton.addEventListener('click', () => {
+      cityDisplay.textContent = 'Miami';
+      cityInput.value = 'Miami';
+      updateDisplay();
+      updateSky();
+      getRealTimeTemperature();
+    });
     
     increaseTempButton.addEventListener('click', () => {
       temperature++;
