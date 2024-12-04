@@ -3,7 +3,9 @@ const state = {
   cityName: "Seattle",
 };
 
-/*********** Wave 2 ***********/
+/************************/
+/******* Wave 2 *********/
+/************************/
 
 // Function to update the temperature display and apply color changes
 const updateTemperatureDisplay = () => {
@@ -41,17 +43,20 @@ const decreaseTemp = () => {
   updateTemperatureDisplay();
 };
 
-/************ Wave 3 ************/
+
+/************************/
+/******* Wave 3 *********/
+/************************/
 
 const retrieveInput = () => {
-    
-
+  const cityNameInput = document.getElementById("cityNameInput");
+  return cityNameInput.value;
 };
 
 const updateCityName = () => {
   const currentCity = document.getElementById("headerCityName");
-  state.cityName = 
-
+  state.cityName = retrieveInput();
+  currentCity.textContent = state.cityName;
 };
 
 // // Register eent handlers for temperature controls
