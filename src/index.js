@@ -46,6 +46,9 @@ const landscape = document.getElementById('landscape')
 const cityNameInput = document.getElementById('cityNameInput');
 const headerCityName = document.getElementById('headerCityName');
 const currentTemperature = document.getElementById('currentTempButton')
+const skySection = document.querySelector('.sky__section ');
+const skySelect = document.getElementById('skySelect')
+const sky = document.getElementById('sky')
 
 const temperatureIncrease = () => {
     state.temperature += 1;  
@@ -100,6 +103,22 @@ const updateCityName = () => {
     headerCityName.textContent = cityInputValue
 }
 
+const skyGardenDisplay = () => {
+    // console.log("working?")
+    skySection.classList.remove("sunny", "cloudy", "rainy", "snowy");
+    const selectedText = skySelect.value
+    // console.log(`${selectedText}, "text"`)
+
+    if (selectedText === 'sunny') {
+        sky.innerHTML = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
+    } else if (selectedText === 'cloudy') {
+        sky.innerHTML = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
+    } else if (selectedText === 'rainy') {
+        sky.innerHTML = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
+    } else if (selectedText == 'snowy') {
+        sky.innerHTML = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
+    }
+}
 const registerEventHandlers = () => {
     //whatever function is updating UI
     const increaseButton = document.getElementById('increaseButton');
@@ -112,6 +131,10 @@ const registerEventHandlers = () => {
 
     const currentTemperatureButton =  document.getElementById('currentTempButton');
     currentTemperatureButton.addEventListener("click", getCurrentTemperature)
+
+    // id = skySelect
+    skySelect.addEventListener('change', skyGardenDisplay);
+
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
