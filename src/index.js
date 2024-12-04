@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 let currentTemperature = 70;
 
 const tempValue = document.getElementById('tempValue');
@@ -61,3 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
         headerCityName.textContent = "Seattle";
     });
 });
+
+
+
