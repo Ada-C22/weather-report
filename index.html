@@ -21,10 +21,12 @@
         </header>
         <section class="temperature-section">
             <h2>Temperature</h2>
+            <span id="realTempValue"></span>   
         </section>
         <section class="city-name-section">
             <h2>City Name</h2>
             <input type="text" id="cityNameInput">
+            <button id="currentTempButton">Get Realtime Temperature</button>
             <button id="cityNameReset" class="city-name-reset-btn">Reset</button>
         </section>
     </section>
@@ -35,7 +37,6 @@
                     <span id="tempValue"></span>
                     <span id="decreaseTempControl">⬇️</span>
                 </div>
-                <button id="currentTempButton">Get Realtime Temperature</button>
         </section>
         <section class="sky-section">
             <h2>Sky</h2>

@@ -2,8 +2,10 @@
 
 // Constants
 const state = {
-  tempValue: 70,
-  tempValueColor: 'orange',
+  realTempValue: 70,
+  realTempValueColor: 'orange',
+  gardenTempValue: 70,
+  gardenTempValueColor: 'orange',
   landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
   sky: 'sunny',
   name: 'Seattle',
@@ -45,36 +47,52 @@ const skyOptions = {
 // Helper Functions
 
 //Wave 2
-const changeTempValueColorAndLandscape = () =>{
+const changeGardenTempValueColorAndLandscape = () =>{
   for (const idx in tempProperties){
     let temp = tempProperties[idx].temp;
-    if (temp === 49 && state.tempValue<= temp){
-      state.tempValueColor = tempProperties[idx].color;
+    if (temp === 49 && state.gardenTempValue<= temp){
+      state.gardenTempValueColor = tempProperties[idx].color;
       state.landscape = tempProperties[idx].landscape;
       break;
-    }else if (state.tempValue >= temp){
-      state.tempValueColor = tempProperties[idx].color;
+    }else if (state.gardenTempValue >= temp){
+      state.gardenTempValueColor = tempProperties[idx].color;
       state.landscape = tempProperties[idx].landscape;
       break;
     }
   }
-  document.getElementById('tempValue').style.color = state.tempValueColor;
+  document.getElementById('tempValue').style.color = state.gardenTempValueColor;
   document.getElementById('landscape'). textContent = state.landscape;
 };
 
 
+
+const changeRealTempValueColor = () =>{
+  for (const idx in tempProperties){
+    let temp = tempProperties[idx].temp;
+    if (temp === 49 && state.realTempValue<= temp){
+      state.realTempValueColor = tempProperties[idx].color;
+      break;
+    }else if (state.realTempValue >= temp){
+      state.realTempValueColor = tempProperties[idx].color;
+      break;
+    }
+  }
+  document.getElementById('realTempValue').style.color = state.realTempValueColor;
+};
+
+
 const increaseTemp = () =>{
-  state.tempValue += 1;
+  state.gardenTempValue += 1;
   const temp = document.getElementById('tempValue');
-  temp.textContent = state.tempValue;
-  changeTempValueColorAndLandscape();
+  temp.textContent = state.gardenTempValue;
+  changeGardenTempValueColorAndLandscape();
 };
 
 const decreaseTemp = () =>{
-  state.tempValue -= 1;
+  state.gardenTempValue -= 1;
   const temp = document.getElementById('tempValue');
-  temp.textContent  = state.tempValue;
-  changeTempValueColorAndLandscape();
+  temp.textContent  = state.gardenTempValue;
+  changeGardenTempValueColorAndLandscape();
 };
 
 
@@ -111,8 +129,8 @@ const getCityWeatherData = (coordObject) =>{
       state.weatherConditionCode = response.data.weather.id;
       const tempK = response.data.main.temp;
       const tempF = (tempK - 273.15) * 1.8 + 32;
-      state.tempValue = parseInt(tempF.toFixed(0));
-      return state.tempValue
+      state.realTempValue = parseInt(tempF.toFixed(0));
+      return state.realTempValue
     })
     .catch((error) => console.log('getCityWeatherData error: ', error.status));
     ;
@@ -125,8 +143,8 @@ const updateCityTempDisplay =  () => {
     return getCityWeatherData(coordList);
   })
   .then(() =>{
-    document.getElementById('tempValue').textContent = state.tempValue;
-    changeTempValueColorAndLandscape();
+    document.getElementById('realTempValue').textContent = state.realTempValue;
+    changeRealTempValueColor();
   });
 };
 
@@ -177,6 +195,8 @@ const registerEventHandlers = () => {
 
 
 const initializeSite = () =>{
+  document.getElementById('tempValue').textContent = state.gardenTempValue
+  changeGardenTempValueColorAndLandscape();
   resetCityName();
   updateCityTempDisplay();
 };
