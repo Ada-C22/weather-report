@@ -1,5 +1,16 @@
 # Weather Report
 
+## Plan of Action
+
+- Access/communication needs
+  - Slack
+- Learning styles
+  - Individual Git branches
+- Preferred way to receive feedback
+  - Slack
+- Team communication skill you want to improve with this experience
+  - Over communication!
+
 ## Skills Assessed
 
 - Following directions and reading comprehension
