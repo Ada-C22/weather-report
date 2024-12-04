@@ -1,4 +1,5 @@
 'use strict';
+// const axios = require("axios");
 // F = 1.8*(K-273) + 32.
 //  F = 9/5(K - 273) + 32
 // C = K - 273.15
@@ -85,17 +86,17 @@ const resetCityNameInput = () => {
   headerCityName.textContent = "";
 };
 
-const findTemperature = (coord) => {
+const findTemperature = (coordinates) => {
   return axios
     .get("http://127.0.0.1:5000/weather", {
       params: {
-        lat: coord[latitude],
-        lon: coord[longitude],
+        lat: coordinates.latitude,
+        lon: coordinates.longitude,
       },
     })
     .then((response) => {
       console.log("success in findTemperature!", response.data.main.temp);
-      return response.data;
+      return response.data.main.temp;
     })
     .catch((error) => {
       console.log("error in findTemperature!");
@@ -118,8 +119,8 @@ const findLatitudeAndLongitude = () => {
       console.log("success in findLatitudeAndLongitude!", latitude, longitude);
       return {
         lat: latitude, 
-        lon: longitude 
-      }
+        lon: longitude, 
+      };
     })
     .catch((error) => {
       console.log("error in findLatitudeAndLongitude!");
@@ -135,19 +136,18 @@ const getTemperature = () => {
   const tempValue = document.getElementById("tempValue");
 
   return findLatitudeAndLongitude()
-  .then(coord => {
-    state.tempCount = 40
-    tempValue.textContent = state.tempCount;
-    const tempData = findTemperature(coord);
-    console.log(tempData)
-    return tempData;
-  });
+    .then((coordinates) => {
+      return findTemperature(coordinates);
+    })
+    .then((temp) => {
+      console.log(temp);
+      state.tempCount = temp;
+      tempValue.textContent = state.tempCount;
+    })
+    .catch((error) => {
+      console.error("Error in getTemperature!");
+    });
 };
-
-  // getTemperature()
-  //   .then(temp => {
-  //     console.log(temp);
-  //   });
 
 const registerEventHandlers = () => {
   const decreaseTemp = document.getElementById('decreaseTempControl');
