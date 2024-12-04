@@ -1,5 +1,4 @@
 'use strict';
-// const axios = require("axios");
 // F = 1.8*(K-273) + 32.
 //  F = 9/5(K - 273) + 32
 // C = K - 273.15
@@ -14,8 +13,7 @@ const updateDecreaseTempCount = () => {
   --state.tempCount;
   tempValue.textContent = state.tempCount;
 
-  updateTempColor();
-  updateLandscape();
+  updateTempColorLandscape();
 };
 
 const updateIncreaseTempCount = () => {
@@ -23,53 +21,39 @@ const updateIncreaseTempCount = () => {
   ++state.tempCount;
   tempValue.textContent = state.tempCount;
 
-  updateTempColor();
-  updateLandscape();
+  updateTempColorLandscape();
 };
 
-const updateTempColor = () => {
+const updateTempColorLandscape = () => {
   const tempValue = document.getElementById("tempValue");
+
+  const newLandscape = document.createElement("div");
+  const landscapeContainer = document.getElementById("landscape");
+  landscapeContainer.textContent = "";
 
   switch (true) {
     case state.tempCount >= 80:
       tempValue.style.color = 'red';
+      newLandscape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
       break;
     case state.tempCount >= 70:
       tempValue.style.color = 'orange';
+      newLandscape.textContent = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
       break;
     case state.tempCount >= 60:
       tempValue.style.color = 'yellow';
+      newLandscape.textContent = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
       break;
     case state.tempCount >= 50:
       tempValue.style.color = 'green';
+      newLandscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
       break;
     case state.tempCount < 50:
       tempValue.style.color = 'teal';
+      newLandscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
       break;
   }
-};
-
-const updateLandscape = () => {
-  const newLandscape = document.createElement('div');
-  const landscapeContainer = document.getElementById('landscape');
-  landscapeContainer.textContent =  ''
-  
-    switch (true) {
-      case state.tempCount >= 80:
-        newLandscape.textContent = '🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂';
-        break;
-      case state.tempCount >= 70:
-        newLandscape.textContent = '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷';
-        break;
-      case state.tempCount >= 60:
-        newLandscape.textContent = '🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃';
-        break;
-      case state.tempCount < 60:
-        newLandscape.textContent = '🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲';
-        break;
-    }
-
-    landscapeContainer.appendChild(newLandscape);
+  landscapeContainer.appendChild(newLandscape);
 };
 
 const updateCityNameInput = () => {
@@ -99,7 +83,7 @@ const findTemperature = (coordinates) => {
       return response.data.main.temp;
     })
     .catch((error) => {
-      console.log("error in findTemperature!");
+      console.log("error in findTemperature!", error);
     });
 };
 
@@ -137,6 +121,7 @@ const getTemperature = () => {
 
   return findLatitudeAndLongitude()
     .then((coordinates) => {
+      console.log(coordinates)
       return findTemperature(coordinates);
     })
     .then((temp) => {
@@ -159,8 +144,7 @@ const registerEventHandlers = () => {
   cityNameReset.addEventListener("click", resetCityNameInput);
   currentTempButton.addEventListener("click", getTemperature);
 
-  updateTempColor();
-  updateLandscape();
+  updateTempColorLandscape();
 };
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
