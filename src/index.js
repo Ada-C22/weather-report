@@ -4,6 +4,30 @@ const state = {
   tempCount: 70,
 };
 
+const findLatitudeAndLongitude = (city) => {
+  let latitude, longitude;
+  axios
+    .get("http://127.0.0.1:5000/location", {
+      params: {
+        q: city,
+        format: "json",
+      },
+    })
+    .then((response) => {
+      latitude = response.data[0].lat;
+      longitude = response.data[0].lon;
+      console.log("success in findLatitudeAndLongitude!", latitude, longitude);
+    })
+    .catch((error) => {
+      console.log("error in findLatitudeAndLongitude!");
+    });
+
+  return {
+    seattleLat: latitude,
+    seattleLon: longitude,
+  };
+};
+
 const updateDecreaseTempCount = () => {
   const tempValue = document.getElementById('tempValue');
   --state.tempCount;
@@ -67,12 +91,15 @@ const updateLandscape = () => {
     landscapeContainer.appendChild(newLandscape);
 }
 
-
+const loadControls = () => {
+  const decreaseTemp = document.getElementById("decreaseTempControl");
+  const increaseTemp = document.getElementById("increaseTempControl");
+}
 
 const registerEventHandlers = () => {
-  // loadControls();
-  const decreaseTemp = document.getElementById('decreaseTempControl');
-  const increaseTemp = document.getElementById('increaseTempControl');
+  loadControls();
+  // const decreaseTemp = document.getElementById('decreaseTempControl');
+  // const increaseTemp = document.getElementById('increaseTempControl');
   decreaseTemp.addEventListener('click', updateDecreaseTempCount);
   increaseTemp.addEventListener('click', updateIncreaseTempCount);
 
