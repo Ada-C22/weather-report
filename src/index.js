@@ -1,28 +1,73 @@
+// const axios = require('axios');
 const state = {
-    city: 'Seattle',
-    temperature: 80
-}
+    city: 'Seattle',  // Default city
+    temperature: 0     // Start with a temperature value of 0
+};
+
+const getCurrentTemperature = () => {
+    const cityName = cityNameInput.value || 'Seattle';  // Default to 'Seattle' if no city is provided
+
+    // Fetch latitude and longitude for the city
+    axios
+        .get('http://localhost:5000/location', {
+            params: { q: cityName }
+        })
+        .then(response => {
+            const { lat, lon } = response.data[0];  // Assuming LocationIQ returns an array with lat/lon in the first item
+            console.log('Latitude:', lat);
+            console.log('Longitude:', lon);
+
+            // Fetch weather data using the latitude and longitude
+            return axios.get('http://localhost:5000/weather', {
+                params: { lat: lat, lon: lon }
+            });
+        })
+        .then(weatherResponse => {
+            const temperatureInKelvin = weatherResponse.data.main.temp;
+            const temperatureInFahrenheit = parseInt((temperatureInKelvin - 273.15) * 9 / 5 + 32);
+            console.log(`Temperature in Fahrenheit: ${temperatureInFahrenheit}°F`);
+
+            // Update the global state with the new temperature
+            state.temperature = parseFloat(temperatureInFahrenheit, 10);  // Set the temperature in the global state
+
+            // Update the DOM element with the new temperature
+            tempValue.textContent = `${state.temperature}°F`;
+
+            // Optionally, update the city name in the header
+            headerCityName.textContent = cityName;
+
+            // Call the other functions to update the UI
+            temperatureColor();
+            weatherGardenDisplay();
+        })
+        .catch(error => {
+            console.error('Error fetching weather data:', error);
+        });
+};
+////
+
 const tempValue = document.getElementById('tempValue')
 const gardenSection = document.querySelector('.garden__section ');
 const landscape = document.getElementById('landscape')
 const cityNameInput = document.getElementById('cityNameInput');
 const headerCityName = document.getElementById('headerCityName');
+const currentTemperature = document.getElementById('currentTempButton')
 
-const temperatureIncrease= () => {
-    state.temperature += 1
-    // const tempValue = document.getElementById('tempValue')
-    tempValue.textContent = state.temperature
-    temperatureColor()
-    weatherGardenDisplay()
-}
+const temperatureIncrease = () => {
+    state.temperature += 1;  // Increase the global state temperature
+    tempValue.textContent = `${state.temperature}°F`;  // Update the temperature on the page
+    temperatureColor();  // Update the color based on the temperature
+    weatherGardenDisplay();  // Update the garden display based on the temperature
+};
 
+// Function to decrease the temperature
 const temperatureDecrease = () => {
-    state.temperature -= 1
-    // const tempValue = document.getElementById('tempValue')
-    tempValue.textContent = state.temperature 
-    temperatureColor()
-    weatherGardenDisplay() 
-}
+    state.temperature -= 1;  // Decrease the global state temperature
+    tempValue.textContent = `${state.temperature}°F`;  // Update the temperature on the page
+    temperatureColor();  // Update the color based on the temperature
+    weatherGardenDisplay();  // Update the garden display based on the temperature
+};
+
 const temperatureColor = () => {
     tempValue.classList.remove("red", "orange", "yellow", "green", "teal");
 
@@ -57,8 +102,9 @@ const weatherGardenDisplay = () => {
     }
 }
 
+
 const updateCityName = () => {
-    const cityInputValue = cityNameInput.value;
+    const cityInputValue = cityNameInput.value 
     headerCityName.textContent = cityInputValue
 }
 
@@ -71,8 +117,11 @@ const registerEventHandlers = () => {
     decreaseButton.addEventListener("click",temperatureDecrease);
 
     cityNameInput.addEventListener('input', updateCityName);
-};
-document.addEventListener("DOMContentLoaded", registerEventHandlers);
 
+    const currentTemperatureButton =  document.getElementById('currentTempButton');
+    currentTemperatureButton.addEventListener("click", getCurrentTemperature)
+};
+
+document.addEventListener("DOMContentLoaded", registerEventHandlers);
 
 
