@@ -2,6 +2,10 @@
 const state = {
   temperature: 69,
   cityName: "",
+  upButton: null,
+  downButton: null,
+  searchBar: null,
+  currentTempButton: null,
 };
 
 // Function when clicking on up button
@@ -101,22 +105,22 @@ const updateToCityTemp = () => {
     });
 };
 
+const loadControls = () => {
+  state.upButton = document.querySelector("#increaseTempControl");
+  state.downButton = document.querySelector("#decreaseTempControl");
+  state.searchBar = document.getElementById("cityNameInput");
+  state.currentTempButton = document.querySelector("#currentTempButton");
+};
 // register the buttons and their respective listener + function
 const registerEventHandlers = () => {
+  loadControls()
   // when DOM loads, the default temp text should also change colors
   changeTemp();
-
-  const upButton = document.querySelector("#increaseTempControl");
-  upButton.addEventListener("click", increaseTemp);
-
-  const downButton = document.querySelector("#decreaseTempControl");
-  downButton.addEventListener("click", decreaseTemp);
-
-  const searchBar = document.getElementById("cityNameInput");
-  searchBar.addEventListener("input", updateCityName);
-
-  const currentTempButton = document.querySelector("#currentTempButton");
-  currentTempButton.addEventListener("click", updateToCityTemp);
+  
+  state.upButton.addEventListener("click", increaseTemp);
+  state.downButton.addEventListener("click", decreaseTemp);
+  state.searchBar.addEventListener("input", updateCityName);
+  state.currentTempButton.addEventListener("click", updateToCityTemp);
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
