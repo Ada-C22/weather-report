@@ -70,7 +70,7 @@ const kelvinToFarenheit = (kelvin) => {
 
 const getCoordinates = () => {
   const search = cityNameInput.value;
-  const locationIQURL = `http://127.0.0.1:5000/location`;
+  const locationIQURL = `https://ada-weather-report-proxy-server.onrender.com/location`;
   return axios.get(locationIQURL, {
     params: { q: search },
   });
@@ -79,7 +79,7 @@ const getCoordinates = () => {
 const getTemperature = (response) => {
   const lat = response.data[0].lat;
   const lon = response.data[0].lon;
-  const openWeartherURL = `http://127.0.0.1:5000/weather`;
+  const openWeartherURL = `https://ada-weather-report-proxy-server.onrender.com/weather`;
   return axios.get(openWeartherURL, {
     params: { lat, lon },
   });
