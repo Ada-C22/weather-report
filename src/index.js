@@ -7,10 +7,8 @@ const state = {
     decreaseTempControl: null,
     tempElement: null,
     gardenLandscape: null,
-    //////////////////Wave 3
     cityName: null,
     cityInput: null
-    ///////////////////Wave 3
 };
 
 const loadControls = () =>{
@@ -18,10 +16,8 @@ const loadControls = () =>{
     state.decreaseTempControl = document.getElementById('decreaseTempControl');
     state.increaseTempControl = document.getElementById('increaseTempControl');
     state.gardenLandscape = document.getElementById('landscape');
-    ////////////////////////////////////////////////////////////////Wave 3
-    state.cityName = document.getElementById('headerCityName');
     state.cityInput = document.getElementById('cityNameInput');
-///////////////////////////////////////////////////////////////////Wave 3
+    state.cityName = document.getElementById('headerCityName');
 };
 
 const updateTemperatureDisplay = () => {
@@ -63,23 +59,22 @@ const decreaseTemp = () =>{
     currentTempValue -= 1;
     updateTemperatureDisplay();
 };
-///////////////////////////////////////////////////////////////////Wave 3
+
 const updateCityName = () => {
-    cityName.textContent = cityInput.value;
+    ////////////// Made changes here 
+    if (state.cityInput && state.cityName){
+    state.cityName.textContent = state.cityInput.value;
+}
 };
-///////////////////////////////////////////////////////////////////Wave 3
+
 const registerEventHandlers = () => {
     loadControls();
     updateTemperatureDisplay();
 
     state.increaseTempControl.addEventListener('click',increaseTemp)
     state.decreaseTempControl.addEventListener('click',decreaseTemp)
-///////////////////////////////////////////////////////////////////Wave 3
     state.cityInput.addEventListener('input',updateCityName)
-///////////////////////////////////////////////////////////////////Wave 3
 };
-
-
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
 
