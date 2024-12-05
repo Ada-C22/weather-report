@@ -50,7 +50,7 @@ main {
 }
 
 .left-side {
-  border: 2px solid white;
+  /* border: 2px solid white; */
   background-color: white;
   border-radius: 16px;
   padding: 1%;
