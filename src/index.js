@@ -1,17 +1,20 @@
 "use strict";
 
+const defaultCityNameInput = "Los Angeles";
 
+// Syncs City name between the input box and the title
 const syncCityName =  () => {
     const cityNameHeader = document.getElementById('headerCityName');
     const cityNameTextBox = document.getElementById('cityNameInput');
+    if(cityNameTextBox.value !== "") {
+        cityNameHeader.textContent = cityNameTextBox.value
+    } else {
+        cityNameHeader.textContent = defaultCityNameInput;
+    }
     cityNameTextBox.addEventListener("input", (event) => {
         cityNameHeader.textContent = event.target.value;
     });
 }
-
-
-
-syncCityName();
 
 // temperature control section
 const updateTemperatureControl = () => {
@@ -91,8 +94,6 @@ const updateCityNameReset = () => {
     const tempValue = document.getElementById("tempValue");
     const cityNameInput = document.getElementById("cityNameInput");
 
-    let defaultCityNameInput = "Los Angeles";
-
     // resets city name and temperature
     const resetCityInfo = () => {
         headerCityName.textContent = defaultCityNameInput;
@@ -109,25 +110,49 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTemperatureControl();
     updateWeatherAlbum();
     updateCityNameReset();
+    syncCityName();
 });
 
 const kelvinToF = (k) => {
     return Math.floor(1.8*(k-273) + 32)
 }
-
-document.getElementById("currentTempButton").addEventListener("click", async (e) => {
-    const cityName = document.getElementById('headerCityName').textContent;
-
+const tempSearch = async (cityName) => {
     const locationResponse = await axios.get('http://localhost:5000/location', {
-        params: { q: cityName }
+        params: {q: cityName}
     });
-    const { lat, lon } = locationResponse.data[0];
+    const {lat, lon} = locationResponse.data[0];
 
     const weatherResponse = await axios.get('http://localhost:5000/weather', {
-        params: { lat, lon }
+        params: {lat, lon}
     });
 
     const temp = kelvinToF(weatherResponse.data.main.temp);
-    document.getElementById("tempValue").textContent = "" + temp +" " + "F";
+    document.getElementById("tempValue").textContent = "" + temp + " " + "F";
 
+};
+
+document.getElementById("currentTempButton").addEventListener("click", async () => {
+    const cityName = document.getElementById('headerCityName').innerHTML;
+    await tempSearch(cityName)
+});
+document.getElementById("citySearchButton").addEventListener("click", async () => {
+    const cityName = document.getElementById('cityNameInput').value;
+    syncCityName()
+    tempSearch(cityName)
+});
+
+document.getElementById("skySelect").addEventListener("change", (event) => {
+    const selectedSky = event.target.value;
+    const skyDisplay = document.getElementById("sky");
+
+    skyDisplay.innerHTML = "";
+
+    const skies = {
+        sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
+        cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
+        rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
+        snowy: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨",
+    };
+
+    skyDisplay.textContent = skies[selectedSky];
 });
