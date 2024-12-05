@@ -9,9 +9,9 @@ const state = {
   landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
   sky: 'sunny',
   name: 'Seattle',
-  weather: 'clear sky',
+  weather: 'clear',
   weatherIconCode: '01d',
-  weatherConditionCode: 800,
+  weatherDescription: 'clear sky',
 };
 
 const tempProperties = [ 
@@ -43,64 +43,6 @@ const skyOptions = {
   'rainy': '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧',
   'snowy': '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨',
 };
-
-const weatherConditionCodeDetails = {
-  200: 'thunderstorm with light rain',
-  201: 'thunderstorm with rain',
-  202: 'thunderstorm with heavy rain',
-  210: 'light thunderstorm',
-  211: 'thunderstorm',
-  212: 'heavy thunderstorm',
-  221: 'ragged thunderstorm',
-  230: 'thunderstorm with light drizzle',
-  231: 'thunderstorm with drizzle',
-  232: 'thunderstorm with heavy drizzle',
-  300: 'light intensity drizzle',
-  301: 'drizzle',
-  302: 'heavy intensity drizzle',
-  310: 'light intensity drizzle rain',
-  311: 'drizzle rain',
-  312: 'heavy intensity drizzle rain',
-  313: 'shower rain and drizzle',
-  314: 'heavy shower rain and drizzle',
-  321: 'shower drizzle',
-  500: 'light rain',
-  501: 'moderate rain',
-  502: 'heavy intensity rain',
-  503: 'very heavy rain',
-  504: 'extreme rain',
-  511: 'freezing rain',
-  520: 'light intensity shower rain',
-  521: 'shower rain',
-  522: 'heavy intensity shower rain',
-  531: 'ragged shower rain',
-  600: 'light snow',
-  601: 'snow',
-  602: 'heavy snow',
-  611: 'sleet',
-  612: 'light shower sleet',
-  613: 'shower sleet',
-  615: 'light rain and snow',
-  616: 'rain and snow',
-  620: 'light shower snow',
-  621: 'shower snow',
-  622: 'heavy shower snow',
-  701: 'mist',
-  711: 'smoke',
-  721: 'haze',
-  731: 'sand/dust whirls',
-  741: 'fog',
-  751: 'sand',
-  761: 'dust',
-  762: 'volcanic ash',
-  771: 'squalls',
-  781: 'tornado',
-  800: 'clear sky',
-  801: 'few clouds: 11-25%',
-  802: 'scattered clouds: 25-50%',
-  803: 'broken clouds: 51-84%',
-  804: 'overcast clouds: 85-100%',
-  }
 
 // Helper Functions
 
@@ -162,8 +104,7 @@ const changeRealWeatherDetails = () =>{
   weather.textContent = state.weather.toUpperCase();
   //Change weather details
   const weatherDetails = document.getElementById('weather-details');
-  weatherDetails.textContent = weatherConditionCodeDetails[state.weatherConditionCode];
-  // Change weather icon
+  weatherDetails.textContent = state.weatherDescription;
   const weatherIcon = document.getElementById('weather-icon');
   weatherIcon.src = `https://openweathermap.org/img/wn/${state.weatherIconCode}@2x.png`;
 
@@ -217,13 +158,14 @@ const getCityWeatherData = (coordObject) =>{
   return axios
     .get ('http://127.0.0.1:5000/weather', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
     .then((response)=>{
+      console.log(response.data)
       const tempK = response.data.main.temp;
       const tempF = (tempK - 273.15) * 1.8 + 32;
       const weatherData ={
         realTempValue: parseInt(tempF.toFixed(0)),
         weather: response.data.weather[0].main,
         weatherIconCode:  response.data.weather[0].icon,
-        weatherConditionCode: response.data.weather[0].id,
+        weatherDescription: response.data.weather[0].description,
       }
       return weatherData
     })
