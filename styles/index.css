@@ -112,6 +112,9 @@ justify-content: space-between;
 
 border-radius: 8px;
 font-size: 2em;
+height: 200px;
+width: 500px;
+background-color: lightblue;
 }
 
 .city-name__reset-btn {
