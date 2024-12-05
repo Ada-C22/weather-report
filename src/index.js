@@ -66,16 +66,10 @@ const changeGardenTempValueColorAndLandscape = () =>{
       break;
     }
   }
-  updateState(data);
-  // document.getElementById('tempValue').style.color = state.gardenTempValueColor;
-  
-  let currentElement = document.getElementById('tempValue');
-  let currentClassList = currentElement.classList;
-  if (currentClassList.length != 0) {    
-    currentElement.classList.remove(currentClassList[0]);
-  }
-  currentElement.classList.add(state.gardenTempValueColor);
 
+  document.getElementById('tempValue').classList.remove(state.gardenTempValueColor)
+  updateState(data);
+  document.getElementById('tempValue').classList.add(state.gardenTempValueColor);
   document.getElementById('landscape'). textContent = state.landscape;
 };
 
@@ -93,14 +87,10 @@ const changeRealTempValueColor = () =>{
       break;
     }
   }
+  document.getElementById('realTempValue').classList.remove(state.realTempValueColor)
   updateState(colorData);
-  // document.getElementById('realTempValue').style.color = state.realTempValueColor;
-  let currentElement = document.getElementById('realTempValue');
-  let currentClassList = currentElement.classList;
-  if (currentClassList.length != 0) {    
-    currentElement.classList.remove(currentClassList[0]);
-  }
-  currentElement.classList.add(state.realTempValueColor);
+  document.getElementById('realTempValue').classList.add(state.realTempValueColor)
+
 };
 
 const changeRealWeatherDetails = () =>{
