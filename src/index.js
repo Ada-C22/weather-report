@@ -1,5 +1,5 @@
 
-"use strict";
+// "use strict";
 let currentTempValue = 32;
 
 const state = {
@@ -78,7 +78,7 @@ const getCityLocationAndTemp = ()=> {
     .then((response) => {
       let lat = response.data[0]['lat'];
       let lon = response.data[0]['lon'];
-      return getCityWeather(lat,lon);
+      getCityWeather(lat,lon);
     })
     .catch((error) => {
       console.log('error!', error.response.data);

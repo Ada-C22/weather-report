@@ -163,6 +163,9 @@ background-color: lightblue;
 background-color: lightsteelblue;
 }
 
+#currentTempButton {
+    cursor: pointer;
+    }
 /* /////////// */
 
 #increaseTempControl,
