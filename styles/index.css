@@ -8,6 +8,8 @@
   --blue-violet: #8338ecff;
   --azure: #3a86ffff;
 
+
+
   /* https://coolors.co/palette/ffbe0b-fb5607-ff006e-8338ec-3a86ff */
 }
 
@@ -82,20 +84,20 @@ main {
 
 
 #current-weather-text {
+  text-align: center;
   font-size: 1.25rem;
 }
 
 .header-city-name {
   font-style: oblique;
   font-size: 2rem;
-  padding-left: 1rem ;
-}
-
-.header-city-name::before,
-.header-city-name::after {
-  content: "✨";
-}
-
+  }
+  
+  .header-city-name::before,
+  .header-city-name::after {
+    content: "✨";
+  }
+  
 
 #current-weather-container {
   display:grid;
@@ -128,6 +130,7 @@ main {
 }
 
 .city-name-section {
+  width: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -165,7 +168,7 @@ main {
 }
 
 button {
-  /* background-color: white; */
+  font-size: 1rem;
   border: none;
   padding: 15px 15px;
   font-family: "Rubik", sans-serif;
@@ -175,7 +178,7 @@ button {
 }
 
 #currentTempButton {
-  background: linear-gradient(45deg, var(--orange-pantone), var(--rose));
+  background: linear-gradient(45deg,var(--orange-pantone), var(--rose));
 }
 
 #cityNameReset {
@@ -183,7 +186,7 @@ button {
 }
 
 .right-side {
-   border: 8px solid white;
+  border: 8px solid white;
   /* background-color: white; */
   border-radius: 16px;
   padding: 1%;
@@ -198,42 +201,15 @@ button {
   align-items: start;
 }
 
-.sky__section {
+.sky-section {
   grid-row: 3;
-}
-
-.header {
-grid-column: span 3;
-display: flex;
-align-items: center;
-margin: 2rem auto 3rem 0;
-}
-
-.header > h1 {
-margin-right: 2rem;
-font-size: 3em;
-}
-
-.header-city-name {
-font-style: oblique;
-font-size: 2rem;
-}
-
-.header-city-name::before,
-.header-city-name::after {
-content: "✨";
-}
-
-.sky-section,
-.garden-section {
-  margin: 0;
-  padding: 0;
 }
 
 .temperature-toggle, .sky-section {
   display: flex;
   flex-direction: column; 
-  align-items: flex-start; 
+  /* align-items: flex-start;  */
+  align-items: center; 
   width: 100%; 
   max-width: 150px; 
   gap: 0.5rem;
@@ -242,6 +218,7 @@ content: "✨";
 
 
 .sky-select{
+  color: black;
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -250,7 +227,7 @@ content: "✨";
 
 .temp-sky-wrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   gap: 1rem;
   width: 100%;
@@ -258,18 +235,26 @@ content: "✨";
 }
 
 .temperature-toggle h2, .sky-section h2 {
-  margin: 0; 
   text-align: left;
 
 }
-
-
 
 #tempValue {
 font-size: 2rem;
 font-weight: bold;
 margin: 0;
 text-align: center;
+}
+
+.temp-arrow {
+  font-size: 1.5rem;
+}
+
+.temperature-controls {
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 1rem;
 }
 
 #skyDisplay {
@@ -279,18 +264,13 @@ text-align: center;
   height: 2.5rem;
   line-height: 2.5rem;
   width: 100%;
-  border: 1px solid black; 
   border-radius: 5px;
 }
 
-.temperature__controls {
-display: flex;
-flex-direction: row;
-align-items: center;
-gap: 1rem;
-}
-
-.garden__section {
+.garden-section {
+  background-color: white;
+  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  border-radius: 18px;
   grid-row: 2;
   grid-column: 1 / span 2;
   display: flex;
@@ -302,7 +282,7 @@ gap: 1rem;
   width: 100%;
 }
 
-.garden__content {
+.garden-content {
 width: 100%;
 max-width: 100%;
 min-height: 200px;
