@@ -35,7 +35,7 @@
                 </section>
             </section>
             <section class="city-name-section">
-                <h2>Choose a city:</h2>
+                <h3>Choose a city:</h3>
                 <div class="input-container">
                     <input type="text" id="cityNameInput">
                 </div>
@@ -47,36 +47,35 @@
         </section>
         <section class="right-side">
             <h2>Weather Garden</h2>
-            <div class="temp-sky-wrapper">
-            <section class="temperature-toggle">
-                <h2>Temp:</h2>
-                    <div class="temperature-controls">
-                        <span id="increaseTempControl" class="temp-arrow">⬆️</span>
-                        <span id="tempValue" class="temp-value">70</span>
-                        <span id="decreaseTempControl" class="temp-arrow">⬇️</span>
-                    </div>
-            </section>
-            <section class="sky-section">
-                <h2>Sky:</h2>
-                <select id="skySelect" class="sky-select">
-                    <option value="">Select Sky</option>
-                    <option value="sunny">Sunny</option>
-                    <option value="cloudy">Cloudy</option>
-                    <option value="rainy">Rainy</option>
-                    <option value="snowy">Snowy</option>
-                </select>              
-            </section>
-        </div>
-        <section class="garden-section">
-            <!-- <h2>Weather Garden</h2> -->
-            <div id='skyDisplay' class='sky-display'> </div>
-            <div id="gardenContent" class="garden-content">
+            <section class="garden-section">
+                <div id='skyDisplay' class='sky-display'> </div>
+                <div id="gardenContent" class="garden-content">
                     <div id="landscape"></div>
                 </div>
             </section>
+            <div class="temp-sky-wrapper">
+                <section class="temp-controls-container">
+                    <h3>Temp:</h3>
+                        <div class="temperature-controls">
+                            <span id="increaseTempControl" class="temp-arrow">⬆️</span>
+                            <span id="tempValue" class="temp-value">70</span>
+                            <span id="decreaseTempControl" class="temp-arrow">⬇️</span>
+                        </div>
+                </section>
+                <section class="sky-controls-container">
+                    <h3>Sky:</h3>
+                    <select id="skySelect" class="sky-select">
+                        <option value="">Select Sky</option>
+                        <option value="sunny">Sunny</option>
+                        <option value="cloudy">Cloudy</option>
+                        <option value="rainy">Rainy</option>
+                        <option value="snowy">Snowy</option>
+                    </select>              
+                </section>
+            </div>
         </section>
-            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-            <script src="./src/index.js" defer></script>
-        </section>
+    </main>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./src/index.js" defer></script>
 </body>
 </html>
