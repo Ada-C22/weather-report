@@ -123,7 +123,7 @@ padding: 1rem;
 font-family: "Rubik", sans-serif;
 }
 
-.red {
+/* .red {
 color: red;
 }
 
@@ -161,4 +161,10 @@ background-color: lightblue;
 
 .snowy {
 background-color: lightsteelblue;
-}
+} */
+
+#skyDisplay {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 10px;
+  }

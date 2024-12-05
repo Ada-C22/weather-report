@@ -18,12 +18,12 @@ const updateTemperature = () => {
         landScrape.textContent = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
     } else if (currentTemperature >= 60) {
         tempValue.style.color = 'yellow';
-        tempValue.style.backgroundColor = '#FFE4B5';
+        tempValue.style.backgroundColor = 'pink';
         landScrape.textContent = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
     } else if (currentTemperature >= 50) {
         tempValue.style.color = 'green';
         tempValue.style.backgroundColor = '#CCFFCC';
-        landScrape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
+        landScrape.textContent = "🌲🌲🍂🌲🍁🍃🌲🌾🌲🌲🍂🍁🌲";
     } else if (currentTemperature >= 40) {
         tempValue.style.color = 'teal';
         tempValue.style.backgroundColor = '#CCFFFF';
@@ -73,6 +73,21 @@ document.addEventListener("DOMContentLoaded", () => {
             currentTemperature = Math.round(tempFahrenheit);
             updateTemperature();
 
+            // Update the sky based on weather condition
+            const weatherCondition = weatherResponse.data.weather.main;
+            let skyType = "Sunny"; // Default sky
+
+            if (weatherCondition.includes("Rain")) {
+            skyType = "Rainy";
+            } else if (weatherCondition.includes("Snow")) {
+            skyType = "Snowy";
+            } else if (weatherCondition.includes("Cloud")) {
+            skyType = "Cloudy";
+            }
+
+            skySelect.value = skyType; // Sync dropdown
+            updateSky(skyType);
+
         } catch (error) {
             console.error("Error fetching weather data:", error);
         }
@@ -87,9 +102,36 @@ document.addEventListener("DOMContentLoaded", () => {
         headerCityName.textContent = "Seattle";
         currentTemperature = 70;
         updateTemperature();
+        updateSky("Sunny");
+        skySelect.value = "Sunny";
     });
 
     updateTemperature();
 });
+
+// Wave 5
+const updateSky = () => {
+    const skySelect = document.getElementById('skySelect');
+    const skyElement = document.getElementById('sky');
+
+    const skyOptions = {
+        Sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
+        Cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
+        Rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
+        Snowy: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨",
+    };
+
+    const selectedSky = skySelect.value;
+    skyElement.textContent = skyOptions[selectedSky];
+};
+
+// Add an event listener to the select dropdown for changing the sky
+document.getElementById('skySelect').addEventListener('change', updateSky);
+
+document.addEventListener("DOMContentLoaded", () => {
+    updateSky("Sunny");
+    updateTemperature();
+  });
+
 
 
