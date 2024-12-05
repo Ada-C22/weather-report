@@ -100,9 +100,11 @@ main {
 #current-weather-container {
   display:grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: 1fr, 2fr;
   gap: 8px;
 }
+
+
 .weather-section{
   background-color: white;
   border-radius: 16px;
