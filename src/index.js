@@ -1,55 +1,53 @@
 'use strict';
-// F = 1.8*(K-273) + 32.
-//  F = 9/5(K - 273) + 32
 // C = K - 273.15
 
 const state = {
   tempCount: 70,
-  cityName: "seattle",
+  cityName: "Seattle",
+  tempValue: null,
 };
 
 //wave 2
 const updateDecreaseTempCount = () => {
-  const tempValue = document.getElementById('tempValue');
   --state.tempCount;
-  tempValue.textContent = `${state.tempCount}°F`;
-
+  refreshUI()
   updateTempColorAndLandscape();
 };
 
 const updateIncreaseTempCount = () => {
-  const tempValue = document.getElementById('tempValue');
   ++state.tempCount;
-  tempValue.textContent = `${state.tempCount}°F`;
-
+  refreshUI();
   updateTempColorAndLandscape();
 };
 
+const refreshUI = () => {
+  state.tempValue.textContent = `${state.tempCount}°F`;
+};
+
 const updateTempColorAndLandscape = () => {
-  const tempValue = document.getElementById("tempValue");
   const newLandscape = document.createElement("div");
   const landscapeContainer = document.getElementById("landscape");
   landscapeContainer.textContent = "";
 
   switch (true) {
     case state.tempCount >= 80:
-      tempValue.style.color = 'red';
+      tempValue.style.color = "red";
       newLandscape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
       break;
     case state.tempCount >= 70:
-      tempValue.style.color = 'orange';
+      tempValue.style.color = "orange";
       newLandscape.textContent = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
       break;
     case state.tempCount >= 60:
-      tempValue.style.color = 'yellow';
+      tempValue.style.color = "yellow";
       newLandscape.textContent = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
       break;
     case state.tempCount >= 50:
-      tempValue.style.color = 'green';
+      tempValue.style.color = "green";
       newLandscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
       break;
     case state.tempCount < 50:
-      tempValue.style.color = 'teal';
+      tempValue.style.color = "teal";
       newLandscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
       break;
   }
@@ -66,9 +64,8 @@ const updateCityNameInput = () => {
 
 //wave 6
 const resetCityNameInput = () => {
-  // const cityNameReset = document.getElementById("cityNameReset");
   cityNameInput.value = "";
-  headerCityName.textContent = "";
+  headerCityName.textContent = "Seattle";
 };
 
 //wave 4
@@ -111,11 +108,11 @@ const findLatitudeAndLongitude = () => {
     })
     .catch((error) => {
       console.log("error in findLatitudeAndLongitude!");
+      throw error;
     });
 };
 
 const getTemperature = () => {
-  const tempValue = document.getElementById("tempValue");
 
   return findLatitudeAndLongitude()
     .then((coordinates) => {
@@ -124,24 +121,37 @@ const getTemperature = () => {
     .then((temp) => {
       const fahrenheit = 1.8 * (temp - 273) + 32;
       state.tempCount = Math.round(fahrenheit);
-      tempValue.textContent = `${state.tempCount}°F`;
+      refreshUI();
       updateTempColorAndLandscape();
     })
     .catch((error) => {
       console.error("Error in getTemperature!");
+      tempValue.textContent = "City does not exist";
     });
 };
 
+const loadControls = () => {
+  state.tempValue = document.getElementById("tempValue");
+
+}
+
 const registerEventHandlers = () => {
+  loadControls();
+
+  const decreaseTemp = document.getElementById("decreaseTempControl");
+  decreaseTemp.addEventListener("click", updateDecreaseTempCount);
+
+  const increaseTemp = document.getElementById("increaseTempControl");
+  increaseTemp.addEventListener("click", updateIncreaseTempCount);
+
   const headerCityName = document.getElementById("headerCityName");
   headerCityName.textContent = "Seattle";
-  const decreaseTemp = document.getElementById('decreaseTempControl');
-  const increaseTemp = document.getElementById('increaseTempControl');
-  const currentTempButton = document.getElementById("currentTempButton");
-  decreaseTemp.addEventListener('click', updateDecreaseTempCount);
-  increaseTemp.addEventListener('click', updateIncreaseTempCount);
-  cityNameInput.addEventListener("input", updateCityNameInput);
+
+  const cityNameReset = document.getElementById("cityNameReset");
   cityNameReset.addEventListener("click", resetCityNameInput);
+  cityNameInput.addEventListener("input", updateCityNameInput);
+
+  const currentTempButton = document.getElementById("currentTempButton");
   currentTempButton.addEventListener("click", getTemperature);
 
   updateTempColorAndLandscape();
