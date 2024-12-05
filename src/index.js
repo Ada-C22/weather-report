@@ -1,11 +1,12 @@
 const state = {
   temperature: 69,
-  cityName: "",
+  cityName: "Seattle",
   upButton: null,
   downButton: null,
   searchBar: null,
   currentTempButton: null,
   skySelectDD: null,
+  resetButton: null,
 };
 
 //Wave 2: Increase and Decrease Temperature
@@ -52,9 +53,12 @@ const changeStyleToTemp = (currentTemp) => {
 
 // function that runs when user inputs in search bar
 const updateCityName = () => {
-  const searchBar = document.getElementById("cityNameInput");
   const cityNameDisplay = document.getElementById("headerCityName");
-  state.cityName = searchBar.value;
+  if (!state.searchBar.value) {
+    state.searchBar.value = state.cityName;
+  } else {
+    state.cityName = state.searchBar.value;
+  }
   cityNameDisplay.textContent = state.cityName;
 };
 
@@ -125,25 +129,37 @@ const showSky = () => {
 ;
 };
 
+const resetCity = () => {
+  state.cityName = "";
+  state.searchBar.value = state.cityName;
+  updateCityName()
+};
+
 // load the elements into the states
 const loadControls = () => {
   state.upButton = document.querySelector("#increaseTempControl");
   state.downButton = document.querySelector("#decreaseTempControl");
   state.searchBar = document.getElementById("cityNameInput");
   state.currentTempButton = document.querySelector("#currentTempButton");
-  state.skySelectDD = document.getElementById("skySelect")
+  state.skySelectDD = document.getElementById("skySelect");
+  state.resetButton = document.getElementById("cityNameReset");
 };
 
 // register the buttons and their respective listener + function
 const registerEventHandlers = () => {
   loadControls()
-  changeTemp(); // when DOM loads, the default temp text should also change colors
+  // when DOM loads:
+  // the default temp text should also change colors
+  // the search bar and header should display default city
+  changeTemp(); 
+  updateCityName();
   
   state.upButton.addEventListener("click", increaseTemp);
   state.downButton.addEventListener("click", decreaseTemp);
   state.searchBar.addEventListener("input", updateCityName);
   state.currentTempButton.addEventListener("click", updateToCityTemp);
   state.skySelectDD.addEventListener("change", showSky)
+  state.resetButton.addEventListener("click", resetCity)
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
