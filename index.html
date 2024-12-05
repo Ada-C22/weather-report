@@ -28,8 +28,7 @@
         </header>
 
         <section class="row d-flex align-items-center justify-content-center temperature__section" id="topSection">
-            <!-- <h2>Temperature</h2> -->
-            <div class="temperature__content">
+            <article class="temperature__content">
                 <div class="row align-items-center temperature__controls">
                     <div class="col-lg-7 col-sm-8 text-end">
                         <div id="tempValue"></div>
@@ -39,13 +38,13 @@
                         <div><i id="decreaseTempControl" class="bi bi-chevron-down"></i></div>
                     </div>
                 </div>
-            </div>
-            <div class="row text-center">
+            </article>
+            <article class="row text-center">
                 <div class="col">
                     <button id="currentTempButton">Real-time Temp</button>
                     <button id="cityNameReset">Reset City Name</button>
                 </div>
-            </div>
+            </article>
         </section>
 
         <hr>
@@ -55,8 +54,7 @@
                     <div class="col d-flex flex-column justify-content-center align-items-center sky__section">
                         <h2>Sky</h2>
                         <select id="skySelect">
-                            <!-- sky options here -->
-                                <option value="chooseAForcast">Choose a Forcast...</option>
+                                <option value="chooseAForecast">Choose a Forecast...</option>
                                 <option value="sunny">Sunny</option>
                                 <option value="cloudy">Cloudy</option>
                                 <option value="rainy">Rainy</option>
@@ -106,14 +104,12 @@
                         <button id="citySearchButton">Search</button>
                     </div>
                 </div>
-
             </article>
             <article class="col-6" id="landscapeImg" style="background-image: url(./assets/weather-imgs/weather_1.png);">
                 <h2>Weather Album</h2>
             </article>
         </section>
     </div>
-
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./src/index.js"></script>
