@@ -178,3 +178,8 @@ background-color: lightsteelblue;
     padding: 0; /* Removes default padding */
     margin: 0; /* Removes default margin */
 }
+
+#currentTempButton {
+    cursor: pointer;
+}
+

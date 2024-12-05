@@ -9,7 +9,10 @@ const state = {
   gardenLandscape: null,
   cityName: null,
   cityInput: null,
-  currentTempButton: null
+  currentTempButton: NaN,
+  /////////////////////////////
+  skySelect: NaN,
+  sky: NaN
 };
 
 const loadControls = () => {
@@ -20,7 +23,11 @@ const loadControls = () => {
   state.cityInput = document.getElementById('cityNameInput');
   state.cityName = document.getElementById('headerCityName');
   state.currentTempButton = document.getElementById('currentTempButton');
+  ////////////////////////
+  state.skySelect = document.getElementById('skySelect');
+  state.sky = document.getElementById('sky');
 };
+
 
 const updateTemperatureDisplay = () => {
   state.tempElement.textContent = `${currentTempValue}°F`;
@@ -66,40 +73,55 @@ const updateCityName = () => {
     state.cityName.textContent = state.cityInput.value;
   }
 };
-
-const getCityLocationAndTemp = ()=> {
+///////////////////
+const skySelector = () =>{
+  if (state.skySelect.value == 'sunny'){
+    state.sky.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
+  } 
+  else if (state.skySelect.value == 'cloudy'){
+    state.sky.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
+  }
+  else if (state.skySelect.value == 'rainy'){
+    state.sky.textContent = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
+  }
+  else {
+    state.sky.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
+  }
+}
+const getCityLocationAndTemp = () => {
   const location = state.cityInput.value
   axios
-    .get('http://127.0.0.1:5000/location',{
-      params: { 
+    .get('http://127.0.0.1:5000/location', {
+      params: {
         q: location
       }
     })
     .then((response) => {
       let lat = response.data[0]['lat'];
       let lon = response.data[0]['lon'];
-      getCityWeather(lat,lon);
+      getCityWeather(lat, lon);
     })
     .catch((error) => {
       console.log('error!', error.response.data);
     });
-  };
-  
-  const getCityWeather = (lat,lon) => {
+};
+
+const getCityWeather = (lat, lon) => {
   axios
-    .get('http://127.0.0.1:5000/weather',{
+    .get('http://127.0.0.1:5000/weather', {
       params: {
         lat: lat,
         lon: lon,
-        }
-      })
+        units: 'imperial'
+      }
+    })
     .then((response) => {
-      state.currentTempButton.textContent = response.main.temp
+      state.tempElement.textContent = response.data.main.temp
     })
     .catch((error) => {
       console.log('error!', error.response.data);
     });
-  };
+};
 
 const registerEventHandlers = () => {
   loadControls();
@@ -109,6 +131,7 @@ const registerEventHandlers = () => {
   state.decreaseTempControl.addEventListener('click', decreaseTemp)
   state.cityInput.addEventListener('input', updateCityName)
   state.currentTempButton.addEventListener('click', getCityLocationAndTemp)
+  state.skySelect.addEventListener('change', skySelector)
 };
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
