@@ -76,8 +76,11 @@
         </section>
     </main>
     <dialog id="cityErrorDialog">
-        <p id="cityErrorMessage">Oops, we couldn't weather data for that city. Please try again</p>
-        <button id="cityErrorCloseBtn">Close</button>
+        <div class="error-message-container">
+            <p id="cityErrorMessage">Oops, we couldn't weather data for that city. </p>
+            <p>Please try again.</p>
+            <button id="cityErrorCloseBtn">Close</button>
+        </div>
     </dialog>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./src/index.js" defer></script>

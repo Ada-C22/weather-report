@@ -186,6 +186,10 @@ button {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
+button:hover, .temp-arrow:hover {
+  transform: scale(1.25);
+}
+
 #currentTempButton {
   background: linear-gradient(45deg,var(--orange-pantone), var(--rose));
 }
@@ -316,8 +320,42 @@ gap: 1rem;
 }
 
 
+dialog {
+  width: 33vw;
+  height: 33vh;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+
+}
+
+.error-message-container {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+dialog::backdrop{
+  background:radial-gradient(whitesmoke, rgb(144, 140, 140));
+  opacity: .75;
+}
+
 dialog p {
   color:black;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+dialog button {
+  background: linear-gradient(45deg, var(--amber), var(--orange-pantone), var(--rose), var(--blue-violet), var(--azure));
+  color:white;
+  font-weight: bold;
 }
 
 
