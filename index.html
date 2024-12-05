@@ -29,33 +29,39 @@
         </section>
     </section>
     <section class="right-side">
+        <!-- Wrapper for Temp Controls and Sky Dropdown -->
+        <div class="temp-sky-wrapper">
+        <!-- Temp Section --> 
         <section class="temperature-toggle">
+            <h2>Temp:</h2>
                 <div class="temperature__controls">
-                    <span id="increaseTempControl">⬆️</span>
-                    <span id="tempValue"></span>
-                    <span id="decreaseTempControl">⬇️</span>
+                    <span id="increaseTempControl" class="temp-arrow">⬆️</span>
+                    <span id="tempValue" class="temp-value">70</span>
+                    <span id="decreaseTempControl" class="temp-arrow">⬇️</span>
                 </div>
-                <button id="currentTempButton">Get Realtime Temperature</button>
         </section>
+        <!-- Sky Section -->
         <section class="sky-section">
-            <h2>Sky</h2>
-            <select id="skySelect">
-                <option value="">Select One</option>
+            <h2>Sky:</h2>
+            <select id="skySelect" class="sky-select">
                 <option value="sunny">Sunny</option>
                 <option value="cloudy">Cloudy</option>
                 <option value="rainy">Rainy</option>
                 <option value="snowy">Snowy</option>
-            </select>
+            </select>              
         </section>
-        <section class="garden__section">
-            <h2>Weather Garden</h2>
-            <div id="skyDisplay" class="sky_display"></div>
-            <div id="gardenContent" class="garden__content">
+    </div>
+    <!-- Weather Garden -->
+    <section class="garden__section">
+        <h2>Weather Garden</h2>
+        <div id='skyDisplay' class='sky-display'> </div>
+        <div id="gardenContent" class="garden__content">
                 <div id="landscape"></div>
             </div>
         </section>
+    </section>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="./src/index.js"></script>
+        <script src="./src/index.js" defer></script>
     </section>
 </body>
 </html>
