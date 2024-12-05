@@ -48,36 +48,54 @@ const skyOptions = {
 
 //Wave 2
 const changeGardenTempValueColorAndLandscape = () =>{
+  let data = {}
   for (const idx in tempProperties){
     let temp = tempProperties[idx].temp;
     if (temp === 49 && state.gardenTempValue<= temp){
-      state.gardenTempValueColor = tempProperties[idx].color;
-      state.landscape = tempProperties[idx].landscape;
+      data.gardenTempValueColor = tempProperties[idx].color;
+      data.landscape = tempProperties[idx].landscape;
       break;
     }else if (state.gardenTempValue >= temp){
-      state.gardenTempValueColor = tempProperties[idx].color;
-      state.landscape = tempProperties[idx].landscape;
+      data.gardenTempValueColor = tempProperties[idx].color;
+      data.landscape = tempProperties[idx].landscape;
       break;
     }
   }
-  document.getElementById('tempValue').style.color = state.gardenTempValueColor;
+  updateState(data);
+  // document.getElementById('tempValue').style.color = state.gardenTempValueColor;
+  
+  let currentElement = document.getElementById('tempValue');
+  let currentClassList = currentElement.classList;
+  if (currentClassList.length != 0) {    
+    currentElement.classList.remove(currentClassList[0]);
+  }
+  currentElement.classList.add(state.gardenTempValueColor);
+
   document.getElementById('landscape'). textContent = state.landscape;
 };
 
 
 
 const changeRealTempValueColor = () =>{
+  let colorData ={}
   for (const idx in tempProperties){
     let temp = tempProperties[idx].temp;
     if (temp === 49 && state.realTempValue<= temp){
-      state.realTempValueColor = tempProperties[idx].color;
+      colorData.realTempValueColor = tempProperties[idx].color;
       break;
     }else if (state.realTempValue >= temp){
-      state.realTempValueColor = tempProperties[idx].color;
+      colorData.realTempValueColor = tempProperties[idx].color;
       break;
     }
   }
-  document.getElementById('realTempValue').style.color = state.realTempValueColor;
+  updateState(colorData);
+  // document.getElementById('realTempValue').style.color = state.realTempValueColor;
+  let currentElement = document.getElementById('realTempValue');
+  let currentClassList = currentElement.classList;
+  if (currentClassList.length != 0) {    
+    currentElement.classList.remove(currentClassList[0]);
+  }
+  currentElement.classList.add(state.realTempValueColor);
 };
 
 
