@@ -134,6 +134,18 @@ const loadControls = () => {
   state.skySelectDD = document.getElementById("skySelect")
 };
 
+//Function to reset city name
+const resetCityName = () => {
+    const cityDefault = "Seattle";
+    state.cityName = cityDefault;
+
+    const searchBar = document.getElementById("cityNameInput");
+    const cityNameDisplay = document.getElementById("headerCityName");
+    searchBar.value = cityDefault; 
+    cityNameDisplay.textContent = cityDefault;
+
+};
+
 // register the buttons and their respective listener + function
 const registerEventHandlers = () => {
   loadControls()
@@ -144,6 +156,8 @@ const registerEventHandlers = () => {
   state.searchBar.addEventListener("input", updateCityName);
   state.currentTempButton.addEventListener("click", updateToCityTemp);
   state.skySelectDD.addEventListener("change", showSky)
+  const resetButton = document.querySelector("#cityNameReset");
+    resetButton.addEventListener("click", resetCityName);
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
