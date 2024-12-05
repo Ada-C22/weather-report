@@ -1,6 +1,31 @@
 "use strict";
 
-const defaultCityNameInput = "Los Angeles";
+const defaultCityNameInput = "Seattle";
+const defaultTempValue = 299.817; // 80 F
+// Keeping one place where we change the temp and unit
+const currentTemperature = {
+    unit: "F",
+    value: defaultTempValue,
+    image: "default.png"
+}
+
+const kelvinToF = (k) => {
+    return Math.floor(1.8*(k-273) + 32)
+}
+
+const kelvinToC = (k) => {
+    return Math.floor(k - 273.15)
+}
+const getTemperatureInCurrentUnit = () => {
+    if(currentTemperature.unit === "F"){
+        return kelvinToF(currentTemperature.value)
+    }
+    return kelvinToC(currentTemperature.value)
+}
+
+const displayTemperature = () => {
+    return `${getTemperatureInCurrentUnit()}°${currentTemperature.unit}`
+}
 
 // Syncs City name between the input box and the title
 const syncCityName =  () => {
@@ -23,8 +48,8 @@ const updateTemperatureControl = () => {
     const decreaseTempControl = document.getElementById("decreaseTempControl");
     const landscape = document.getElementById("landscape");
 
-    let temp = 80;
-    tempValue.textContent = `${temp}°F`;
+    let temp = getTemperatureInCurrentUnit();
+    tempValue.textContent = displayTemperature();
 
     // updates temperature text color and weather garden landscape
     const updateWeatherDisplay = () => {
@@ -50,17 +75,15 @@ const updateTemperatureControl = () => {
 
     // controls temperature increase
     const increaseTemp = () => {
-        temp = parseInt(tempValue.textContent);
-        temp += 1;
-        tempValue.textContent = `${temp}°F`;
+        currentTemperature.value += 1;
+        tempValue.textContent = displayTemperature();
         updateWeatherDisplay();
     };
 
     // controls temperature decrease
     const decreaseTemp = () => {
-        temp = parseInt(tempValue.textContent);
-        temp -= 1;
-        tempValue.textContent = `${temp}°F`;
+        currentTemperature.value -= 1;
+        tempValue.textContent = displayTemperature();
         updateWeatherDisplay();
     };
 
@@ -99,7 +122,8 @@ const updateCityNameReset = () => {
     // resets city name and temperature
     const resetCityInfo = () => {
         headerCityName.textContent = defaultCityNameInput;
-        tempValue.textContent = "80°F";
+        currentTemperature.value = defaultTempValue
+        tempValue.textContent = displayTemperature();
         tempValue.style.color = "red";
         cityNameInput.value = "";
     };
@@ -113,11 +137,9 @@ document.addEventListener("DOMContentLoaded", () => {
     updateWeatherAlbum();
     updateCityNameReset();
     syncCityName();
+    updateBackground();
 });
 
-const kelvinToF = (k) => {
-    return Math.floor(1.8*(k-273) + 32)
-}
 const tempSearch = async (cityName) => {
     const locationResponse = await axios.get('http://localhost:5000/location', {
         params: {q: cityName}
@@ -127,11 +149,9 @@ const tempSearch = async (cityName) => {
     const weatherResponse = await axios.get('http://localhost:5000/weather', {
         params: {lat, lon}
     });
-
-    const temp = kelvinToF(weatherResponse.data.main.temp);
-    const tempValue = document.getElementById("tempValue");
-    tempValue.textContent = `${temp}°F`;
-
+    currentTemperature.value = weatherResponse.data.main.temp;
+    document.getElementById("tempValue").textContent = displayTemperature();
+    updateBackground();
 };
 
 document.getElementById("currentTempButton").addEventListener("click", async () => {
@@ -149,7 +169,6 @@ document.getElementById("skySelect").addEventListener("change", (event) => {
     const skyDisplay = document.getElementById("sky");
 
     skyDisplay.innerHTML = "";
-
     const skies = {
         sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
         cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
@@ -159,3 +178,30 @@ document.getElementById("skySelect").addEventListener("change", (event) => {
 
     skyDisplay.textContent = skies[selectedSky];
 });
+
+
+document.getElementById("convert-temp-btn").addEventListener("click", () => {
+    const convertTempBtn = document.getElementById("convert-temp-btn");
+    if (currentTemperature.unit === "C") {
+        convertTempBtn.textContent = "Convert to °C";
+        currentTemperature.unit = "F"
+    } else {
+        convertTempBtn.textContent = "Convert to °F";
+        currentTemperature.unit = "C"
+    }
+    document.getElementById("tempValue").textContent = displayTemperature();
+});
+
+// - Changing the temperature should change the page's background.
+const updateBackground = () => {
+    const body = document.body;
+    if (currentTemperature.value > 290) {
+        currentTemperature.image = "hot.png"
+    } else if (currentTemperature.value > 280 && currentTemperature.value <= 290) {
+        currentTemperature.image = "good.png"
+    } else {
+        currentTemperature.image = "cold.png"
+    }
+     body.style.backgroundImage = `url(./assets/tempretures/${currentTemperature.image})`;
+     body.style.backgroundSize = "cover";
+};
