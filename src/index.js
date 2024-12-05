@@ -62,7 +62,6 @@ const updateCityNameInput = () => {
   const headerCityName = document.getElementById("headerCityName");
   headerCityName.textContent = cityNameInput.value;
   state.cityName = cityNameInput.value;
-  console.log(state.cityName);
 };
 
 //wave 6
@@ -134,6 +133,8 @@ const getTemperature = () => {
 };
 
 const registerEventHandlers = () => {
+  const headerCityName = document.getElementById("headerCityName");
+  headerCityName.textContent = "Seattle";
   const decreaseTemp = document.getElementById('decreaseTempControl');
   const increaseTemp = document.getElementById('increaseTempControl');
   const currentTempButton = document.getElementById("currentTempButton");

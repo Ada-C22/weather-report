@@ -80,6 +80,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  gap: 1em;
   /* justify-content: center; */
 }
 
