@@ -12,51 +12,52 @@
 </head>
 
 <body>
-    <h1 id = 'siteTitle'>Ada Weather Report</h1>
-    <section class="left-side">
-        <header class="header">
-            <h1>Weather Report</h1>
-            <span>For the lovely city of
-                <span id="headerCityName" class="header-city-name"></span></span>
-        </header>
-        <section class="temperature-section">
-            <h2>Temperature</h2>
-            <span id="realTempValue"></span>   
+    <main class="app-container">
+        <h1 id = 'siteTitle'>Ada Weather Report</h1>
+        <section class="left-side">
+            <header class="current-weather-header">
+                <span>Current weather in the lovely city of</span>
+                <span id="headerCityName" class="header-city-name"></span>
+            </header>
+            <section class="temperature-section">
+                <h2>Temperature</h2>
+                    <span id="realTempValue"></span>
+            </section>
+            <section class="city-name-section">
+                <h2>Choose a city:</h2>
+                <input type="text" id="cityNameInput">
+                <button id="currentTempButton">Get Realtime Temperature</button>
+                <button id="cityNameReset" class="city-name-reset-btn">Reset</button>
+            </section>
         </section>
-        <section class="city-name-section">
-            <h2>City Name</h2>
-            <input type="text" id="cityNameInput">
-            <button id="currentTempButton">Get Realtime Temperature</button>
-            <button id="cityNameReset" class="city-name-reset-btn">Reset</button>
-        </section>
-    </section>
-    <section class="right-side">
-        <section class="temperature-toggle">
-                <div class="temperature__controls">
-                    <span id="increaseTempControl">⬆️</span>
-                    <span id="tempValue"></span>
-                    <span id="decreaseTempControl">⬇️</span>
+        <section class="right-side">
+            <section class="temperature-toggle">
+                    <div class="temperature__controls">
+                        <span id="increaseTempControl">⬆️</span>
+                        <span id="tempValue"></span>
+                        <span id="decreaseTempControl">⬇️</span>
+                    </div>
+            </section>
+            <section class="sky-section">
+                <h2>Sky</h2>
+                <select id="skySelect">
+                    <option value="">Select One</option>
+                    <option value="sunny">Sunny</option>
+                    <option value="cloudy">Cloudy</option>
+                    <option value="rainy">Rainy</option>
+                    <option value="snowy">Snowy</option>
+                </select>
+            </section>
+            <section class="garden__section">
+                <h2>Weather Garden</h2>
+                <div id="skyDisplay" class="sky_display"></div>
+                <div id="gardenContent" class="garden__content">
+                    <div id="landscape"></div>
                 </div>
+            </section>
+            <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+            <script src="./src/index.js"></script>
         </section>
-        <section class="sky-section">
-            <h2>Sky</h2>
-            <select id="skySelect">
-                <option value="">Select One</option>
-                <option value="sunny">Sunny</option>
-                <option value="cloudy">Cloudy</option>
-                <option value="rainy">Rainy</option>
-                <option value="snowy">Snowy</option>
-            </select>
-        </section>
-        <section class="garden__section">
-            <h2>Weather Garden</h2>
-            <div id="skyDisplay" class="sky_display"></div>
-            <div id="gardenContent" class="garden__content">
-                <div id="landscape"></div>
-            </div>
-        </section>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="./src/index.js"></script>
-    </section>
+    </main>
 </body>
 </html>
