@@ -42,7 +42,7 @@ const changeColorAndLandscape = (temp) => {
 const updateSky = () => {
     const skySelect = document.getElementById("skySelect").value;
     const sky = document.getElementById("sky")
-    if (skySelect === "sunny") {
+    if (skySelect === "Sunny") {
         sky.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
     } else if (skySelect === "cloudy") {
         sky.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
@@ -57,7 +57,7 @@ const updateSky = () => {
 
 const findLatitudeAndLongitude = () => {
     let latitude, longitude;
-    const cityName = document.getElementById("cityNameInput").value;
+    const cityName = document.getElementById("headerCityName").textContent;
     axios.get('http://127.0.0.1:5000/location',
         {
             params: {
@@ -71,7 +71,7 @@ const findLatitudeAndLongitude = () => {
             changeColorAndLandscape(state.curTemp)
         })
         .catch((error) => {
-            console.log('error in testfindLatitudeAndLongitude!');
+            console.log('error in findLatitudeAndLongitude!');
         });
 }
 
@@ -80,12 +80,12 @@ const findWeather = (latitude, longitude) => {
             params: { lat: latitude, lon: longitude },
         })
         .then((response) => {
-            const kelvinTemp = response.data.main.temp;
+            const kelvinTemp = response.data.main.temp;        
             const fahrenheitTemp = Math.round(kelvinTemp * 9 / 5 - 459.67);
             state.curTemp = fahrenheitTemp;
             const temp = document.getElementById("tempValue");
-            temp.textContent = state.curTemp;
-            
+            const weather = document.getElementById("skySelect");
+            temp.textContent = state.curTemp;          
         })
 
         .catch((error) => {
@@ -106,7 +106,7 @@ const changeCityName = () => {
     const cityName = document.getElementById("cityNameInput").value;
     const headerCityName = document.getElementById("headerCityName");
     headerCityName.textContent = cityName;
-    findLatitudeAndLongitude(cityName);
+    // findLatitudeAndLongitude(cityName);
 };
 
 const registerEventHandlers = () => {
@@ -120,7 +120,7 @@ const registerEventHandlers = () => {
     cityResetButton.addEventListener("click", resetCityName);
 
     const cityNameInput = document.getElementById("cityNameInput");
-    cityNameInput.addEventListener("click", changeCityName);
+    cityNameInput.addEventListener("input", changeCityName);
 
     const updateTempButton = document.getElementById('currentTempButton');
     updateTempButton.addEventListener('click', findLatitudeAndLongitude);
