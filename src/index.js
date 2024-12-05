@@ -9,7 +9,7 @@ const state = {
   gardenLandscape: null,
   cityName: null,
   cityInput: null,
-  currentTempButton: null
+  currentTempButton: NaN
 };
 
 const loadControls = () => {
@@ -78,29 +78,30 @@ const getCityLocationAndTemp = ()=> {
     .then((response) => {
       let lat = response.data[0]['lat'];
       let lon = response.data[0]['lon'];
-      return getCityWeather(lat,lon);
-    })
-    .catch((error) => {
-      console.log('error!', error.response.data);
-    });
-  };
-  
-  const getCityWeather = (lat,lon) => {
-  axios
-    .get('http://127.0.0.1:5000/weather',{
-      params: {
-        lat: lat,
-        lon: lon,
-        }
-      })
-    .then((response) => {
-      state.currentTempButton.textContent = response.main.temp
+      getCityWeather(lat,lon);
     })
     .catch((error) => {
       console.log('error!', error.response.data);
     });
   };
 
+const getCityWeather= (lat,lon) => {
+  axios
+    .get('http://127.0.0.1:5000/weather',{
+      params: {
+        lat: lat,
+        lon: lon,
+        units: 'imperial'
+        }
+      })
+    .then((response) => {
+      state.tempElement.textContent = response.data.main.temp
+    })
+    .catch((error) => {
+      console.log('error!', error.response.data);
+    });
+  };
+  
 const registerEventHandlers = () => {
   loadControls();
   updateTemperatureDisplay();
