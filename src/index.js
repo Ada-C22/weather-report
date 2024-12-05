@@ -14,7 +14,7 @@ const syncCityName =  () => {
 syncCityName();
 
 // temperature control section
-document.addEventListener("DOMContentLoaded", () => {
+const updateTemperatureControl = () => {
     const tempValue = document.getElementById("tempValue");
     const increaseTempControl = document.getElementById("increaseTempControl");
     const decreaseTempControl = document.getElementById("decreaseTempControl");
@@ -46,23 +46,25 @@ document.addEventListener("DOMContentLoaded", () => {
     updateWeatherDisplay();
 
     // controls temperature increase
-    increaseTempControl.addEventListener("click", () => {
+    const increaseTemp = () => {
         temp += 1;
         tempValue.textContent = `${temp}°F`;
         updateWeatherDisplay();
-    });
+    };
 
     // controls temperature decrease
-    decreaseTempControl.addEventListener("click", () => {
+    const decreaseTemp = () => {
         temp -= 1;
         tempValue.textContent = `${temp}°F`;
         updateWeatherDisplay();
-    });
-});
+    };
 
+    increaseTempControl.addEventListener("click", increaseTemp);
+    decreaseTempControl.addEventListener("click", decreaseTemp);
+};
 
 // weather album section
-document.addEventListener("DOMContentLoaded", () => {
+const updateWeatherAlbum = () => {
     const landscapeImg = document.getElementById("landscapeImg");
     const images = [
         './assets/weather-imgs/weather_1.png',
@@ -73,15 +75,17 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     let currentIndex = 0;
 
-    function rotateImage() {
+    // rotates weather album images
+    const rotateImage = () => {
         currentIndex = (currentIndex + 1) % images.length;
         landscapeImg.style.backgroundImage = `url(${images[currentIndex]})`;
-    }
+    };
 
     setInterval(rotateImage, 10000);
-});
+};
 
-document.addEventListener("DOMContentLoaded", () => {
+// reset city name section
+const updateCityNameReset = () => {
     const resetCityName = document.getElementById("cityNameReset");
     const headerCityName = document.getElementById("headerCityName");
     const tempValue = document.getElementById("tempValue");
@@ -89,17 +93,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let defaultCityNameInput = "Los Angeles";
 
-    resetCityName.addEventListener("click", () => {
+    // resets city name and temperature
+    const resetCityInfo = () => {
         headerCityName.textContent = defaultCityNameInput;
         tempValue.textContent = "80°F";
         tempValue.style.color = "red";
         cityNameInput.value = "";
-    });
+    };
+
+    resetCityName.addEventListener("click", resetCityInfo);
+};
+
+// DOM initialization
+document.addEventListener("DOMContentLoaded", () => {
+    updateTemperatureControl();
+    updateWeatherAlbum();
+    updateCityNameReset();
 });
 
 const kelvinToF = (k) => {
     return Math.floor(1.8*(k-273) + 32)
 }
+
 document.getElementById("currentTempButton").addEventListener("click", async (e) => {
     const cityName = document.getElementById('headerCityName').textContent;
 
