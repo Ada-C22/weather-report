@@ -1,5 +1,5 @@
 const state = {
-  currentTemp: 39,
+  currentTemp: 0,
   cityName: "Miami",
   // defaultCityName = "Seattle",
 };
@@ -66,10 +66,11 @@ const updateCityName = () => {
 /******* Wave 4 *********/
 /************************/
 
-const updateRealtimeTempButton = (location) => {
+// Cannot pass parameters into function
+const updateRealtimeTempButton = () => {
   const realtimeTempValue = document.getElementById("currentTempButton");
-  // state.currentTemp = getLatAndLon(location);
-
+  // state.currentTemp = 
+ 
 };
 
 const getRealtimeTempButton = () => {
@@ -78,20 +79,15 @@ const getRealtimeTempButton = () => {
 };
 
 // ASK IN OFFICE HOURS!
-const LOCATIONIQ_KEY = process.env["LOCATION_KEY"];
-const WEATHER_KEY = process.env["WEATHER_KEY"];
-
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-const coordinateResults = {};
 
-const getLatAndLong= (location) => {
+
+const getLatAndLong = (location) => {
   let latitude, longitude;
   return axios
-    .get("http://127.0.0.1:5000", {
+    .get("http://127.0.0.1:5000/location", {
     params: {
-        "q": location,
-        "key": LOCATIONIQ_KEY,
-        "format": "json",
+        "q": location
       },
     })
     .then((response) => {
@@ -102,7 +98,7 @@ const getLatAndLong= (location) => {
         `Location: ${location}, Latitude: ${latitude}, Longitude: ${longitude}`
       );
 
-      return coordinateResults = {
+      return {
         latitude: latitude,
         longitude: longitude,
       };
@@ -117,19 +113,20 @@ const getLatAndLong= (location) => {
     });
 };
 
+// API Call for weather status/temp of current city displayed
 const getCurrentCityWeather = (lat, long) => {
   // Info from OpenWeather API Call documentation:
   // https://openweathermap.org/current#geo
 
-  lat = getLatAndLong().latitude;
-  long = getLatAndLong().longitude;
+  // Function call is returning a Promise Object - cannot call this
+  // Create a 3rd separate helper function to chain together location + weather
+  // by chaining the .then()
 
   return axios
-    .get("http://127.0.0.1:5000", {
+    .get("http://127.0.0.1:5000/weather", {
       params: {
           "lat": lat,
           "lon": long,
-          "appid": WEATHER_KEY,
     }})
     .then((response) => {
       return Object.keys(response.main.temp);
