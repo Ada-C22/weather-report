@@ -104,3 +104,23 @@ cityForcastButton.addEventListener('click', () => {
   });
 })
   
+
+const skySelectElement = document.getElementById("skySelect");
+const skyElement = document.getElementById("sky");
+
+// Define sky options
+const skyOptions = {
+  sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
+  cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
+  rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
+  snowy: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨",
+};
+
+// Function to update the sky based on selection
+const updateSky = () => {
+  const selectedSky = skySelectElement.value; // Get selected value
+  skyElement.textContent = skyOptions[selectedSky]; // Update the sky display
+};
+
+// Event listener for dropdown change
+skySelectElement.addEventListener("change", updateSky);

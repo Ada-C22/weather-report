@@ -162,3 +162,12 @@ background-color: lightblue;
 .snowy {
 background-color: lightsteelblue;
 }
+
+#sky {
+    font-size: 2rem;
+    text-align: center;
+    margin: 10px 0;
+    color: #21482e; /* Optional: Customize the color */
+}
+
+
