@@ -126,14 +126,47 @@ const getTemperature = () => {
     })
     .catch((error) => {
       console.error("Error in getTemperature!");
-      tempValue.textContent = "City does not exist";
     });
+
+// wave 5
+};
+const updateSky = () => {
+  const skySelect = document.getElementById('skySelect').value;
+  const skyContainer = document.getElementById('sky');
+
+  skyContainer.textContent = "";
+
+  let sky;
+  let skyBackgroundClass;
+
+  switch (skySelect) {
+    case 'sunny':
+      sky = '☀️ ☀️ ☀️ ☀️ ☀️ ☀️';
+      skyBackgroundClass = 'sunny';
+      break;
+    case 'cloudy':
+      sky = '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️';
+      skyBackgroundClass = 'cloudy';
+      break;
+    case 'rainy':
+      sky = '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧';
+      skyBackgroundClass = 'rainy';
+      break;
+    case 'snowy':
+      sky = '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨';
+      skyBackgroundClass = 'snowy';
+      break;
+ 
+  }
+
+  const skyContent = document.createElement('div');
+  skyContent.textContent = sky;
+  skyContainer.appendChild(skyContent);
+  skyContainer.className = skyBackgroundClass;
 };
 
-const loadControls = () => {
-  state.tempValue = document.getElementById("tempValue");
 
-}
+
 
 const registerEventHandlers = () => {
   loadControls();
@@ -152,8 +185,13 @@ const registerEventHandlers = () => {
   cityNameInput.addEventListener("input", updateCityNameInput);
 
   const currentTempButton = document.getElementById("currentTempButton");
+  const skySelect = document.getElementById('skySelect');
+  decreaseTemp.addEventListener('click', updateDecreaseTempCount);
+  increaseTemp.addEventListener('click', updateIncreaseTempCount);
+  cityNameInput.addEventListener("input", updateCityNameInput);
+  cityNameReset.addEventListener("click", resetCityNameInput);
   currentTempButton.addEventListener("click", getTemperature);
-
+  skySelect.addEventListener('change', updateSky);
   updateTempColorAndLandscape();
 };
 
