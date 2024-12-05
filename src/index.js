@@ -61,73 +61,88 @@ const updateCityName = () => {
   currentCity.textContent = state.cityName;
 };
 
-// // Register event handlers for temperature controls
-const registerEventHandlers = () => {
-  /** Wave 2 events **/
-  const warmUpButton = document.getElementById("increaseTempControl");
-  const coolDownButton = document.getElementById("decreaseTempControl");
-
-  warmUpButton.addEventListener("click", increaseTemp);
-  coolDownButton.addEventListener("click", decreaseTemp);
-
-  /** Wave 3 events **/
-  const cityNameInput = document.getElementById("cityNameInput");
-  const resetButton = document.getElementById("cityNameReset");
-
-  cityNameInput.addEventListener("input", retrieveInput);
-  resetButton.addEventListener("click", updateCityName);
-
-  // Initialize the temperature display
-  updateTemperatureDisplay();
-  updateSky();
-  TempButton();
-};
-
-// Initialize the application when DOM content is loaded
-document.addEventListener("DOMContentLoaded", registerEventHandlers);
 
 /************************/
 /******* Wave 4 *********/
 /************************/
 
-// const trueCityTemp = () => {
+const updateRealtimeTempButton = (location) => {
+  const realtimeTempValue = document.getElementById("currentTempButton");
+  // state.currentTemp = getLatAndLon(location);
 
-// }:
+};
 
-// const TempButton = () => {
-//   const cityNameInput = document.getElementById("currentTempButton");
-//   cityNameInput.addEventListener("click", trueCityTemp);
-// };
+const getRealtimeTempButton = () => {
+  const realtimeTemp = document.getElementById("currentTempButton");
+  realtimeTemp.addEventListener("click", updateRealtimeTempButton);
+};
 
-// const axios = require("axios");
-// const LOCATIONIQ_KEY = ;
+// ASK IN OFFICE HOURS!
+const LOCATIONIQ_KEY = process.env["LOCATION_KEY"];
+const WEATHER_KEY = process.env["WEATHER_KEY"];
 
-// const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-// const results = {};
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const coordinateResults = {};
 
-// const findLatitudeAndLongitude = (location) => {
-//   let latitude, longitude;
-//   axios
-//     .get("https://us1.locationiq.com/v1/search.php", {
-//       params: {
-//         key: LOCATIONIQ_KEY,
-//         q: location,
-//         format: "json",
-//       },
-//     })
-//     .then((response) => {
-//       latitude = response.data[0].lat;
-//       longitude = response.data[0].lon;
-//       //console.log(location, ":", latitude, longitude);
-//       results[location] = {
-//         latitude: latitude,
-//         longitude: longitude,
-//       };
-//     })
-//     .catch((error) => {
-//       console.log("error in findLatitudeAndLongitude!");
-//     });
-// };
+const getLatAndLong= (location) => {
+  let latitude, longitude;
+  return axios
+    .get("http://127.0.0.1:5000", {
+    params: {
+        "q": location,
+        "key": LOCATIONIQ_KEY,
+        "format": "json",
+      },
+    })
+    .then((response) => {
+      latitude = response.data[0].lat;
+      longitude = response.data[0].lon;
+
+      console.log(
+        `Location: ${location}, Latitude: ${latitude}, Longitude: ${longitude}`
+      );
+
+      return coordinateResults = {
+        latitude: latitude,
+        longitude: longitude,
+      };
+    })
+    .catch((error) => {
+      console.log("Error found in getLatAndLong!");
+      console.log(
+        `The value of status inside of error response is: 
+        ${error.response.status}`
+      );
+  
+    });
+};
+
+const getCurrentCityWeather = (lat, long) => {
+  // Info from OpenWeather API Call documentation:
+  // https://openweathermap.org/current#geo
+
+  lat = getLatAndLong().latitude;
+  long = getLatAndLong().longitude;
+
+  return axios
+    .get("http://127.0.0.1:5000", {
+      params: {
+          "lat": lat,
+          "lon": long,
+          "appid": WEATHER_KEY,
+    }})
+    .then((response) => {
+      return Object.keys(response.main.temp);
+    })
+    .catch((error) => {
+      console.log("Error found in getCurrentCityWeather!");
+      console.log(
+        `The value of status inside of error response is: 
+        ${error.response.status}`
+      );
+    })
+
+  };
 
 /************************/
 /******* Wave 5 *********/
@@ -169,3 +184,29 @@ const updateSky = () => {
 //   cityNameInput.value =  state.defaultCityName
 
 // };
+
+
+// Register event handlers for temperature controls
+const registerEventHandlers = () => {
+  /** Wave 2 events **/
+  const warmUpButton = document.getElementById("increaseTempControl");
+  const coolDownButton = document.getElementById("decreaseTempControl");
+
+  warmUpButton.addEventListener("click", increaseTemp);
+  coolDownButton.addEventListener("click", decreaseTemp);
+
+  /** Wave 3 events **/
+  const cityNameInput = document.getElementById("cityNameInput");
+  const resetButton = document.getElementById("cityNameReset");
+
+  cityNameInput.addEventListener("input", retrieveInput);
+  resetButton.addEventListener("click", updateCityName);
+
+  // Initialize the temperature display
+  updateTemperatureDisplay();
+  updateSky();
+  getRealtimeTempButton();
+};
+
+// Initialize the application when DOM content is loaded
+document.addEventListener("DOMContentLoaded", registerEventHandlers);
