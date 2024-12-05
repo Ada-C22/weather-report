@@ -166,7 +166,9 @@ const updateSky = () => {
 };
 
 
-
+const loadControls = () => {
+  state.tempValue = document.getElementById("tempValue");
+};
 
 const registerEventHandlers = () => {
   loadControls();
