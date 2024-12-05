@@ -8,25 +8,25 @@ const state = {
   cityName: "seattle",
 };
 
+//wave 2
 const updateDecreaseTempCount = () => {
   const tempValue = document.getElementById('tempValue');
   --state.tempCount;
-  tempValue.textContent = state.tempCount;
+  tempValue.textContent = `${state.tempCount}°F`;
 
-  updateTempColorLandscape();
+  updateTempColorAndLandscape();
 };
 
 const updateIncreaseTempCount = () => {
   const tempValue = document.getElementById('tempValue');
   ++state.tempCount;
-  tempValue.textContent = state.tempCount;
+  tempValue.textContent = `${state.tempCount}°F`;
 
-  updateTempColorLandscape();
+  updateTempColorAndLandscape();
 };
 
-const updateTempColorLandscape = () => {
+const updateTempColorAndLandscape = () => {
   const tempValue = document.getElementById("tempValue");
-
   const newLandscape = document.createElement("div");
   const landscapeContainer = document.getElementById("landscape");
   landscapeContainer.textContent = "";
@@ -56,6 +56,7 @@ const updateTempColorLandscape = () => {
   landscapeContainer.appendChild(newLandscape);
 };
 
+//Wave 3
 const updateCityNameInput = () => {
   const cityNameInput = document.getElementById("cityNameInput");
   const headerCityName = document.getElementById("headerCityName");
@@ -64,12 +65,14 @@ const updateCityNameInput = () => {
   console.log(state.cityName);
 };
 
+//wave 6
 const resetCityNameInput = () => {
-  const cityNameReset = document.getElementById("cityNameReset");
+  // const cityNameReset = document.getElementById("cityNameReset");
   cityNameInput.value = "";
   headerCityName.textContent = "";
 };
 
+//wave 4
 const findTemperature = (coordinates) => {
   console.log(coordinates)
   return axios
@@ -110,11 +113,6 @@ const findLatitudeAndLongitude = () => {
     .catch((error) => {
       console.log("error in findLatitudeAndLongitude!");
     });
-
-  // return {
-  //   seattleLat: latitude,
-  //   seattleLon: longitude,
-  // };
 };
 
 const getTemperature = () => {
@@ -122,13 +120,13 @@ const getTemperature = () => {
 
   return findLatitudeAndLongitude()
     .then((coordinates) => {
-      console.log(coordinates)
       return findTemperature(coordinates);
     })
     .then((temp) => {
-      console.log(temp);
-      state.tempCount = temp;
-      tempValue.textContent = state.tempCount;
+      const fahrenheit = 1.8 * (temp - 273) + 32;
+      state.tempCount = Math.round(fahrenheit);
+      tempValue.textContent = `${state.tempCount}°F`;
+      updateTempColorAndLandscape();
     })
     .catch((error) => {
       console.error("Error in getTemperature!");
@@ -145,7 +143,7 @@ const registerEventHandlers = () => {
   cityNameReset.addEventListener("click", resetCityNameInput);
   currentTempButton.addEventListener("click", getTemperature);
 
-  updateTempColorLandscape();
+  updateTempColorAndLandscape();
 };
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
