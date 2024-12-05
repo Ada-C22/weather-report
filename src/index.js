@@ -3,7 +3,7 @@
 
 const state = {
   tempCount: 70,
-  cityName: "Seattle",
+  cityName: "",
   tempValue: null,
 };
 
@@ -65,7 +65,7 @@ const updateCityNameInput = () => {
 //wave 6
 const resetCityNameInput = () => {
   cityNameInput.value = "";
-  headerCityName.textContent = "Seattle";
+  headerCityName.textContent = "";
 };
 
 //wave 4
@@ -84,6 +84,7 @@ const findTemperature = (coordinates) => {
     })
     .catch((error) => {
       console.log("error in findTemperature!", error);
+      throw error;
     });
 };
 
@@ -126,6 +127,7 @@ const getTemperature = () => {
     })
     .catch((error) => {
       console.error("Error in getTemperature!");
+      state.tempValue.textContent = "Enter a valid city"
     });
 
 // wave 5
@@ -178,22 +180,17 @@ const registerEventHandlers = () => {
 
   const increaseTemp = document.getElementById("increaseTempControl");
   increaseTemp.addEventListener("click", updateIncreaseTempCount);
-
-  const headerCityName = document.getElementById("headerCityName");
-  headerCityName.textContent = "Seattle";
-
+  
+  const skySelect = document.getElementById('skySelect');
+  skySelect.addEventListener('change', updateSky);
+  
   const cityNameReset = document.getElementById("cityNameReset");
   cityNameReset.addEventListener("click", resetCityNameInput);
   cityNameInput.addEventListener("input", updateCityNameInput);
 
   const currentTempButton = document.getElementById("currentTempButton");
-  const skySelect = document.getElementById('skySelect');
-  decreaseTemp.addEventListener('click', updateDecreaseTempCount);
-  increaseTemp.addEventListener('click', updateIncreaseTempCount);
-  cityNameInput.addEventListener("input", updateCityNameInput);
-  cityNameReset.addEventListener("click", resetCityNameInput);
   currentTempButton.addEventListener("click", getTemperature);
-  skySelect.addEventListener('change', updateSky);
+  
   updateTempColorAndLandscape();
 };
 
