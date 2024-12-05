@@ -16,7 +16,7 @@
         <h1 id = 'siteTitle'>Ada Weather Report</h1>
         <section class="left-side">
             <header class="current-weather-header">
-                <span>Current weather in the lovely city of</span>
+                <span id="current-weather-text">Current weather in the lovely city of</span>
                 <span id="headerCityName" class="header-city-name"></span>
             </header>
             <section class="temperature-section">
@@ -25,9 +25,13 @@
             </section>
             <section class="city-name-section">
                 <h2>Choose a city:</h2>
-                <input type="text" id="cityNameInput">
-                <button id="currentTempButton">Get Realtime Temperature</button>
-                <button id="cityNameReset" class="city-name-reset-btn">Reset</button>
+                <div class="input-container">
+                    <input type="text" id="cityNameInput">
+                </div>
+                <div class="button-container">
+                    <button id="currentTempButton">Get Realtime Temperature</button>
+                    <button id="cityNameReset" class="city-name-reset-btn">Reset</button>
+                </div>
             </section>
         </section>
         <section class="right-side">
@@ -43,7 +47,6 @@
             <section class="sky-section">
                 <h2>Sky:</h2>
                 <select id="skySelect" class="sky-select">
-                    <option value="">Select One</option>
                     <option value="sunny">Sunny</option>
                     <option value="cloudy">Cloudy</option>
                     <option value="rainy">Rainy</option>
@@ -51,7 +54,7 @@
                 </select>              
             </section>
         </div>
-        <section class="garden__section">
+        <section class="garden-section">
             <h2>Weather Garden</h2>
             <div id='skyDisplay' class='sky-display'> </div>
             <div id="gardenContent" class="garden__content">
