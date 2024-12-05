@@ -54,6 +54,17 @@ const updateState = (data) =>{
 const HandleCityNameError = () =>{
   const cityErrorMessageModal = document.getElementById('cityErrorDialog');
   cityErrorMessageModal.showModal();
+  let errorData = {
+    name: '??',
+    weather: '??',
+    weatherIconCode: '??',
+    weatherDescription: '??',
+    realTempValue: '??'
+  };
+  updateState(errorData);
+  document.getElementById('realTempValue').textContent = errorData.realTempValue;
+  changeRealTempValueColor();
+  changeRealWeatherDetails();
 }
 
 const closeErrorModal = () =>{
@@ -113,8 +124,12 @@ const changeRealWeatherDetails = () =>{
   weatherDetails.textContent = state.weatherDescription;
 
   const weatherIcon = document.getElementById('weather-icon');
-  weatherIcon.src = `https://openweathermap.org/img/wn/${state.weatherIconCode}@2x.png`;
-};
+  if (state.weatherIconCode != '??'){
+    weatherIcon.src = `https://openweathermap.org/img/wn/${state.weatherIconCode}@2x.png`;
+  } else {
+    weatherIcon.src = 'assets/unknown-weather-icon.png'
+  }
+  };
 
 const increaseTemp = () =>{
   state.gardenTempValue += 1;
@@ -175,7 +190,7 @@ const getCityWeatherData = (coordObject) =>{
       return weatherData
     })
     .catch((error) => {
-      console.log('getCityWeatherData error')
+      console.log('getCityWeatherData error');
       HandleCityNameError();
     });
     ;
