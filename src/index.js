@@ -4,6 +4,9 @@ const tempValue = document.getElementById('tempValue');
 const increaseTempControl = document.getElementById('increaseTempControl');
 const decreaseTempControl = document.getElementById('decreaseTempControl');
 const landScrape = document.getElementById('landscape');
+const skySelect = document.getElementById('skySelect');
+const skyElement = document.getElementById('sky');
+
 
 const updateTemperature = () => {
     tempValue.textContent = `${currentTemperature}°F`;
@@ -29,7 +32,7 @@ const updateTemperature = () => {
         tempValue.style.backgroundColor = '#CCFFFF';
         landScrape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
     }
-}
+};
 
 increaseTempControl.addEventListener('click', () => {
     currentTemperature += 1;
@@ -40,6 +43,26 @@ decreaseTempControl.addEventListener('click', () => {
     currentTemperature -= 1;
     updateTemperature();
 });
+
+// Wave 5
+const updateSky = (skyType) => {
+    const skyOptions = {
+        Sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
+        Cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
+        Rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
+        Snowy: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨",
+        Misty: "🌫️🌫️💨🌫️🌦🌫️🌫️💨🌫️🌫️🌫️💨",
+    };
+
+    skyElement.textContent = skyOptions[skyType] || skyOptions["Sunny"];
+    skySelect.value = skyType; // Sync the dropdown
+};
+
+skySelect.addEventListener("change", () => {
+    const selectedSky = skySelect.value;
+    updateSky(selectedSky);
+});
+
 // Wave 3 
 document.addEventListener("DOMContentLoaded", () => {
     const cityNameInput = document.getElementById('cityNameInput');
@@ -53,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Wave 4
     const getRealTimeTemperature = async () => {
-      
         const cityName = headerCityName.textContent;
         
         try {
@@ -66,28 +88,28 @@ document.addEventListener("DOMContentLoaded", () => {
             const weatherResponse = await axios.get(
                 `http://127.0.0.1:5000/weather?lat=${lat}&lon=${lon}`
             );
-            const tempKelvin = weatherResponse.data.main.temp;
 
+            const tempKelvin = weatherResponse.data.main.temp;
             const tempFahrenheit = ((tempKelvin - 273.15) * 1.8) + 32;
 
             currentTemperature = Math.round(tempFahrenheit);
             updateTemperature();
 
             // Update the sky based on weather condition
-            const weatherCondition = weatherResponse.data.weather.main;
+            const weatherCondition = weatherResponse.data.weather[0].main;
             let skyType = "Sunny"; // Default sky
 
             if (weatherCondition.includes("Rain")) {
-            skyType = "Rainy";
+                skyType = "Rainy";
             } else if (weatherCondition.includes("Snow")) {
-            skyType = "Snowy";
+                skyType = "Snowy";
             } else if (weatherCondition.includes("Cloud")) {
-            skyType = "Cloudy";
+                skyType = "Cloudy";
+            } else if (weatherCondition.includes("Misty")) {
+                skyType = "Misty";
             }
 
-            skySelect.value = skyType; // Sync dropdown
             updateSky(skyType);
-
         } catch (error) {
             console.error("Error fetching weather data:", error);
         }
@@ -103,35 +125,12 @@ document.addEventListener("DOMContentLoaded", () => {
         currentTemperature = 70;
         updateTemperature();
         updateSky("Sunny");
-        skySelect.value = "Sunny";
+        // skySelect.value = "Sunny";
     });
 
     updateTemperature();
-});
-
-// Wave 5
-const updateSky = () => {
-    const skySelect = document.getElementById('skySelect');
-    const skyElement = document.getElementById('sky');
-
-    const skyOptions = {
-        Sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
-        Cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
-        Rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
-        Snowy: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨",
-    };
-
-    const selectedSky = skySelect.value;
-    skyElement.textContent = skyOptions[selectedSky];
-};
-
-// Add an event listener to the select dropdown for changing the sky
-document.getElementById('skySelect').addEventListener('change', updateSky);
-
-document.addEventListener("DOMContentLoaded", () => {
     updateSky("Sunny");
-    updateTemperature();
-  });
+});
 
 
 
