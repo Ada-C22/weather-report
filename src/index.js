@@ -45,6 +45,11 @@ const skyOptions = {
 };
 
 // Helper Functions
+const updateState = (data) =>{
+  for (let key of Object.keys(data)){
+    state[key] = data[key]
+  }
+};
 
 //Wave 2
 const changeGardenTempValueColorAndLandscape = () =>{
@@ -99,21 +104,16 @@ const changeRealTempValueColor = () =>{
 };
 
 const changeRealWeatherDetails = () =>{
-  // Change weather
+  
   const weather = document.getElementById('weather');
-  weather.textContent = state.weather.toUpperCase();
-  //Change weather details
+  weather.textContent = state.weather;
+
   const weatherDetails = document.getElementById('weather-details');
   weatherDetails.textContent = state.weatherDescription;
+
   const weatherIcon = document.getElementById('weather-icon');
   weatherIcon.src = `https://openweathermap.org/img/wn/${state.weatherIconCode}@2x.png`;
-
-
-}
-
-
-
-
+};
 
 const increaseTemp = () =>{
   state.gardenTempValue += 1;
@@ -136,7 +136,9 @@ const updateCityName = () => {
   state.name = cityNameInput.value
   
   const headerCityName = document.getElementById("headerCityName");
-  headerCityName.textContent = state.name;
+  if (state.name != ''){
+    headerCityName.textContent = state.name[0].toUpperCase() + state.name.substring(1);
+  }
 };
 
 // Wave 4
@@ -158,7 +160,6 @@ const getCityWeatherData = (coordObject) =>{
   return axios
     .get ('http://127.0.0.1:5000/weather', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
     .then((response)=>{
-      console.log(response.data)
       const tempK = response.data.main.temp;
       const tempF = (tempK - 273.15) * 1.8 + 32;
       const weatherData ={
@@ -182,17 +183,6 @@ const getCityWeatherData = (coordObject) =>{
   };
   
 
-const updateState = (data) =>{
-  // state.weather = data.weather
-  // state.weatherConditionCode = data.weatherConditionCode
-  // state.weatherIconCode = data.weatherIconCode
-  // state.realTempValue = data.realTempValue
-
-  for (let key of Object.keys(data)){
-    state[key] = data[key]
-  }
-
-};
 
 const updateCityTempDisplay = () =>{
   getCityData()
