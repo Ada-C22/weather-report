@@ -316,7 +316,9 @@ gap: 1rem;
 }
 
 
-
+dialog p {
+  color:black;
+}
 
 
 .red {
