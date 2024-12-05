@@ -240,10 +240,16 @@ button {
 }
 
 #tempValue {
+background-color: whitesmoke;
+padding: 5px;
+border-radius: 8px;
+box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+
 font-size: 2rem;
 font-weight: bold;
 margin: 0;
 text-align: center;
+
 }
 
 .temp-arrow {
