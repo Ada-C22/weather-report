@@ -1,4 +1,3 @@
-// Q: I had added the const (doc elements) in their respective functions, should i have added it to load controls
 const state = {
   temperature: 69,
   cityName: "",
@@ -6,6 +5,7 @@ const state = {
   downButton: null,
   searchBar: null,
   currentTempButton: null,
+  skySelectDD: null,
 };
 
 // Function when clicking on up button
@@ -84,8 +84,8 @@ const getCityTemp = (coords) => {
       },
     })
     .then((response) => {
-      let tempK = response.data.main.temp;
-      let tempF = Math.round((tempK - 273.15) * 1.8 + 32);
+      const tempK = response.data.main.temp;
+      const tempF = Math.round((tempK - 273.15) * 1.8 + 32);
       console.log("success getCityTemp", tempF);
       return tempF;
     })
@@ -105,22 +105,42 @@ const updateToCityTemp = () => {
     });
 };
 
+const showSky = () => {
+  let selection = state.skySelectDD.value;
+  const sky = document.getElementById("sky");
+  if (!selection) {
+    sky.textContent = ""
+  } else if (selection=="sunny") {
+    sky.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️"
+  } else if (selection == "cloudy") {
+    sky.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️"
+  } else if (selection == "rainy") {
+    sky.textContent = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧"
+  } else if (selection == "snowy") {
+    sky.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨"
+  }
+;
+};
+
+// load the elements into the states
 const loadControls = () => {
   state.upButton = document.querySelector("#increaseTempControl");
   state.downButton = document.querySelector("#decreaseTempControl");
   state.searchBar = document.getElementById("cityNameInput");
   state.currentTempButton = document.querySelector("#currentTempButton");
+  state.skySelectDD = document.getElementById("skySelect")
 };
+
 // register the buttons and their respective listener + function
 const registerEventHandlers = () => {
   loadControls()
-  // when DOM loads, the default temp text should also change colors
-  changeTemp();
+  changeTemp(); // when DOM loads, the default temp text should also change colors
   
   state.upButton.addEventListener("click", increaseTemp);
   state.downButton.addEventListener("click", decreaseTemp);
   state.searchBar.addEventListener("input", updateCityName);
   state.currentTempButton.addEventListener("click", updateToCityTemp);
+  state.skySelectDD.addEventListener("change", showSky)
 };
 
 document.addEventListener("DOMContentLoaded", registerEventHandlers);
