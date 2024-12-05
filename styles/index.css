@@ -97,7 +97,13 @@ main {
 }
 
 
-.temperature-section{
+#current-weather-container {
+  display:grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 8px;
+}
+.weather-section{
   background-color: white;
   border-radius: 16px;
   padding: 2em;
@@ -108,12 +114,14 @@ main {
   align-items: center;
 }
 
-.temperature-section h2 {
+
+
+.weather-section h3, #weather, #weather-details, #weather-icon {
   color: black;
 }
 
 #realTempValue {
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .city-name-section {
