@@ -50,6 +50,7 @@ const updateTemperatureControl = () => {
 
     // controls temperature increase
     const increaseTemp = () => {
+        temp = parseInt(tempValue.textContent);
         temp += 1;
         tempValue.textContent = `${temp}°F`;
         updateWeatherDisplay();
@@ -57,6 +58,7 @@ const updateTemperatureControl = () => {
 
     // controls temperature decrease
     const decreaseTemp = () => {
+        temp = parseInt(tempValue.textContent);
         temp -= 1;
         tempValue.textContent = `${temp}°F`;
         updateWeatherDisplay();
@@ -127,7 +129,8 @@ const tempSearch = async (cityName) => {
     });
 
     const temp = kelvinToF(weatherResponse.data.main.temp);
-    document.getElementById("tempValue").textContent = "" + temp + " " + "F";
+    const tempValue = document.getElementById("tempValue");
+    tempValue.textContent = `${temp}°F`;
 
 };
 
