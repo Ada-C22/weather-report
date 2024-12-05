@@ -42,7 +42,7 @@ const skyOptions = {
   'cloudy': '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️',
   'rainy': '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧',
   'snowy': '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨',
-}
+};
 
 // Helper Functions
 
@@ -188,15 +188,16 @@ const updateCityTempDisplay = () =>{
 };
 
 // Wave 5
-const changeSky = () =>{
-const selectedSky = document.getElementById('skySelect').value;
-if (skyOptions[selectedSky]) {
-  state.sky = selectedSky
+const changeSky = () => {
+  const selectedSky = document.getElementById('skySelect').value;
   const skyDisplay = document.getElementById('skyDisplay');
-  skyDisplay.textContent = skyOptions[state.sky];
-} else {
-  skyDisplay.textContent = '';
-}
+  
+  if (skyOptions[selectedSky]) {
+    state.sky = selectedSky;
+    skyDisplay.textContent = skyOptions[state.sky]; 
+  } else {
+      skyDisplay.textContent = ''; 
+  }
 };
 // Wave 6
 const resetCityName = () =>{
@@ -208,8 +209,6 @@ const resetCityName = () =>{
 };
 
 
-
-
 // Main code 
 const registerEventHandlers = () => {
   const increaseTempButton = document.getElementById("increaseTempControl");
@@ -219,19 +218,18 @@ const registerEventHandlers = () => {
   decreaseTempButton.addEventListener("click", decreaseTemp);
   
   const getCurrentTempButton = document.getElementById('currentTempButton');
-  getCurrentTempButton.addEventListener('click', updateCityTempDisplay);
+  getCurrentTempButton.addEventListener("click", updateCityTempDisplay);
   
   const cityNameInput = document.getElementById("cityNameInput");
   cityNameInput.addEventListener("input", updateCityName);
 
-  const skySelect = document.getElementById('skySelect');
-  skySelect.addEventListener('change', changeSky);
+  const skySelect = document.getElementById("skySelect");
+  skySelect.addEventListener("change", changeSky);
   
   const resetCityNameButton = document.getElementById('cityNameReset')
   resetCityNameButton.addEventListener('click', resetCityName)
   
 };
-
 
 const initializeSite = () =>{
   document.getElementById('tempValue').textContent = state.gardenTempValue
@@ -245,4 +243,3 @@ document.addEventListener("DOMContentLoaded", ()=>{
   initializeSite();
 });
 
-  
