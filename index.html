@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,78 @@
     <title>Weather Report</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/index.css">
 </head>
+
 <body>
-    <script src="./src/index.js"></script>
+    <main class="app-container">
+        <h1 id = 'siteTitle'>Ada Weather Report</h1>
+        <section class="left-side">
+            <header class="current-weather-header">
+                <span id="current-weather-text">Current weather in the lovely city of</span>
+                <span id="headerCityName" class="header-city-name"></span>
+            </header>
+            <section id="current-weather-container">
+                <section id="wsDetails" class="weather-section">
+                    <span id="weather-details"></span>
+                </section>
+                <section id="wsIcon" class="weather-section">
+                    <img id="weather-icon" src="" alt="weather-icon">
+                </section>
+                <section id="wsTemp" class="weather-section">
+                    <h3>Temperature</h3>
+                        <span id="realTempValue"></span>
+                </section>
+            </section>
+            <section class="city-name-section">
+                <h3>Choose a city:</h3>
+                <div class="input-container">
+                    <input type="text" id="cityNameInput">
+                </div>
+                <div class="button-container">
+                    <button id="currentTempButton">Get Realtime Temperature</button>
+                    <button id="cityNameReset" class="city-name-reset-btn">Reset</button>
+                </div>
+            </section>
+        </section>
+        <section class="right-side">
+            <h2>Weather Garden</h2>
+            <section class="garden-section">
+                <div id='skyDisplay' class='sky-display'> </div>
+                <div id="gardenContent" class="garden-content">
+                    <div id="landscape"></div>
+                </div>
+            </section>
+            <div class="temp-sky-wrapper">
+                <section class="temp-controls-container">
+                    <h3>Temp:</h3>
+                        <div class="temperature-controls">
+                            <span id="increaseTempControl" class="temp-arrow">⬆️</span>
+                            <span id="tempValue" class="temp-value">70</span>
+                            <span id="decreaseTempControl" class="temp-arrow">⬇️</span>
+                        </div>
+                </section>
+                <section class="sky-controls-container">
+                    <h3>Sky:</h3>
+                    <select id="skySelect" class="sky-select">
+                        <option value="">Select Sky</option>
+                        <option value="sunny">Sunny</option>
+                        <option value="cloudy">Cloudy</option>
+                        <option value="rainy">Rainy</option>
+                        <option value="snowy">Snowy</option>
+                    </select>              
+                </section>
+            </div>
+        </section>
+    </main>
+    <dialog id="cityErrorDialog">
+        <div class="error-message-container">
+            <p id="cityErrorMessage">Oops, we couldn't find weather data for that city. </p>
+            <p>Please try again.</p>
+            <button id="cityErrorCloseBtn">Close</button>
+        </div>
+    </dialog>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./src/index.js" defer></script>
 </body>
 </html>
