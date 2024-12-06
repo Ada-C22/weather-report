@@ -49,7 +49,7 @@ const decreaseTemp = () => {
 /************************/
 
 // Event handler function to retrieve user input:
-const retrieveInput = () => {
+const retrieveCityInput = () => {
   const cityNameInput = document.getElementById("cityNameInput");
   return cityNameInput.value;
 };
@@ -57,54 +57,39 @@ const retrieveInput = () => {
 // Event handler function to UPDATE the headerCityName to user's input:
 const updateCityName = () => {
   const currentCity = document.getElementById("headerCityName");
-  state.cityName = retrieveInput();
+  state.cityName = retrieveCityInput();
   currentCity.textContent = state.cityName;
 };
-
 
 /************************/
 /******* Wave 4 *********/
 /************************/
 
-// Cannot pass parameters into function
-const updateRealtimeTempButton = () => {
-  const realtimeTempValue = document.getElementById("currentTempButton");
-  // state.currentTemp = 
- 
-};
-
-const getRealtimeTempButton = () => {
-  const realtimeTemp = document.getElementById("currentTempButton");
-  realtimeTemp.addEventListener("click", updateRealtimeTempButton);
-};
-
-// ASK IN OFFICE HOURS!
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-
-const getLatAndLong = (location) => {
-  let latitude, longitude;
+const getCoordinates = () => {
+  let location = retrieveCityInput();
+  
   return axios
     .get("http://127.0.0.1:5000/location", {
-    params: {
-        "q": location
-      },
+      params: {
+          "q": location
+        }
     })
     .then((response) => {
-      latitude = response.data[0].lat;
-      longitude = response.data[0].lon;
+      let latitude = response.data[0].lat;
+      let longitude = response.data[0].lon;
 
       console.log(
         `Location: ${location}, Latitude: ${latitude}, Longitude: ${longitude}`
       );
-
       return {
         latitude: latitude,
         longitude: longitude,
       };
     })
     .catch((error) => {
-      console.log("Error found in getLatAndLong!");
+      console.log("Error found inside getCoordinates function!");
       console.log(
         `The value of status inside of error response is: 
         ${error.response.status}`
@@ -114,33 +99,58 @@ const getLatAndLong = (location) => {
 };
 
 // API Call for weather status/temp of current city displayed
-const getCurrentCityWeather = (lat, long) => {
+const getCurrentCityWeather = () => {
   // Info from OpenWeather API Call documentation:
   // https://openweathermap.org/current#geo
+  return getCoordinates()
+    .then((coordinatesResponse) => {
 
-  // Function call is returning a Promise Object - cannot call this
-  // Create a 3rd separate helper function to chain together location + weather
-  // by chaining the .then()
+      if (!coordinatesResponse) {
+        throw new Error("Coordinates could not be retrieved.");
+      }
 
-  return axios
-    .get("http://127.0.0.1:5000/weather", {
-      params: {
-          "lat": lat,
-          "lon": long,
-    }})
-    .then((response) => {
-      return Object.keys(response.main.temp);
+      else {
+        return axios.
+          get("http://127.0.0.1:5000/weather", {
+            params: {
+                lat: coordinatesResponse.latitude,
+                lon: coordinatesResponse.longitude,
+          }
+        });
+      }
+    })
+    .then((locationTempResponse) => {
+      let temp = locationTempResponse.main.temp; // in KELVIN
+      console.log(`Current Location temperature is: ${temp}`);
+      return temp;
     })
     .catch((error) => {
-      console.log("Error found in getCurrentCityWeather!");
+      console.log("Error found inside getCurrentCityWeather!");
       console.log(
         `The value of status inside of error response is: 
         ${error.response.status}`
       );
     })
-
   };
 
+  const updateRealtimeTempBtn = () => {
+    // Chaining the axios Promise API call/response from above
+    getCurrentCityWeather()
+    .then(tempKelvin => {
+      if (tempKelvin) {
+        const conversion = (tempKelvin - 273)*((9/5) + 32);
+        state.currentTemp = conversion;
+        document.getElementById("currentTempButton").textContent = state.currentTemp;
+      }
+    });
+  }; 
+
+  const getRealtimeTempButton = () => {
+    const realtimeTemp = document.getElementById("currentTempButton");
+    realtimeTemp.addEventListener("click", updateRealtimeTempBtn);
+  };
+  
+ 
 /************************/
 /******* Wave 5 *********/
 /************************/
@@ -196,13 +206,14 @@ const registerEventHandlers = () => {
   const cityNameInput = document.getElementById("cityNameInput");
   const resetButton = document.getElementById("cityNameReset");
 
-  cityNameInput.addEventListener("input", retrieveInput);
+  cityNameInput.addEventListener("input", retrieveCityInput);
   resetButton.addEventListener("click", updateCityName);
 
   // Initialize the temperature display
-  updateTemperatureDisplay();
+  
   updateSky();
   getRealtimeTempButton();
+  updateTemperatureDisplay();
 };
 
 // Initialize the application when DOM content is loaded
