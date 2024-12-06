@@ -10,9 +10,9 @@ const state = {
   cityName: null,
   cityInput: null,
   currentTempButton: NaN,
-  /////////////////////////////
   skySelect: NaN,
-  sky: NaN
+  sky: NaN,
+  resetButtom: null
 };
 
 const loadControls = () => {
@@ -26,6 +26,7 @@ const loadControls = () => {
   ////////////////////////
   state.skySelect = document.getElementById('skySelect');
   state.sky = document.getElementById('sky');
+  state.resetButtom = document.getElementById('cityNameReset')
 };
 
 
@@ -73,7 +74,13 @@ const updateCityName = () => {
     state.cityName.textContent = state.cityInput.value;
   }
 };
-///////////////////
+
+const resetCityNameAndText = () => {
+  state.cityInput.value = null
+  state.cityName.textContent = null
+  state.tempElement.textContent = `${currentTempValue}°F`
+}
+
 const skySelector = () =>{
   if (state.skySelect.value == 'sunny'){
     state.sky.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
@@ -116,7 +123,7 @@ const getCityWeather = (lat, lon) => {
       }
     })
     .then((response) => {
-      state.tempElement.textContent = response.data.main.temp
+      state.tempElement.textContent = `${Math.round(response.data.main.temp)}°F`
     })
     .catch((error) => {
       console.log('error!', error.response.data);
@@ -132,6 +139,7 @@ const registerEventHandlers = () => {
   state.cityInput.addEventListener('input', updateCityName)
   state.currentTempButton.addEventListener('click', getCityLocationAndTemp)
   state.skySelect.addEventListener('change', skySelector)
+  state.resetButtom.addEventListener('click', resetCityNameAndText)
 };
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);

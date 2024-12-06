@@ -179,7 +179,8 @@ background-color: lightsteelblue;
     margin: 0; /* Removes default margin */
 }
 
-#currentTempButton {
+#currentTempButton,
+#cityNameReset {
     cursor: pointer;
 }
 
