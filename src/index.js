@@ -116,12 +116,8 @@ const changeRealTempValueColor = () =>{
 };
 
 const changeRealWeatherDetails = () =>{
-  
-  const weather = document.getElementById('weather');
-  weather.textContent = state.weather;
-
   const weatherDetails = document.getElementById('weather-details');
-  weatherDetails.textContent = state.weatherDescription;
+  weatherDetails.textContent = state.weatherDescription[0].toUpperCase() + state.weatherDescription.substring(1);
 
   const weatherIcon = document.getElementById('weather-icon');
   if (state.weatherIconCode != '??'){
@@ -161,7 +157,7 @@ const updateCityName = () => {
 const getCityCoords = () =>{
   const city = state.name;
   return axios
-    .get('http://127.0.0.1:5000/location', {params:{q: city}})
+    .get('https://ada-weather-report-proxy-server.onrender.com/location', {params:{q: city}})
     .then((response)=>{
       const results = {
         cityLat:response.data[0].lat,
@@ -177,7 +173,7 @@ const getCityCoords = () =>{
 
 const getCityWeatherData = (coordObject) =>{
   return axios
-    .get ('http://127.0.0.1:5000/weather', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
+    .get ('https://ada-weather-report-proxy-server.onrender.com/weather', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
     .then((response)=>{
       const tempK = response.data.main.temp;
       const tempF = (tempK - 273.15) * 1.8 + 32;
@@ -192,6 +188,7 @@ const getCityWeatherData = (coordObject) =>{
     .catch((error) => {
       console.log('getCityWeatherData error');
       HandleCityNameError();
+
     });
     ;
   };
