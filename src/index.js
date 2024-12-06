@@ -51,6 +51,27 @@ const updateState = (data) =>{
   }
 };
 
+const HandleCityNameError = () =>{
+  const cityErrorMessageModal = document.getElementById('cityErrorDialog');
+  cityErrorMessageModal.showModal();
+  let errorData = {
+    name: '??',
+    weather: '??',
+    weatherIconCode: '??',
+    weatherDescription: '??',
+    realTempValue: '??'
+  };
+  updateState(errorData);
+  document.getElementById('realTempValue').textContent = errorData.realTempValue;
+  changeRealTempValueColor();
+  changeRealWeatherDetails();
+}
+
+const closeErrorModal = () =>{
+  const cityErrorMessageModal = document.getElementById('cityErrorDialog');
+  cityErrorMessageModal.close();
+};
+
 //Wave 2
 const changeGardenTempValueColorAndLandscape = () =>{
   let data = {};
@@ -66,16 +87,9 @@ const changeGardenTempValueColorAndLandscape = () =>{
       break;
     }
   }
+  document.getElementById('tempValue').classList.remove(state.gardenTempValueColor)
   updateState(data);
-  // document.getElementById('tempValue').style.color = state.gardenTempValueColor;
-  
-  let currentElement = document.getElementById('tempValue');
-  let currentClassList = currentElement.classList;
-  if (currentClassList.length != 0) {    
-    currentElement.classList.remove(currentClassList[0]);
-  }
-  currentElement.classList.add(state.gardenTempValueColor);
-
+  document.getElementById('tempValue').classList.add(state.gardenTempValueColor);
   document.getElementById('landscape'). textContent = state.landscape;
 };
 
@@ -149,10 +163,7 @@ const getCityCoords = () =>{
       };
       return results;
     })
-    .catch((error) => {
-      console.log('getCityCoords error: ', error.status);
-      HandleCityNameError();
-    });
+    .catch((error) => HandleCityNameError());
 }
 
 const getCityWeatherData = (coordObject) =>{
@@ -169,11 +180,7 @@ const getCityWeatherData = (coordObject) =>{
       };
       return weatherData;
     })
-    .catch((error) => {
-      console.log('getCityWeatherData error');
-      HandleCityNameError();
-    });
-    ;
+    .catch((error) => HandleCityNameError());
   };
   
   
@@ -241,6 +248,8 @@ const registerEventHandlers = () => {
   const resetCityNameButton = document.getElementById('cityNameReset')
   resetCityNameButton.addEventListener('click', resetCityName)
   
+  const closeErrorModalButton = document.getElementById('cityErrorCloseBtn');
+  closeErrorModalButton.addEventListener('click', closeErrorModal)
 };
 
 const initializeSite = () =>{
