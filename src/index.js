@@ -7,7 +7,7 @@ const state = {
   gardenTempValue: 70,
   gardenTempValueColor: 'orange',
   landscape: '🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷',
-  sky: 'sunny',
+  // sky: 'sunny',
   name: 'Seattle',
   weather: 'clear',
   weatherIconCode: '01d',
@@ -38,10 +38,10 @@ const tempProperties = [
 ];
 
 const skyOptions = {
-  'sunny': '☁️ ☁️ ☁️ ☀️ ☁️ ☁️',
-  'cloudy': '☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️',
-  'rainy': '🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧',
-  'snowy': '🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨',
+  'sunny': '☀️☀️☀️☀️☀️☀️',
+  'cloudy': '☁️☁️☁️🌤☁️☁️☁️',
+  'rainy': '🌧🌈⛈🌧💧⛈🌧🌦💧🌧',
+  'snowy': '🌨❄️🌨❄️🌨❄️🌨❄️🌨🌨',
 };
 
 // Helper Functions
@@ -50,28 +50,6 @@ const updateState = (data) =>{
     state[key] = data[key]
   }
 };
-
-const HandleCityNameError = () =>{
-  const cityErrorMessageModal = document.getElementById('cityErrorDialog');
-  cityErrorMessageModal.showModal();
-  let errorData = {
-    name: '??',
-    weather: '??',
-    weatherIconCode: '??',
-    weatherDescription: '??',
-    realTempValue: '??'
-  };
-  updateState(errorData);
-  document.getElementById('realTempValue').textContent = errorData.realTempValue;
-  changeRealTempValueColor();
-  changeRealWeatherDetails();
-}
-
-const closeErrorModal = () =>{
-  const cityErrorMessageModal = document.getElementById('cityErrorDialog');
-  cityErrorMessageModal.close();
-
-}
 
 //Wave 2
 const changeGardenTempValueColorAndLandscape = () =>{
@@ -88,10 +66,16 @@ const changeGardenTempValueColorAndLandscape = () =>{
       break;
     }
   }
-
-  document.getElementById('tempValue').classList.remove(state.gardenTempValueColor)
   updateState(data);
-  document.getElementById('tempValue').classList.add(state.gardenTempValueColor);
+  // document.getElementById('tempValue').style.color = state.gardenTempValueColor;
+  
+  let currentElement = document.getElementById('tempValue');
+  let currentClassList = currentElement.classList;
+  if (currentClassList.length != 0) {    
+    currentElement.classList.remove(currentClassList[0]);
+  }
+  currentElement.classList.add(state.gardenTempValueColor);
+
   document.getElementById('landscape'). textContent = state.landscape;
 };
 
@@ -109,10 +93,14 @@ const changeRealTempValueColor = () =>{
       break;
     }
   }
-  document.getElementById('realTempValue').classList.remove(state.realTempValueColor)
   updateState(colorData);
-  document.getElementById('realTempValue').classList.add(state.realTempValueColor)
-
+  // document.getElementById('realTempValue').style.color = state.realTempValueColor;
+  let currentElement = document.getElementById('realTempValue');
+  let currentClassList = currentElement.classList;
+  if (currentClassList.length != 0) {    
+    currentElement.classList.remove(currentClassList[0]);
+  }
+  currentElement.classList.add(state.realTempValueColor);
 };
 
 const changeRealWeatherDetails = () =>{
@@ -124,12 +112,8 @@ const changeRealWeatherDetails = () =>{
   weatherDetails.textContent = state.weatherDescription;
 
   const weatherIcon = document.getElementById('weather-icon');
-  if (state.weatherIconCode != '??'){
-    weatherIcon.src = `https://openweathermap.org/img/wn/${state.weatherIconCode}@2x.png`;
-  } else {
-    weatherIcon.src = 'assets/unknown-weather-icon.png'
-  }
-  };
+  weatherIcon.src = `https://openweathermap.org/img/wn/${state.weatherIconCode}@2x.png`;
+};
 
 const increaseTemp = () =>{
   state.gardenTempValue += 1;
@@ -169,10 +153,7 @@ const getCityCoords = () =>{
       };
       return results;
     })
-    .catch((error) => {
-      console.log('getCityCoords error');
-      HandleCityNameError();
-    });
+    .catch((error) => console.log('getCityCoords error: ', error.status));
 }
 
 const getCityWeatherData = (coordObject) =>{
@@ -189,10 +170,7 @@ const getCityWeatherData = (coordObject) =>{
       }
       return weatherData
     })
-    .catch((error) => {
-      console.log('getCityWeatherData error');
-      HandleCityNameError();
-    });
+    .catch((error) => console.log('getCityWeatherData error: ', error.status));
     ;
   };
   
@@ -219,14 +197,14 @@ const updateCityTempDisplay = () =>{
 
 // Wave 5
 const changeSky = () => {
-  const selectedSky = document.getElementById('skySelect').value;
-  const skyDisplay = document.getElementById('skyDisplay');
+  const selectedSky = document.getElementById("skySelect").value;
+  const skyDisplay = document.getElementById("skyDisplay");
   
   if (skyOptions[selectedSky]) {
     state.sky = selectedSky;
     skyDisplay.textContent = skyOptions[state.sky]; 
   } else {
-      skyDisplay.textContent = ''; 
+      skyDisplay.textContent = ""; 
   }
 };
 // Wave 6
@@ -237,9 +215,6 @@ const resetCityName = () =>{
   headerCityName.textContent = state.name;
   cityNameInput.value = "";
 };
-
-
-
 
 // Main code 
 const registerEventHandlers = () => {
@@ -256,14 +231,11 @@ const registerEventHandlers = () => {
   cityNameInput.addEventListener("input", updateCityName);
 
   const skySelect = document.getElementById("skySelect");
+  console.log("Dropdown Text: ", skySelect.textContent);
   skySelect.addEventListener("change", changeSky);
   
-  const resetCityNameButton = document.getElementById('cityNameReset');
-  resetCityNameButton.addEventListener('click', resetCityName);
-
-  const closeErrorModalButton = document.getElementById('cityErrorCloseBtn');
-  closeErrorModalButton.addEventListener('click', closeErrorModal)
-
+  const resetCityNameButton = document.getElementById('cityNameReset')
+  resetCityNameButton.addEventListener('click', resetCityName)
   
 };
 

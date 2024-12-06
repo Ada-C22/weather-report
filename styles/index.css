@@ -358,6 +358,14 @@ dialog button {
   font-weight: bold;
 }
 
+#increaseTempControl:hover::after,
+#decreaseTempControl:hover::after {
+  content: "🌡️"; 
+  position: absolute;
+  transform: translate(-50%, -100%);
+  font-size: 24px;
+  pointer-events: none; /* Prevent the emoji from interfering with clicks */
+}
 
 .red {
 color: red;
