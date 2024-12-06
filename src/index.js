@@ -149,7 +149,10 @@ const getCityCoords = () =>{
       };
       return results;
     })
-    .catch((error) => console.log('getCityCoords error: ', error.status));
+    .catch((error) => {
+      console.log('getCityCoords error: ', error.status);
+      HandleCityNameError();
+    });
 }
 
 const getCityWeatherData = (coordObject) =>{
