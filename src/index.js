@@ -12,7 +12,7 @@ const state = {
 const updateTemperatureDisplay = () => {
   const tempValueElement = document.getElementById("tempValue");
   const landscapeElement = document.getElementById("landscape");
-  tempValueElement.textContent = `${state.currentTemp}°F`;
+  tempValueElement.textContent = `${state.currentTemp}°`;
 
   if (state.currentTemp >= 80) {
     tempValueElement.style.color = "red";
@@ -32,27 +32,45 @@ const updateTemperatureDisplay = () => {
   }
 };
 
-// Event handler to increase temperature
+// Function to increase temperature
 const increaseTemp = () => {
   state.currentTemp += 1;
   updateTemperatureDisplay();
 };
 
-// Event handler to decrease temperature
+// Function to decrease temperature
 const decreaseTemp = () => {
   state.currentTemp -= 1;
   updateTemperatureDisplay();
 };
 
+/** Wave 2 events **/
+const temperatureControls = () => {
+  const warmUpButton = document.getElementById("increaseTempControl");
+  const coolDownButton = document.getElementById("decreaseTempControl");
+
+  warmUpButton.addEventListener("click", increaseTemp);
+  coolDownButton.addEventListener("click", decreaseTemp);
+};
+
+
 /************************/
 /******* Wave 3 *********/
 /************************/
+
 const updateCity = () => {
   const cityNameInput = document.getElementById("cityNameInput");
   const currentCityHeader = document.getElementById("headerCityName");
   currentCityHeader.textContent = cityNameInput.value;
 };
 
+const handleUpdateCityEvent = () => {
+  const cityNameInput = document.getElementById("cityNameInput");
+  const resetButton = document.getElementById("cityNameReset");
+  cityNameInput.addEventListener("input", updateCity);
+  resetButton.addEventListener("click", ResetCity);
+};
+  
 /************************/
 /******* Wave 4 *********/
 /************************/
@@ -65,6 +83,7 @@ const retrieveCityInput = () => {
   return cityNameInput.value;
 };
 
+// API Call to LocationIQ for location coordinates
 const getCoordinates = () => {
   let location = retrieveCityInput();
 
@@ -171,7 +190,6 @@ const updateSky = () => {
 /************************/
 
 // reset city name to default
-
 // Event handler function to UPDATE the headerCityName to user's input:
 const ResetCity = () => {
   const currentCityHeader = document.getElementById("headerCityName");
@@ -181,25 +199,22 @@ const ResetCity = () => {
   cityNameInput.value = state.defaultCityName;
 };
 
-// Register event handlers for temperature controls
+
+/************************/
+/**** Event Handling ****/
+/************************/
+
 const registerEventHandlers = () => {
   /** Wave 2 events **/
-  const warmUpButton = document.getElementById("increaseTempControl");
-  const coolDownButton = document.getElementById("decreaseTempControl");
-
-  warmUpButton.addEventListener("click", increaseTemp);
-  coolDownButton.addEventListener("click", decreaseTemp);
+  temperatureControls();
 
   /** Wave 3 events **/
-  const cityNameInput = document.getElementById("cityNameInput");
-  const resetButton = document.getElementById("cityNameReset");
-
-  cityNameInput.addEventListener("input", updateCity);
-  resetButton.addEventListener("click", ResetCity);
-
-  // Initialize the temperature display
-
+  handleUpdateCityEvent();
+  
+  /**** Wave 5 events ****/
   updateSky();
+
+
   getRealtimeTempButton();
   updateTemperatureDisplay();
 };
