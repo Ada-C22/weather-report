@@ -104,7 +104,6 @@ const getCurrentCityWeather = () => {
   // https://openweathermap.org/current#geo
   return getCoordinates()
     .then((coordinatesResponse) => {
-
       if (!coordinatesResponse) {
         throw new Error("Coordinates could not be retrieved.");
       }
@@ -120,7 +119,7 @@ const getCurrentCityWeather = () => {
       }
     })
     .then((locationTempResponse) => {
-      let temp = locationTempResponse.main.temp; // in KELVIN
+      let temp = locationTempResponse.data.main.temp; // in KELVIN
       console.log(`Current Location temperature is: ${temp}`);
       return temp;
     })
@@ -128,7 +127,7 @@ const getCurrentCityWeather = () => {
       console.log("Error found inside getCurrentCityWeather!");
       console.log(
         `The value of status inside of error response is: 
-        ${error.response.status}`
+        ${error}`
       );
     })
   };
@@ -138,9 +137,9 @@ const getCurrentCityWeather = () => {
     getCurrentCityWeather()
     .then(tempKelvin => {
       if (tempKelvin) {
-        const conversion = (tempKelvin - 273)*((9/5) + 32);
-        state.currentTemp = conversion;
-        document.getElementById("currentTempButton").textContent = state.currentTemp;
+        const conversion = (tempKelvin - 273)*(9/5) + 32;
+        state.currentTemp = Math.round(conversion);
+        updateTemperatureDisplay();
       }
     });
   }; 
