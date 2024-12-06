@@ -9,10 +9,10 @@ const state = {
   gardenLandscape: null,
   cityName: null,
   cityInput: null,
-  currentTempButton: NaN,
-  skySelect: NaN,
-  sky: NaN,
-  resetButtom: null
+  currentTempButton: null,
+  skySelect: null,
+  sky: null,
+  resetButton: null
 };
 
 const loadControls = () => {
@@ -23,40 +23,25 @@ const loadControls = () => {
   state.cityInput = document.getElementById('cityNameInput');
   state.cityName = document.getElementById('headerCityName');
   state.currentTempButton = document.getElementById('currentTempButton');
-  ////////////////////////
   state.skySelect = document.getElementById('skySelect');
   state.sky = document.getElementById('sky');
-  state.resetButtom = document.getElementById('cityNameReset')
+  state.resetButton = document.getElementById('cityNameReset')
 };
 
 
+const getLandscape = (temp) => {
+  if (temp <= 49) return { color: 'blue', text: "A cold, snowy winter day..." };
+  if (temp <= 59) return { color: 'green', text: "A mild spring day..." };
+  if (temp <= 69) return { color: 'yellow', text: "A warm summer afternoon..." };
+  if (temp <= 79) return { color: 'orange', text: "An autumn landscape..." };
+  return { color: 'red', text: "A scorching hot desert scene..." };
+};
+
 const updateTemperatureDisplay = () => {
   state.tempElement.textContent = `${currentTempValue}°F`;
-
-  if (currentTempValue <= 49) {
-    state.tempElement.style.color = 'blue';
-    state.gardenLandscape.textContent = "A cold, snowy winter day with frost-covered trees and a blue-tinted sky, symbolizing freezing temperatures."
-  }
-
-  else if (currentTempValue <= 59) {
-    state.tempElement.style.color = 'green';
-    state.gardenLandscape.textContent = "A mild spring day with vibrant green grass, blooming flowers, and a soft, refreshing breeze"
-  }
-
-  else if (currentTempValue <= 69) {
-    state.tempElement.style.color = 'yellow';
-    state.gardenLandscape.textContent = "A warm summer afternoon, with golden sunlight casting a cheerful glow on the surroundings."
-  }
-
-  else if (currentTempValue <= 79) {
-    state.tempElement.style.color = 'orange';
-    state.gardenLandscape.textContent = "An autumn landscape with leaves turning shades of orange and brown, and the air feeling crisp but comfortable."
-  }
-
-  else {
-    state.tempElement.style.color = 'red';
-    state.gardenLandscape.textContent = "A scorching hot desert scene with blazing sunlight, sand dunes shimmering in heat, and a fiery red horizon."
-  }
+  const { color, text } = getLandscape(currentTempValue);
+  state.tempElement.style.color = color;
+  state.gardenLandscape.textContent = text;
 };
 
 const increaseTemp = () => {
@@ -81,20 +66,15 @@ const resetCityNameAndText = () => {
   state.tempElement.textContent = `${currentTempValue}°F`
 }
 
-const skySelector = () =>{
-  if (state.skySelect.value == 'sunny'){
-    state.sky.textContent = "☁️ ☁️ ☁️ ☀️ ☁️ ☁️";
-  } 
-  else if (state.skySelect.value == 'cloudy'){
-    state.sky.textContent = "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️";
-  }
-  else if (state.skySelect.value == 'rainy'){
-    state.sky.textContent = "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧";
-  }
-  else {
-    state.sky.textContent = "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨";
-  }
-}
+const skyOptions = {
+  sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
+  cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
+  rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
+  default: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨"
+};
+
+state.sky.textContent = skyOptions[state.skySelect.value.toLowerCase()] || skyOptions.default;
+
 const getCityLocationAndTemp = () => {
   const location = state.cityInput.value
   axios
@@ -119,11 +99,12 @@ const getCityWeather = (lat, lon) => {
       params: {
         lat: lat,
         lon: lon,
-        units: 'imperial'
       }
     })
     .then((response) => {
-      state.tempElement.textContent = `${Math.round(response.data.main.temp)}°F`
+      const tempKelvin = response.data.main.temp; //temp in Kelvin
+      const tempImperial = (tempKelvin - 273.15) * (9 / 5) + 32;
+      state.tempElement.textContent = `${Math.round(tempImperial)}°F`;
     })
     .catch((error) => {
       console.log('error!', error.response.data);
@@ -139,7 +120,7 @@ const registerEventHandlers = () => {
   state.cityInput.addEventListener('input', updateCityName)
   state.currentTempButton.addEventListener('click', getCityLocationAndTemp)
   state.skySelect.addEventListener('change', skySelector)
-  state.resetButtom.addEventListener('click', resetCityNameAndText)
+  state.resetButton.addEventListener('click', resetCityNameAndText)
 };
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
