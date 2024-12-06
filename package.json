@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "form-data": "^4.0.1",
+    "jsdom": "^25.0.1"
+  }
+}
