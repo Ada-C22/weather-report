@@ -21,12 +21,13 @@ const citySearchButton = document.getElementById("citySearchButton");
 // default values
 const defaultCityNameInput = "Seattle";
 const defaultTempValue = 299.817; // 80 F
-const skies = {
-    sunny: "☁️☁️☁️☀️☁️☁️",
-    cloudy: "☁️☁️☁️🌤☁️️☁️",
-    rainy: "🌧🌈🌦🌧🌧💧⛈",
-    snowy: "🌨❄️🌨🌨❄️❄️🌨",
-};
+// const skies = {
+//     chooseAForecast: "&nbsp;",
+//     sunny: "☁️☁️☁️☀️☁️☁️☁️",
+//     cloudy: "☁️☁️☁️🌤☁️️☁️",
+//     rainy: "🌧🌈🌦🌧🌧💧⛈",
+//     snowy: "🌨❄️🌨🌨❄️❄️🌨",
+// };
 // Keeping one place where we change the temp and unit
 const currentTemperature = {
     unit: "F",
@@ -65,31 +66,46 @@ const syncCityName =  () => {
     });
 }
 
+const updateSkyDisplay = () => {
+    const skySelect = document.getElementById("skySelect");
+    const skyDisplay = document.getElementById("sky");
+
+    const skies = {
+        chooseAForecast: "&nbsp;",
+        sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️ ☁️",
+        cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ ☁️ ☁️ ☁️☁️",
+        rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
+        snowy: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨",
+    };
+
+    const selectedSky = skySelect.value;
+    skyDisplay.innerHTML = skies[selectedSky] || skies.chooseAForecast;
+};
+
+document.getElementById("skySelect").addEventListener("change", updateSkyDisplay);
+
+
 // updates temperature text color and weather garden landscape
 const updateWeatherDisplay = () => {
     let temp = kelvinToF(currentTemperature.value);
     if (temp >= 80) {
         tempValue.style.color = "red";
         landscape.textContent = "🌵__🐍_🦂_🌵🌵__🐍_🏜_🦂";
-        sky.textContent = skies.sunny;
 
     } else if (temp >= 70) {
         tempValue.style.color = "orange";
         landscape.textContent = "🌸🌿🌼__🌷🌻🌿_☘️🌱_🌻🌷";
-        sky.textContent = skies.cloudy;
 
     } else if (temp >= 60) {
         tempValue.style.color = "yellow";
         landscape.textContent = "🌾🌾_🍃_🪨__🛤_🌾🌾🌾_🍃";
-        sky.textContent = skies.cloudy;
+
     } else if (temp >= 50) {
         tempValue.style.color = "green";
         landscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
-        sky.textContent = skies.rainy;
     } else {
         tempValue.style.color = "teal";
         landscape.textContent = "🌲🌲⛄️🌲⛄️🍂🌲🍁🌲🌲⛄️🍂🌲";
-        sky.textContent = skies.snowy;
     }
     tempValue.textContent = displayTemperature();
     updateBackground();
@@ -161,14 +177,7 @@ const updateBackground = () => {
     body.style.backgroundSize = "cover";
 };
 
-// DOM initialization
-document.addEventListener("DOMContentLoaded", () => {
-    updateWeatherDisplay();
-    updateWeatherAlbum();
-    updateCityNameReset();
-    syncCityName();
-});
-// Events
+
 // set temp control
 increaseTempControl.addEventListener("click", () => {
     if(currentTemperature.unit === "F"){
@@ -218,4 +227,12 @@ convertTempBtn.addEventListener("click", () => {
     }
     updateWeatherDisplay();
     tempValue.textContent = displayTemperature();
+});
+
+// DOM initialization
+document.addEventListener("DOMContentLoaded", () => {
+    updateWeatherDisplay();
+    updateWeatherAlbum();
+    updateCityNameReset();
+    syncCityName();
 });
