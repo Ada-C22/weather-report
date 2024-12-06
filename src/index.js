@@ -47,13 +47,13 @@ const skyOptions = {
 // Helper Functions
 const updateState = (data) =>{
   for (let key of Object.keys(data)){
-    state[key] = data[key]
+    state[key] = data[key];
   }
 };
 
 //Wave 2
 const changeGardenTempValueColorAndLandscape = () =>{
-  let data = {}
+  let data = {};
   for (const idx in tempProperties){
     let temp = tempProperties[idx].temp;
     if (temp === 49 && state.gardenTempValue<= temp){
@@ -82,7 +82,7 @@ const changeGardenTempValueColorAndLandscape = () =>{
 
 
 const changeRealTempValueColor = () =>{
-  let colorData ={}
+  let colorData ={};
   for (const idx in tempProperties){
     let temp = tempProperties[idx].temp;
     if (temp === 49 && state.realTempValue<= temp){
@@ -93,27 +93,23 @@ const changeRealTempValueColor = () =>{
       break;
     }
   }
+  document.getElementById('realTempValue').classList.remove(state.realTempValueColor)
   updateState(colorData);
-  // document.getElementById('realTempValue').style.color = state.realTempValueColor;
-  let currentElement = document.getElementById('realTempValue');
-  let currentClassList = currentElement.classList;
-  if (currentClassList.length != 0) {    
-    currentElement.classList.remove(currentClassList[0]);
-  }
-  currentElement.classList.add(state.realTempValueColor);
+  document.getElementById('realTempValue').classList.add(state.realTempValueColor)
+
 };
 
 const changeRealWeatherDetails = () =>{
-  
-  const weather = document.getElementById('weather');
-  weather.textContent = state.weather;
-
   const weatherDetails = document.getElementById('weather-details');
-  weatherDetails.textContent = state.weatherDescription;
+  weatherDetails.textContent = state.weatherDescription[0].toUpperCase() + state.weatherDescription.substring(1);
 
   const weatherIcon = document.getElementById('weather-icon');
-  weatherIcon.src = `https://openweathermap.org/img/wn/${state.weatherIconCode}@2x.png`;
-};
+  if (state.weatherIconCode != '??'){
+    weatherIcon.src = `https://openweathermap.org/img/wn/${state.weatherIconCode}@2x.png`;
+  } else {
+    weatherIcon.src = 'assets/unknown-weather-icon.png'
+  }
+  };
 
 const increaseTemp = () =>{
   state.gardenTempValue += 1;
@@ -133,19 +129,19 @@ const decreaseTemp = () =>{
 // Wave 3
 const updateCityName = () => {
   const cityNameInput = document.getElementById("cityNameInput");
-  state.name = cityNameInput.value
+  state.name = cityNameInput.value;
   
   const headerCityName = document.getElementById("headerCityName");
   if (state.name != ''){
     headerCityName.textContent = state.name[0].toUpperCase() + state.name.substring(1);
-  }
+  };
 };
 
 // Wave 4
 const getCityCoords = () =>{
   const city = state.name;
   return axios
-    .get('http://127.0.0.1:5000/location', {params:{q: city}})
+    .get('https://ada-weather-report-proxy-server.onrender.com/location', {params:{q: city}})
     .then((response)=>{
       const results = {
         cityLat:response.data[0].lat,
@@ -158,7 +154,7 @@ const getCityCoords = () =>{
 
 const getCityWeatherData = (coordObject) =>{
   return axios
-    .get ('http://127.0.0.1:5000/weather', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
+    .get ('https://ada-weather-report-proxy-server.onrender.com/weather', {params:{lat: coordObject.cityLat, lon: coordObject.cityLon}})
     .then((response)=>{
       const tempK = response.data.main.temp;
       const tempF = (tempK - 273.15) * 1.8 + 32;
@@ -167,10 +163,13 @@ const getCityWeatherData = (coordObject) =>{
         weather: response.data.weather[0].main,
         weatherIconCode:  response.data.weather[0].icon,
         weatherDescription: response.data.weather[0].description,
-      }
-      return weatherData
+      };
+      return weatherData;
     })
-    .catch((error) => console.log('getCityWeatherData error: ', error.status));
+    .catch((error) => {
+      console.log('getCityWeatherData error');
+      HandleCityNameError();
+    });
     ;
   };
   
@@ -188,7 +187,7 @@ const updateCityTempDisplay = () =>{
   getCityData()
   .then((data) =>{
     updateState(data);
-    let temp = data.realTempValue
+    let temp = data.realTempValue;
     document.getElementById('realTempValue').textContent = temp;
     changeRealTempValueColor();
     changeRealWeatherDetails();
@@ -210,10 +209,13 @@ const changeSky = () => {
 // Wave 6
 const resetCityName = () =>{
   state.name = 'Seattle';
-  const headerCityName = document.getElementById('headerCityName');
 
+  const headerCityName = document.getElementById('headerCityName');
   headerCityName.textContent = state.name;
+  
   cityNameInput.value = "";
+
+  updateCityTempDisplay();
 };
 
 // Main code 
@@ -240,7 +242,6 @@ const registerEventHandlers = () => {
 };
 
 const initializeSite = () =>{
-  document.getElementById('tempValue').textContent = state.gardenTempValue
   changeGardenTempValueColorAndLandscape();
   resetCityName();
   updateCityTempDisplay();

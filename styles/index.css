@@ -7,16 +7,11 @@
   --rose: #ff006eff;
   --blue-violet: #8338ecff;
   --azure: #3a86ffff;
-
-
-
-  /* https://coolors.co/palette/ffbe0b-fb5607-ff006e-8338ec-3a86ff */
 }
 
 * {
   box-sizing: border-box;
   margin: 0px;
-  /* border: 1px dotted white; */
   color: white;
 }
 
@@ -109,7 +104,7 @@ main {
   width: 90%;
   display:grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 1fr, 2fr;
+  grid-template-rows: 1fr 4fr;
   gap: 0.5rem;
 }
 
@@ -128,10 +123,27 @@ main {
 
 
 
-.weather-section h3, #weather, #weather-details, #weather-icon {
-  font-size: 1rem;
+.weather-section h3, #weather-details, #weather-icon {
+  font-size: 1.25rem;
   color: black;
 }
+
+#wsDetails {
+  grid-column: 1/ span2;
+  grid-row: 1 / span 1;
+}
+
+#wsIcon {
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+}
+
+#wsTemp{
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+}
+
+
 
 #realTempValue {
   font-size: 2.5rem;
@@ -389,20 +401,4 @@ color: green;
 
 .teal {
 color: teal;
-}
-
-.cloudy {
-background-color: lightgrey;
-}
-
-.sunny {
-background-color: rgb(221, 255, 255);
-}
-
-.rainy {
-background-color: lightblue;
-}
-
-.snowy {
-background-color: lightsteelblue;
 }
