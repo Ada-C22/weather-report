@@ -47,7 +47,7 @@ const skyOptions = {
 // Helper Functions
 const updateState = (data) =>{
   for (let key of Object.keys(data)){
-    state[key] = data[key]
+    state[key] = data[key];
   }
 };
 
@@ -75,7 +75,7 @@ const closeErrorModal = () =>{
 
 //Wave 2
 const changeGardenTempValueColorAndLandscape = () =>{
-  let data = {}
+  let data = {};
   for (const idx in tempProperties){
     let temp = tempProperties[idx].temp;
     if (temp === 49 && state.gardenTempValue<= temp){
@@ -98,7 +98,7 @@ const changeGardenTempValueColorAndLandscape = () =>{
 
 
 const changeRealTempValueColor = () =>{
-  let colorData ={}
+  let colorData ={};
   for (const idx in tempProperties){
     let temp = tempProperties[idx].temp;
     if (temp === 49 && state.realTempValue<= temp){
@@ -109,9 +109,9 @@ const changeRealTempValueColor = () =>{
       break;
     }
   }
-  document.getElementById('realTempValue').classList.remove(state.realTempValueColor)
+  document.getElementById('realTempValue').classList.remove(state.realTempValueColor);
   updateState(colorData);
-  document.getElementById('realTempValue').classList.add(state.realTempValueColor)
+  document.getElementById('realTempValue').classList.add(state.realTempValueColor);
 
 };
 
@@ -123,7 +123,7 @@ const changeRealWeatherDetails = () =>{
   if (state.weatherIconCode != '??'){
     weatherIcon.src = `https://openweathermap.org/img/wn/${state.weatherIconCode}@2x.png`;
   } else {
-    weatherIcon.src = 'assets/unknown-weather-icon.png'
+    weatherIcon.src = 'assets/unknown-weather-icon.png';
   }
   };
 
@@ -145,12 +145,12 @@ const decreaseTemp = () =>{
 // Wave 3
 const updateCityName = () => {
   const cityNameInput = document.getElementById("cityNameInput");
-  state.name = cityNameInput.value
+  state.name = cityNameInput.value;
   
   const headerCityName = document.getElementById("headerCityName");
   if (state.name != ''){
     headerCityName.textContent = state.name[0].toUpperCase() + state.name.substring(1);
-  }
+  };
 };
 
 // Wave 4
@@ -182,8 +182,8 @@ const getCityWeatherData = (coordObject) =>{
         weather: response.data.weather[0].main,
         weatherIconCode:  response.data.weather[0].icon,
         weatherDescription: response.data.weather[0].description,
-      }
-      return weatherData
+      };
+      return weatherData;
     })
     .catch((error) => {
       console.log('getCityWeatherData error');
@@ -207,7 +207,7 @@ const updateCityTempDisplay = () =>{
   getCityData()
   .then((data) =>{
     updateState(data);
-    let temp = data.realTempValue
+    let temp = data.realTempValue;
     document.getElementById('realTempValue').textContent = temp;
     changeRealTempValueColor();
     changeRealWeatherDetails();
