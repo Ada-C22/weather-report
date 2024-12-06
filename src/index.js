@@ -229,10 +229,13 @@ const changeSky = () => {
 // Wave 6
 const resetCityName = () =>{
   state.name = 'Seattle';
-  const headerCityName = document.getElementById('headerCityName');
 
+  const headerCityName = document.getElementById('headerCityName');
   headerCityName.textContent = state.name;
+  
   cityNameInput.value = "";
+
+  updateCityTempDisplay();
 };
 
 
@@ -265,7 +268,6 @@ const registerEventHandlers = () => {
 };
 
 const initializeSite = () =>{
-  document.getElementById('tempValue').textContent = state.gardenTempValue
   changeGardenTempValueColorAndLandscape();
   resetCityName();
   updateCityTempDisplay();

@@ -7,16 +7,11 @@
   --rose: #ff006eff;
   --blue-violet: #8338ecff;
   --azure: #3a86ffff;
-
-
-
-  /* https://coolors.co/palette/ffbe0b-fb5607-ff006e-8338ec-3a86ff */
 }
 
 * {
   box-sizing: border-box;
   margin: 0px;
-  /* border: 1px dotted white; */
   color: white;
 }
 
@@ -128,8 +123,8 @@ main {
 
 
 
-.weather-section h3, #weather, #weather-details, #weather-icon {
-  font-size: 1rem;
+.weather-section h3, #weather-details, #weather-icon {
+  font-size: 1.25rem;
   color: black;
 }
 
@@ -398,20 +393,4 @@ color: green;
 
 .teal {
 color: teal;
-}
-
-.cloudy {
-background-color: lightgrey;
-}
-
-.sunny {
-background-color: rgb(221, 255, 255);
-}
-
-.rainy {
-background-color: lightblue;
-}
-
-.snowy {
-background-color: lightsteelblue;
 }
