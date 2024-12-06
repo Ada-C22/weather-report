@@ -1,5 +1,5 @@
+"use strict";
 
-// "use strict";
 let currentTempValue = 32;
 
 const state = {
@@ -25,9 +25,10 @@ const loadControls = () => {
   state.currentTempButton = document.getElementById('currentTempButton');
   state.skySelect = document.getElementById('skySelect');
   state.sky = document.getElementById('sky');
-  state.resetButton = document.getElementById('cityNameReset')
+  state.resetButton = document.getElementById('cityNameReset');
 };
 
+const kelvinToFahrenheit = (kelvin) => Math.round((kelvin - 273.15) * (9 / 5) + 32);
 
 const getLandscape = (temp) => {
   if (temp <= 49) return { color: 'blue', text: "A cold, snowy winter day..." };
@@ -55,72 +56,58 @@ const decreaseTemp = () => {
 };
 
 const updateCityName = () => {
-  if (state.cityInput && state.cityName) {
-    state.cityName.textContent = state.cityInput.value;
-  }
+  state.cityName.textContent = state.cityInput.value || null;
 };
 
 const resetCityNameAndText = () => {
-  state.cityInput.value = null
-  state.cityName.textContent = null
-  state.tempElement.textContent = `${currentTempValue}°F`
-}
-
-const skyOptions = {
-  sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
-  cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
-  rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
-  default: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨"
+  state.cityInput.value = null;
+  state.cityName.textContent = null;
+  currentTempValue = 32;
+  updateTemperatureDisplay();
 };
 
-state.sky.textContent = skyOptions[state.skySelect.value.toLowerCase()] || skyOptions.default;
+const skySelector = () => {
+  const skyOptions = {
+    sunny: "☁️ ☁️ ☁️ ☀️ ☁️ ☁️",
+    cloudy: "☁️☁️ ☁️ ☁️☁️ ☁️ 🌤 ☁️ ☁️☁️",
+    rainy: "🌧🌈⛈🌧🌧💧⛈🌧🌦🌧💧🌧🌧",
+    default: "🌨❄️🌨🌨❄️❄️🌨❄️🌨❄️❄️🌨🌨"
+  };
+
+  state.sky.textContent = skyOptions[state.skySelect.value.toLowerCase()] || skyOptions.default;
+};
 
 const getCityLocationAndTemp = () => {
-  const location = state.cityInput.value
+  const location = state.cityInput.value;
   axios
-    .get('http://127.0.0.1:5000/location', {
-      params: {
-        q: location
-      }
-    })
+    .get('http://127.0.0.1:5000/location', { params: { q: location } })
     .then((response) => {
-      let lat = response.data[0]['lat'];
-      let lon = response.data[0]['lon'];
+      const { lat, lon } = response.data[0];
       getCityWeather(lat, lon);
     })
-    .catch((error) => {
-      console.log('error!', error.response.data);
-    });
+    .catch((error) => console.error('Error fetching location:', error.response.data));
 };
 
 const getCityWeather = (lat, lon) => {
   axios
-    .get('http://127.0.0.1:5000/weather', {
-      params: {
-        lat: lat,
-        lon: lon,
-      }
-    })
+    .get('http://127.0.0.1:5000/weather', { params: { lat, lon } })
     .then((response) => {
-      const tempKelvin = response.data.main.temp; //temp in Kelvin
-      const tempImperial = (tempKelvin - 273.15) * (9 / 5) + 32;
-      state.tempElement.textContent = `${Math.round(tempImperial)}°F`;
+      currentTempValue = kelvinToFahrenheit(response.data.main.temp);
+      updateTemperatureDisplay();
     })
-    .catch((error) => {
-      console.log('error!', error.response.data);
-    });
+    .catch((error) => console.error('Error fetching weather:', error.response.data));
 };
 
 const registerEventHandlers = () => {
   loadControls();
   updateTemperatureDisplay();
 
-  state.increaseTempControl.addEventListener('click', increaseTemp)
-  state.decreaseTempControl.addEventListener('click', decreaseTemp)
-  state.cityInput.addEventListener('input', updateCityName)
-  state.currentTempButton.addEventListener('click', getCityLocationAndTemp)
-  state.skySelect.addEventListener('change', skySelector)
-  state.resetButton.addEventListener('click', resetCityNameAndText)
+  state.increaseTempControl.addEventListener('click', increaseTemp);
+  state.decreaseTempControl.addEventListener('click', decreaseTemp);
+  state.cityInput.addEventListener('input', updateCityName);
+  state.currentTempButton.addEventListener('click', getCityLocationAndTemp);
+  state.skySelect.addEventListener('change', skySelector);
+  state.resetButton.addEventListener('click', resetCityNameAndText);
 };
 
 document.addEventListener('DOMContentLoaded', registerEventHandlers);
