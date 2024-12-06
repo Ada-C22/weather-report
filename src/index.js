@@ -1,7 +1,7 @@
 const state = {
   currentTemp: 0,
   cityName: "Miami",
-  // defaultCityName = "Seattle",
+  defaultCityName: "Seattle",
 };
 
 /************************/
@@ -47,18 +47,10 @@ const decreaseTemp = () => {
 /************************/
 /******* Wave 3 *********/
 /************************/
-
-// Event handler function to retrieve user input:
-const retrieveCityInput = () => {
+const updateCity = () => {
   const cityNameInput = document.getElementById("cityNameInput");
-  return cityNameInput.value;
-};
-
-// Event handler function to UPDATE the headerCityName to user's input:
-const updateCityName = () => {
-  const currentCity = document.getElementById("headerCityName");
-  state.cityName = retrieveCityInput();
-  currentCity.textContent = state.cityName;
+  const currentCityHeader = document.getElementById("headerCityName");
+  currentCityHeader.textContent = cityNameInput.value;
 };
 
 /************************/
@@ -67,14 +59,20 @@ const updateCityName = () => {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+// Event handler function to retrieve user input:
+const retrieveCityInput = () => {
+  const cityNameInput = document.getElementById("cityNameInput");
+  return cityNameInput.value;
+};
+
 const getCoordinates = () => {
   let location = retrieveCityInput();
-  
+
   return axios
     .get("http://127.0.0.1:5000/location", {
       params: {
-          "q": location
-        }
+        q: location,
+      },
     })
     .then((response) => {
       let latitude = response.data[0].lat;
@@ -94,7 +92,6 @@ const getCoordinates = () => {
         `The value of status inside of error response is: 
         ${error.response.status}`
       );
-  
     });
 };
 
@@ -106,15 +103,12 @@ const getCurrentCityWeather = () => {
     .then((coordinatesResponse) => {
       if (!coordinatesResponse) {
         throw new Error("Coordinates could not be retrieved.");
-      }
-
-      else {
-        return axios.
-          get("http://127.0.0.1:5000/weather", {
-            params: {
-                lat: coordinatesResponse.latitude,
-                lon: coordinatesResponse.longitude,
-          }
+      } else {
+        return axios.get("http://127.0.0.1:5000/weather", {
+          params: {
+            lat: coordinatesResponse.latitude,
+            lon: coordinatesResponse.longitude,
+          },
         });
       }
     })
@@ -129,27 +123,25 @@ const getCurrentCityWeather = () => {
         `The value of status inside of error response is: 
         ${error}`
       );
-    })
-  };
-
-  const updateRealtimeTempBtn = () => {
-    // Chaining the axios Promise API call/response from above
-    getCurrentCityWeather()
-    .then(tempKelvin => {
-      if (tempKelvin) {
-        const conversion = (tempKelvin - 273)*(9/5) + 32;
-        state.currentTemp = Math.round(conversion);
-        updateTemperatureDisplay();
-      }
     });
-  }; 
+};
 
-  const getRealtimeTempButton = () => {
-    const realtimeTemp = document.getElementById("currentTempButton");
-    realtimeTemp.addEventListener("click", updateRealtimeTempBtn);
-  };
-  
- 
+const updateRealtimeTempBtn = () => {
+  // Chaining the axios Promise API call/response from above
+  getCurrentCityWeather().then((tempKelvin) => {
+    if (tempKelvin) {
+      const conversion = (tempKelvin - 273) * (9 / 5) + 32;
+      state.currentTemp = Math.round(conversion);
+      updateTemperatureDisplay();
+    }
+  });
+};
+
+const getRealtimeTempButton = () => {
+  const realtimeTemp = document.getElementById("currentTempButton");
+  realtimeTemp.addEventListener("click", updateRealtimeTempBtn);
+};
+
 /************************/
 /******* Wave 5 *********/
 /************************/
@@ -180,17 +172,14 @@ const updateSky = () => {
 
 // reset city name to default
 
-// const resetCityName = () => {
-//   const currentCity = document.getElementById("headerCityName");
-//   const cityNameInput = document.getElementById("cityNameInput");
+// Event handler function to UPDATE the headerCityName to user's input:
+const ResetCity = () => {
+  const currentCityHeader = document.getElementById("headerCityName");
+  currentCityHeader.textContent = state.defaultCityName;
 
-//   state.cityName = state.defaultCityName
-
-//   currentCity.textContent = state.cityName
-//   cityNameInput.value =  state.defaultCityName
-
-// };
-
+  const cityNameInput = document.getElementById("cityNameInput");
+  cityNameInput.value = state.defaultCityName;
+};
 
 // Register event handlers for temperature controls
 const registerEventHandlers = () => {
@@ -205,11 +194,11 @@ const registerEventHandlers = () => {
   const cityNameInput = document.getElementById("cityNameInput");
   const resetButton = document.getElementById("cityNameReset");
 
-  cityNameInput.addEventListener("input", retrieveCityInput);
-  resetButton.addEventListener("click", updateCityName);
+  cityNameInput.addEventListener("input", updateCity);
+  resetButton.addEventListener("click", ResetCity);
 
   // Initialize the temperature display
-  
+
   updateSky();
   getRealtimeTempButton();
   updateTemperatureDisplay();
