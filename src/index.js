@@ -233,7 +233,6 @@ const registerEventHandlers = () => {
   cityNameInput.addEventListener("input", updateCityName);
 
   const skySelect = document.getElementById("skySelect");
-  console.log("Dropdown Text: ", skySelect.textContent);
   skySelect.addEventListener("change", changeSky);
   
   const resetCityNameButton = document.getElementById('cityNameReset')
