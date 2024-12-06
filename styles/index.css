@@ -23,7 +23,7 @@
     #header_city {
         color: #FAF9F6;
         font-size: 50px;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
         .header__city-name::before,
         .header__city-name::after {
             content: "✨";
@@ -67,7 +67,6 @@
     }
 
     #cityNameReset {
-        background-color: #0B131E;
         background-color: #334766; 
     }
 
