@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,9 +8,68 @@
     <title>Weather Report</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="styles/index.css">
 </head>
+
 <body>
+    <header class="header__header">
+        <h1>Weather Report</h1>
+        <span>For the lovely city of 
+            <span id="headerCityName" class="header__city-name"></span></span>
+    </header>
+    <section class="temperature__section">
+        <h2>Temperature (<span class="tempType"></span>)</h2>
+        <div class="temperature__content">
+            <div class="temperature__controls">
+                <span id="increaseTempControl"><button id="increaseTempButton">⬆️</button></span>
+                <span id =tempValueBox><span id="tempValue"></span>°<span class="tempType"></span></span>
+                <span id="decreaseTempControl"><button id="decreaseTempButton">⬇️</button></span>
+            </div>
+            <div id = tempButtons>
+                <button id="currentTempButton">Get current <span id=cityName></span> Weather</button>
+                <button id="conversionButton"></button>
+            </div>
+        </div>
+
+    </section>
+    <section class="sky__section">
+        <h2>Sky</h2>
+        <select id="skySelect">
+            <option value="Clear">Sunny</option>
+            <option value="Clouds">Cloudy</option>
+            <option value="Rain">Rainy</option>
+            <option value="Snow">Snowy</option>
+            <option value="Tornado">Tornado</option>
+            <option value="Drizzle">Drizzly</option>
+            <option value="Mist">Misty</option>git p
+            <option value="Smoke">Smokey</option>
+            <option value="Haze">Hazey</option>
+            <option value="Dust">Dusty</option>
+            <option value="Ash">Ashy</option>
+            <option value="Fog">Foggy</option>
+            <option value="Sand">Sandy</option>
+            <option value="Squall">Squall</option>
+            <option Value="ThunderStorm">Thunder Storms</option>
+        </select>
+    </section>
+
+    <section class="city-name__section">
+        <h2 id="cityName">City Name</h2>
+        <input type="text" id="cityNameInput" placeholder="Enter city name">
+        <button id="cityUpdate" class="cityButtons">Update</button>
+        <button id="cityNameReset" class="cityButtons">Reset</button>
+
+    </section>
+
+    <section class="garden__section">
+        <h2>Weather Garden</h2>
+        <div id="gardenContent" class="garden__content">
+            <div id="sky"></div>
+            <div id="landscape"></div>
+        </div>
+    </section>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="./src/index.js"></script>
 </body>
 </html>
