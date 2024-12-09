@@ -1,3 +1,6 @@
+devENV = false
+const baseURL = devENV ? 'http://localhost:5000' : 'http://christellenkera.com/weather-report-api'
+
 "use strict";
 // Common Selectors
 // const sky = document.getElementById("sky");
@@ -131,12 +134,12 @@ const updateCityNameReset = () => {
 
 // Get Temp of search terms
 const tempSearch = async (cityName) => {
-    const locationResponse = await axios.get('http://localhost:5000/location', {
+    const locationResponse = await axios.get(`${baseURL}/location`, {
         params: {q: cityName}
     });
     const {lat, lon} = locationResponse.data[0];
 
-    const weatherResponse = await axios.get('http://localhost:5000/weather', {
+    const weatherResponse = await axios.get(`${baseURL}/weather`, {
         params: {lat, lon}
     });
     currentTemperature.value = weatherResponse.data.main.temp;
